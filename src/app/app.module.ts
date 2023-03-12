@@ -25,12 +25,16 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { MatStepperModule } from '@angular/material/stepper';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddCategoryComponent } from './categories/add-category/add-category.component';
-import { ViewCategoriesComponent } from './categories/view-categories/view-categories.component';
+import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
+import { ViewCategoriesComponent } from './pages/categories/view-categories/view-categories.component';
 import { ConfirmDialogueComponent } from './components/confirm-dialogue/confirm-dialogue.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { AddSubCategoryComponent } from './pages/sub-categories/add-sub-category/add-sub-category.component';
+import { ViewSubCategoryComponent } from './pages/sub-categories/view-sub-category/view-sub-category.component';
+import { AddProductComponent } from './pages/products/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +43,9 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     ViewCategoriesComponent,
     ConfirmDialogueComponent,
     LoadingSpinnerComponent,
+    AddSubCategoryComponent,
+    ViewSubCategoryComponent,
+    AddProductComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -72,6 +79,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
     MatExpansionModule,
     MatMenuModule,
     MatTableModule,
+    MatStepperModule,
     BrowserAnimationsModule,
     FormsModule,
   ],

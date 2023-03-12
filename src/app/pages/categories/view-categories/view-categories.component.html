@@ -100,7 +100,7 @@
         </button>&nbsp;
         <button mat-mini-fab color="primary" [routerLink]="'/category/edit/'+element.id"
           title='edit category'><mat-icon>edit</mat-icon></button>&nbsp;
-        <button mat-mini-fab color="primary" title='view category'>
+        <button mat-mini-fab color="primary" title='view category' [routerLink]="'/sub-category/view/' + element.id">
           <mat-icon>visibility</mat-icon>
         </button>
       </td>

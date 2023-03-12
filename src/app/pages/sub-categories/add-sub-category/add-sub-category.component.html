@@ -1,0 +1,17 @@
+<div class="col-8 mx-auto">
+  <h1>{{subCategoryId ? 'Edit' : 'Add'}} Sub Category</h1>
+
+  <form (submit)='subCategoryId ? updateSubCategory() : saveSubCategory()'>
+    <mat-form-field class="w-100">
+      <mat-label>Name</mat-label>
+      <input name='name' matInput placeholder="Ex. Corporate Clothing" [(ngModel)]="subCategory.name" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Description</mat-label>
+      <textarea name='desc' matInput [(ngModel)]="subCategory.description"></textarea>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary">{{subCategoryId ? 'Update' : 'Create'}}</button>
+  </form>
+</div>
