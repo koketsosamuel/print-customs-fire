@@ -26,6 +26,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { QuillModule } from 'ngx-quill';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
@@ -35,6 +38,9 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { AddSubCategoryComponent } from './pages/sub-categories/add-sub-category/add-sub-category.component';
 import { ViewSubCategoryComponent } from './pages/sub-categories/view-sub-category/view-sub-category.component';
 import { AddProductComponent } from './pages/products/add-product/add-product.component';
+import { ProductFormComponent } from './pages/products/components/product-form/product-form.component';
+import { ManageImagesComponent } from './pages/products/components/manage-images/manage-images.component';
+import { ProductImageComponent } from './pages/products/components/product-image/product-image.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +52,9 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
     AddSubCategoryComponent,
     ViewSubCategoryComponent,
     AddProductComponent,
+    ProductFormComponent,
+    ManageImagesComponent,
+    ProductImageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -80,8 +89,11 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
     MatMenuModule,
     MatTableModule,
     MatStepperModule,
+    DragDropModule,
     BrowserAnimationsModule,
     FormsModule,
+    QuillModule.forRoot(),
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

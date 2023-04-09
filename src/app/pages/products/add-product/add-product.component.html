@@ -1,1 +1,23 @@
-<p>add-product works!</p>
+<mat-stepper #stepper [selectedIndex]="selectedStepIndex" [linear]="!edit">
+  <mat-step label="Product Information">
+    <app-product-form [edit]="edit" (submitProductEvent)="submitProduct($event)" [categories]="categories"
+      [subCategoryGroups]="subCategoryGroups" [product]='product'
+      (getSubCategories)="getSubCategories($event)"></app-product-form>
+  </mat-step>
+
+  <mat-step label="Add Images">
+    <app-manage-images [product]='product' (refreshProduct)="getProduct()"></app-manage-images>
+    <div class='mt-4'>
+      <button mat-flat-button matStepperPrevious color="primary">Back</button>&nbsp;
+      <button mat-flat-button matStepperNext color="primary">Next</button>
+    </div>
+  </mat-step>
+
+  <mat-step label='Select Printing Positions'>
+
+  </mat-step>
+
+  <mat-step label='Select Printing Methods'>
+
+  </mat-step>
+</mat-stepper>

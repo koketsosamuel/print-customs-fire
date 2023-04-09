@@ -77,8 +77,8 @@ export class ViewSubCategoryComponent implements OnInit {
           const afterDoc = this.subCategoryService.getSubCategoryById(
             this.after
           );
-          afterDoc.subscribe(async (d: any) => {
-            await this.getSubCategories(d).finally(() => {
+          afterDoc.then(async (d: any) => {
+            await this.getSubCategories(d.doc).finally(() => {
               this.loadingSpinner.hide();
             });
           });
@@ -129,8 +129,8 @@ export class ViewSubCategoryComponent implements OnInit {
       const afterDoc = this.subCategoryService.getSubCategoryById(
         this.after || ''
       );
-      afterDoc.subscribe(async (d: any) => {
-        this.afterDoc = d;
+      afterDoc.then(async (d: any) => {
+        this.afterDoc = d.doc;
         const res = await this.subCategoryService.getSubCategories(
           this.sortBy,
           this.ascending,
@@ -155,10 +155,8 @@ export class ViewSubCategoryComponent implements OnInit {
   }
 
   getCategory() {
-    this.categoryService
-      .getCategoryById(this.categoryId)
-      .subscribe((cat: any) => {
-        this.category = { ...cat.data(), id: cat.id };
-      });
+    this.categoryService.getCategoryById(this.categoryId).then((cat: any) => {
+      this.category = cat.value;
+    });
   }
 }

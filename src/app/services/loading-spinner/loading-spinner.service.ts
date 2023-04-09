@@ -7,18 +7,27 @@ import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/load
 })
 export class LoadingSpinnerService {
   dialogRef: any = null;
+  open = 0;
 
   constructor(private readonly dialog: MatDialog) {}
 
   show() {
-    this.dialogRef = this.dialog.open(LoadingSpinnerComponent, {
-      maxHeight: '600px',
-      maxWidth: '600px',
-    });
+    this.open += 1;
+    if (this.open == 1) {
+      this.dialogRef = this.dialog.open(LoadingSpinnerComponent, {
+        maxHeight: '600px',
+        maxWidth: '600px',
+      });
+    }
   }
 
   hide() {
-    this.dialogRef && this.dialogRef.close();
-    this.dialogRef = null;
+    this.open -= 1;
+    if (this.open == 0) {
+      this.dialogRef && this.dialogRef.close();
+      this.dialogRef = null;
+    } else if (this.open < 0) {
+      this.open == 0;
+    }
   }
 }

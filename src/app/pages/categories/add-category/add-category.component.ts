@@ -35,8 +35,8 @@ export class AddCategoryComponent implements OnInit {
         this.categoryId = p.categoryId;
         this.categoryService
           .getCategoryById(p.categoryId)
-          .subscribe((category: any) => {
-            this.category = category.data();
+          .then((category: any) => {
+            this.category = category.doc.data();
             this.loadingSpinner.hide();
           });
       }

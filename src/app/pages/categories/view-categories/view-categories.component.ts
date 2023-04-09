@@ -59,8 +59,8 @@ export class ViewCategoriesComponent implements OnInit {
 
       if (this.after) {
         const afterDoc = this.categorySrevice.getCategoryById(this.after);
-        afterDoc.subscribe(async (d: any) => {
-          await this.getCategories(d);
+        afterDoc.then(async (d: any) => {
+          await this.getCategories(d.doc);
           this.loadingSpinner.hide();
         });
       } else {
@@ -105,8 +105,8 @@ export class ViewCategoriesComponent implements OnInit {
       this.hasNext = false;
     } else {
       const afterDoc = this.categorySrevice.getCategoryById(this.after || '');
-      afterDoc.subscribe(async (d: any) => {
-        this.afterDoc = d;
+      afterDoc.then(async (d: any) => {
+        this.afterDoc = d.doc;
         const res = await this.categorySrevice.getCategories(
           this.sortBy,
           this.ascending,

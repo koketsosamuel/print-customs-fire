@@ -1,0 +1,6 @@
+<div class='p-2'>
+  <img [src]="image.link" [alt]="image.path">
+  <div class="mt-2" *ngIf="!sort">
+    <button mat-mini-fab color="warn" title='remove image' class='mr-1'><mat-icon>delete</mat-icon></button>
+  </div>
+</div>

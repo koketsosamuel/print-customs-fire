@@ -44,7 +44,7 @@ export class SubCategoryService {
     asc = true,
     categoryId: string,
     where: [string, WhereFilterOp, any][] = [],
-    limit = 20,
+    limit: number | null = 20,
     after: AngularFirestoreDocument | null = null
   ) {
     return await this.db.getDocumentsOrderedByWhere(
@@ -55,6 +55,24 @@ export class SubCategoryService {
       limit,
       after
     );
+  }
+
+  async getSubCategoryGroups(categories: string[]) {
+    const subCategoryGroups = await Promise.all(
+      categories.map(async (category) => {
+        const subCategories = await this.getSubCategories(
+          'name',
+          true,
+          category,
+          [],
+          null
+        );
+
+        return { category, subCategories };
+      })
+    );
+
+    return subCategoryGroups;
   }
 
   getSubCategoryById(id: string) {

@@ -36,8 +36,8 @@ export class AddSubCategoryComponent implements OnInit {
         this.loadingSpinner.show();
         this.subCategoryService
           .getSubCategoryById(p.subCategoryId)
-          .subscribe((subCategory: any) => {
-            this.subCategory = subCategory.data();
+          .then((subCategory: any) => {
+            this.subCategory = subCategory.doc.data();
             this.loadingSpinner.hide();
           });
       }

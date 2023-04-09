@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
 import { ViewCategoriesComponent } from './pages/categories/view-categories/view-categories.component';
+import { AddProductComponent } from './pages/products/add-product/add-product.component';
 import { AddSubCategoryComponent } from './pages/sub-categories/add-sub-category/add-sub-category.component';
 import { ViewSubCategoryComponent } from './pages/sub-categories/view-sub-category/view-sub-category.component';
 
@@ -29,6 +30,14 @@ const routes: Routes = [
   {
     path: 'sub-category/edit/:categoryId/:subCategoryId',
     component: AddSubCategoryComponent,
+  },
+  {
+    path: 'product/add',
+    component: AddProductComponent,
+  },
+  {
+    path: 'product/edit/:productId',
+    component: AddProductComponent,
   },
 ];
 

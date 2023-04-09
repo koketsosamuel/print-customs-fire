@@ -1,0 +1,67 @@
+<div>
+  <button mat-mini-fab color="primary" title='Add new image'
+    (click)="imageInput.click()"><mat-icon>addition</mat-icon></button>&nbsp;
+  <button mat-mini-fab title='refresh images' color="primary" [disabled]="processingUpload"
+    (click)="refreshImages()"><mat-icon>refresh</mat-icon></button>
+  <input type="file" name="image" id="image-input" #imageInput class='d-none' (change)="selectImages($event.target)"
+    multiple>
+
+  <mat-card class='mt-4' *ngIf="imageFiles.length > 0">
+    <mat-card-header>
+      <mat-card-title>New Image(s)</mat-card-title>
+      <mat-card-subtitle>upload new images</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list class='bg-grey-100 mt-3'>
+        <mat-list-item *ngFor="let image of imageFiles">{{image.name}} <button [disabled]="processingUpload"
+            mat-flat-button color='warn' (click)="removeNewImage(image.name)">Remove</button></mat-list-item>
+      </mat-list>
+
+      <button mat-flat-button color="primary" (click)="uploadImages()" class='mt-3'>Upload Images</button>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class='mt-4 p-4' *ngIf="processingUpload">
+
+    <div class="mb-2">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+    Processing images...
+  </mat-card>
+
+  <div class="row mt-3 display-images" *ngIf="product.images?.length">
+    <h1>Current Images</h1>
+    <div class="col-lg-9 col-md-8">
+      <div class="row">
+        <div class="col-md-4" *ngFor="let image of product.images">
+          <div class='p-4 bg-grey-200 mb-4'>
+            <div class="d-flex image-container">
+              <img [src]="image.link" [alt]="image.path">
+            </div>
+            <button mat-mini-fab color="warn" title='remove image' [disabled]="processingUpload" class='mr-1'
+              (click)="removeCurrentImage(image.path)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-4" *ngIf="product.images?.length">
+
+      <div class="bg-grey-100 p-4 image-sort">
+        <div class="overlay" *ngIf="processingUpload"></div>
+        <h2>Re-Order images (drag and drop)</h2>
+        <div cdkDropList class='images mt-3' (cdkDropListDropped)="drop($event)">
+          <div cdkDrag *ngFor="let image of product.images">
+            <app-product-image [image]="image" [sort]='true'></app-product-image>
+          </div>
+          <button mat-flat-button color="primary" [disabled]="processingUpload" (click)="updateImageSortOrder()">Update
+            Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-card *ngIf="product.images?.length === 0" class='p-4 mt-4'>
+    <p class='pb-2 text-center'>No Images uploaded yet</p>
+    <p class='text-center'>new images may take up to a minute to show</p>
+  </mat-card>
+</div>

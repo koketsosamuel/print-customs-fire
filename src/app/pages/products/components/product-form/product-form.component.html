@@ -1,0 +1,58 @@
+<div class="col-lg-8 ">
+  <h1>{{edit ? 'Edit' : 'Add'}} Product</h1>
+
+  <form (submit)="submitProduct()">
+    <mat-form-field class="w-100">
+      <mat-label>Name</mat-label>
+      <input name='name' matInput placeholder="Ex. Corporate Clothing" [(ngModel)]="product.name" required />
+    </mat-form-field>
+
+    <quill-editor class='mb-4' [(ngModel)]='product.description' name="description" placeholder="Description..."
+      [styles]="{height: '250px'}"></quill-editor>
+
+    <mat-form-field class="w-100">
+      <mat-label>Price</mat-label>
+      <input name='price' min='1' type='number' matInput placeholder="Ex. Corporate Clothing"
+        [(ngModel)]="product.price" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class='w-100'>
+      <mat-label>Categories</mat-label>
+      <mat-select name='categories-selected' [(ngModel)]="product.categories" multiple (closed)="selectionClosed()">
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{category.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class='w-100'>
+      <mat-label>Sub Categories</mat-label>
+      <mat-select name='sub-categories-selected' [(ngModel)]="product.subCategories" multiple
+        [disabled]="product.categories.length == 0">
+        <mat-optgroup *ngFor="let group of subCategoryGroups" [label]="group.category?.name">
+          <mat-option *ngFor="let subCategory of group.subCategories" [value]="subCategory.id">
+            {{subCategory?.name}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="example-chip-list" appearance="fill" class='w-100'>
+      <mat-label>Keywords</mat-label>
+      <mat-chip-grid #chipGrid aria-label="Enter fruits">
+        <mat-chip-row *ngFor="let keyword of product.keywords" (removed)="remove(keyword)" [editable]="true"
+          (edited)="editKeywords(keyword, $event)" [aria-description]="'press enter to edit ' + keyword">
+          {{keyword}}
+          <button matChipRemove [attr.aria-label]="'remove ' + keyword">
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip-row>
+        <input placeholder="New keyword..." [matChipInputFor]="chipGrid"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur
+          (matChipInputTokenEnd)="add($event)" required />
+      </mat-chip-grid>
+    </mat-form-field>
+
+    <button mat-flat-button color="primary">{{edit ? 'Update' : 'Create'}}</button>
+  </form>
+</div>
