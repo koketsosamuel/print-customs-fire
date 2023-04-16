@@ -1,5 +1,5 @@
 <div>
-  <button mat-mini-fab color="primary" title='Add new image' disabled="!product.id"
+  <button mat-mini-fab color="primary" title='Add new image' [disabled]="!product.id"
     (click)="imageInput.click()"><mat-icon>addition</mat-icon></button>&nbsp;
   <button mat-mini-fab title='refresh images' color="primary" [disabled]="processingUpload || !product.id"
     (click)="refreshImages()"><mat-icon>refresh</mat-icon></button>

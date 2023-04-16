@@ -23,6 +23,10 @@ export class ManageImagesComponent {
     subCategories: [],
     images: [],
     keywords: [],
+    variations: {
+      name: '',
+      options: [],
+    },
   };
   @Output() refreshProduct = new EventEmitter<boolean>();
   imageFiles: any[] = [];

@@ -1,3 +1,5 @@
+import { IVariation } from './variation.interface';
+
 export default interface IProduct {
   id?: string;
   name: string;
@@ -10,6 +12,7 @@ export default interface IProduct {
   subCategories: string[];
   images?: IImage[];
   keywords: string[];
+  variations: IVariation;
 }
 
 export interface IImage {

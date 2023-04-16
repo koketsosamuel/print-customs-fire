@@ -41,6 +41,9 @@ import { AddProductComponent } from './pages/products/add-product/add-product.co
 import { ProductFormComponent } from './pages/products/components/product-form/product-form.component';
 import { ManageImagesComponent } from './pages/products/components/manage-images/manage-images.component';
 import { ProductImageComponent } from './pages/products/components/product-image/product-image.component';
+import { AddVariationsComponent } from './pages/products/components/add-variations/add-variations.component';
+import { VariationFormComponent } from './pages/products/components/add-variations/variation-form/variation-form.component';
+import { VariationOptionFormComponent } from './pages/products/components/add-variations/variation-option-form/variation-option-form.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,9 @@ import { ProductImageComponent } from './pages/products/components/product-image
     ProductFormComponent,
     ManageImagesComponent,
     ProductImageComponent,
+    AddVariationsComponent,
+    VariationFormComponent,
+    VariationOptionFormComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
