@@ -1,66 +1,58 @@
 import { Injectable } from '@angular/core';
-import { DbService } from '../db/db.service';
-import { IPrintingPosition } from 'src/app/models/printing-position.interface';
-import { StorageService } from '../storage/storage.service';
 import { LoadingSpinnerService } from '../loading-spinner/loading-spinner.service';
+import { IPrintingMethod } from 'src/app/models/printing-method.interface';
+import { DbService } from '../db/db.service';
 import { AlertService } from '../alert/alert.service';
+import { StorageService } from '../storage/storage.service';
+import { IImage } from 'src/app/models/product.interface';
 import { WhereFilterOp } from '@angular/fire/firestore';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { IImage } from 'src/app/models/product.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PrintingPositionsService {
-  COLLECTION_NAME = 'PrintingPositions' as const;
-  STORAGE_FOLDER_NAME = 'printing-positions-images' as const;
+export class PrintingMethodsService {
+  COLLECTION_NAME = 'PrintingMethods' as const;
+  STORAGE_FOLDER_NAME = 'printing-methods-images' as const;
 
   constructor(
-    private readonly db: DbService,
-    private readonly storage: StorageService,
     private readonly loadingSpinnerService: LoadingSpinnerService,
-    private readonly alertService: AlertService
+    private readonly db: DbService,
+    private readonly alertService: AlertService,
+    private readonly storage: StorageService
   ) {}
 
-  async add(printingPosition: IPrintingPosition) {
-    let savedPrintingPosition;
+  async add(printingMethod: IPrintingMethod) {
+    let savedPrintingMethod;
     try {
       this.loadingSpinnerService.show();
-      const imagesBlob = [...(printingPosition.images || [])];
-      printingPosition.images = [];
-      savedPrintingPosition = await this.db
-        .addDocument(this.COLLECTION_NAME, printingPosition)
+      const imagesBlob = [...(printingMethod.images || [])];
+      printingMethod.images = [];
+      savedPrintingMethod = await this.db
+        .addDocument(this.COLLECTION_NAME, printingMethod)
         .then((doc) => {
-          this.alertService.success(
-            'Printing position info successfully saved'
-          );
+          this.alertService.success('Printing method info successfully saved');
           return doc;
         });
 
       await this.storage.uploadImages(
         imagesBlob || [],
         {
-          id: savedPrintingPosition.id || '',
-          name: savedPrintingPosition.name,
+          id: savedPrintingMethod.id || '',
+          name: savedPrintingMethod.name,
         },
         this.COLLECTION_NAME,
         this.STORAGE_FOLDER_NAME
       );
-      this.alertService.success('Printing position image successfully saved');
-      await this.db.updateById(
-        this.COLLECTION_NAME,
-        savedPrintingPosition.id || '',
-        {
-          active: true,
-        }
-      );
+      this.alertService.success('Printing method image successfully saved');
+
       this.alertService.success(
-        'Printing position status successfully updated to active'
+        'Printing method status successfully updated to active'
       );
     } catch (error: any) {
       this.loadingSpinnerService.hide();
       this.alertService.error(
-        'Error saving printing position: ' + error.toString()
+        'Error saving printing method: ' + error.toString()
       );
     } finally {
       this.loadingSpinnerService.hide();
@@ -86,22 +78,23 @@ export class PrintingPositionsService {
         );
       }
 
-      await this.db.updateById(this.COLLECTION_NAME, data.id || '', data);
+      await this.db.updateById(this.COLLECTION_NAME, id, data);
+      this.alertService.success('Printing method successfully updated');
     } catch (error: any) {
       this.loadingSpinnerService.hide();
       this.alertService.error(
-        'Error updating printing position: ' + error.toString()
+        'Error updating printing method: ' + error.toString()
       );
     } finally {
       this.loadingSpinnerService.hide();
     }
   }
 
-  getPrintingPosition(id: string): Promise<any> {
+  getPrintingMethod(id: string): Promise<any> {
     return this.db.getDocumentById(this.COLLECTION_NAME, id);
   }
 
-  getPrintingPositions(
+  getPrintingMethods(
     sortBy = 'name',
     asc = true,
     where: [string, WhereFilterOp, any][] = [],

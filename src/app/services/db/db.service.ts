@@ -53,7 +53,10 @@ export class DbService {
   }
 
   updateById(collection: string, id: string, data: Record<string, any>) {
+    console.log('before ', id);
+
     delete data['id'];
+    console.log('after', id, data);
     return this.firestore.collection(collection).doc(id).update(data);
   }
 

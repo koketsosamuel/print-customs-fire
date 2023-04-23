@@ -7,6 +7,8 @@ import { AddSubCategoryComponent } from './pages/sub-categories/add-sub-category
 import { ViewSubCategoryComponent } from './pages/sub-categories/view-sub-category/view-sub-category.component';
 import { PrintingPositionsFormComponent } from './pages/printing-positions/printing-positions-form/printing-positions-form.component';
 import { PrintingPositionsComponent } from './pages/printing-positions/printing-positions/printing-positions.component';
+import { PrintingMethodsFormComponent } from './pages/printing-methods/printing-methods-form/printing-methods-form.component';
+import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-methods-view/printing-methods-view.component';
 
 const routes: Routes = [
   {
@@ -52,6 +54,18 @@ const routes: Routes = [
   {
     path: 'printing-positions/edit/:printingPositionId',
     component: PrintingPositionsFormComponent,
+  },
+  {
+    path: 'printing-methods/add',
+    component: PrintingMethodsFormComponent,
+  },
+  {
+    path: 'printing-methods/edit/:printingMethodId',
+    component: PrintingMethodsFormComponent,
+  },
+  {
+    path: 'printing-methods/view',
+    component: PrintingMethodsViewComponent,
   },
 ];
 

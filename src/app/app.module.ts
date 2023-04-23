@@ -46,6 +46,8 @@ import { VariationFormComponent } from './pages/products/components/add-variatio
 import { VariationOptionFormComponent } from './pages/products/components/add-variations/variation-option-form/variation-option-form.component';
 import { PrintingPositionsFormComponent } from './pages/printing-positions/printing-positions-form/printing-positions-form.component';
 import { PrintingPositionsComponent } from './pages/printing-positions/printing-positions/printing-positions.component';
+import { PrintingMethodsFormComponent } from './pages/printing-methods/printing-methods-form/printing-methods-form.component';
+import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-methods-view/printing-methods-view.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { PrintingPositionsComponent } from './pages/printing-positions/printing-
     VariationOptionFormComponent,
     PrintingPositionsFormComponent,
     PrintingPositionsComponent,
+    PrintingMethodsFormComponent,
+    PrintingMethodsViewComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
