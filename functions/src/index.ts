@@ -26,9 +26,10 @@ export const addImageToProduct = functions
     const imageName = imageNameArr.pop() || '';
 
     const itemID = imageName?.split('_')[0];
+    const collection = imageName?.split('_')[1];
 
     await db
-      .collection(config.firestore.productsCollection)
+      .collection(collection)
       .doc(itemID || '')
       .update({
         images: firestore.FieldValue.arrayUnion(
@@ -52,10 +53,11 @@ export const removeDeletedImageFromProduct = functions.storage
     const imageName = imageNameArr[imageNameArr.length - 1];
 
     const itemID = imageName?.split('_')[0];
+    const collection = imageName?.split('_')[1];
 
     // UPDATE COLLECTION DOC
     await db
-      .collection(config.firestore.productsCollection)
+      .collection(collection)
       .doc(itemID)
       .update({
         images: firestore.FieldValue.arrayRemove(

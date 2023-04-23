@@ -1,0 +1,30 @@
+<div class="col-8 mx-auto">
+  <h1>{{edit ? 'Edit' : 'Add'}} Printing Position</h1>
+
+  <form (submit)='submit()' autocomplete='off'>
+    <mat-form-field class="w-100">
+      <mat-label>Name</mat-label>
+      <input name='pp_name' matInput placeholder="Ex. T-Shirt A4 Large Front" [(ngModel)]="printingPosition.name" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Short Name</mat-label>
+      <input name='pp_name' matInput placeholder="Ex. Large Front" [(ngModel)]="printingPosition.shortName" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <mat-label>Description</mat-label>
+      <textarea name='pp_desc' matInput [(ngModel)]="printingPosition.description"></textarea>
+    </mat-form-field>
+
+    <div *ngIf="edit && printingPosition.images?.[0]" class='bg-grey-300 p-4 mb-4'>
+      <h3>Current image</h3>
+      <img [src]="printingPosition.images?.[0]?.link" alt="Current">
+    </div>
+
+    <div class='mb-3'>
+      Insert image new <input (change)="selectImage($event)" type="file" name="pp_image" id="">
+    </div>
+    <button mat-flat-button color="primary">{{edit ? 'Update' : 'Create'}}</button>
+  </form>
+</div>

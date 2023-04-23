@@ -20,21 +20,27 @@ export class StorageService {
     return this.storage.upload(`${folder}/${fileName}`, file);
   }
 
-  async uploadProductImages(
-    product: IProduct,
+  async uploadImages(
+    images: Blob[] | any[],
+    item: { id: string; name: string },
     collectionName: string,
-    images: Blob[]
+    folder: string
   ) {
+    console.log('uploading');
+
     this.loadingSpinner.show();
     const imagesUpload = await Promise.all(
       images.map(async (image) => {
-        const fileName = this.getFileName(product, collectionName, image);
-        const folder = 'product-images';
-        const res = await this.uploadFile(folder, fileName, image);
+        const fileName = this.getFileName(item, collectionName, image);
+        const res = await this.uploadFile(folder, fileName, image).catch(
+          (error) => {
+            this.alertService.error('Error uploading image: ' + fileName);
+          }
+        );
         return res;
       })
     )
-      .then(() => {
+      .then((res) => {
         this.alertService.success('Images have been uploaded!');
       })
       .catch((err) => {

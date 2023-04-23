@@ -61,12 +61,13 @@ export class ManageImagesComponent {
 
   uploadImages() {
     const refreshTime = (30 + (this.imageFiles.length - 1) * 15) * 1000; // 30s + 15s per additional image
-    this.storageService
-      .uploadProductImages(this.product, 'Product', this.imageFiles)
+    this.productService
+      .uploadProductImages(this.product, this.imageFiles)
       .then(() => {
         this.imageFiles = [];
         this.processImagesLoading(refreshTime);
       });
+
   }
 
   refreshImages() {

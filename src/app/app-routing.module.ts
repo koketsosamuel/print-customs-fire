@@ -5,6 +5,8 @@ import { ViewCategoriesComponent } from './pages/categories/view-categories/view
 import { AddProductComponent } from './pages/products/add-product/add-product.component';
 import { AddSubCategoryComponent } from './pages/sub-categories/add-sub-category/add-sub-category.component';
 import { ViewSubCategoryComponent } from './pages/sub-categories/view-sub-category/view-sub-category.component';
+import { PrintingPositionsFormComponent } from './pages/printing-positions/printing-positions-form/printing-positions-form.component';
+import { PrintingPositionsComponent } from './pages/printing-positions/printing-positions/printing-positions.component';
 
 const routes: Routes = [
   {
@@ -38,6 +40,18 @@ const routes: Routes = [
   {
     path: 'product/edit/:productId',
     component: AddProductComponent,
+  },
+  {
+    path: 'printing-positions/add',
+    component: PrintingPositionsFormComponent,
+  },
+  {
+    path: 'printing-positions/view',
+    component: PrintingPositionsComponent,
+  },
+  {
+    path: 'printing-positions/edit/:printingPositionId',
+    component: PrintingPositionsFormComponent,
   },
 ];
 

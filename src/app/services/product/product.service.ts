@@ -3,17 +3,19 @@ import IProduct from 'src/app/models/product.interface';
 import { AlertService } from '../alert/alert.service';
 import { DbService } from '../db/db.service';
 import { LoadingSpinnerService } from '../loading-spinner/loading-spinner.service';
+import { StorageService } from '../storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProductService {
-  COLLECTION_NAME = 'Product';
+  COLLECTION_NAME = 'Product' as const;
 
   constructor(
     private readonly db: DbService,
     private readonly loadingSpinner: LoadingSpinnerService,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly storageService: StorageService
   ) {}
 
   addProduct(product: IProduct) {
@@ -51,5 +53,14 @@ export class ProductService {
 
   getProduct(id: string) {
     return this.db.getDocumentById(this.COLLECTION_NAME, id);
+  }
+
+  async uploadProductImages(product: IProduct, images: Blob[]) {
+    return this.storageService.uploadImages(
+      images,
+      { id: product.id || '', name: product.name },
+      this.COLLECTION_NAME,
+      'product-images'
+    );
   }
 }

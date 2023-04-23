@@ -1,2 +1,1 @@
-delete original image
-have a link to original image
+storage rules with data types

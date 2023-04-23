@@ -109,8 +109,6 @@ export class DbService {
   }
 
   async getNewDocFromReference(doc: any) {
-    console.log(doc);
-
     let newDoc = await doc.get();
     return { id: newDoc.id, ...newDoc.data() };
   }
