@@ -1,3 +1,4 @@
+import { ICanvasPositionInfo } from './canvas-position-info.interface';
 import { IImage } from './product.interface';
 
 export interface IPrintingPosition {
@@ -9,4 +10,5 @@ export interface IPrintingPosition {
   active: boolean;
   createdAt: Date;
   updatedAt: Date;
+  canvasPositionInfo: ICanvasPositionInfo;
 }

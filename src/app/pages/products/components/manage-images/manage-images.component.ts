@@ -12,22 +12,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
   styleUrls: ['./manage-images.component.scss'],
 })
 export class ManageImagesComponent {
-  @Input() product: IProduct = {
-    name: '',
-    description: '',
-    price: 0,
-    promotion: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    categories: [],
-    subCategories: [],
-    images: [],
-    keywords: [],
-    variations: {
-      name: '',
-      options: [],
-    },
-  };
+  @Input() product!: IProduct;
   @Output() refreshProduct = new EventEmitter<boolean>();
   imageFiles: any[] = [];
   processingUpload: boolean = false;
@@ -67,7 +52,6 @@ export class ManageImagesComponent {
         this.imageFiles = [];
         this.processImagesLoading(refreshTime);
       });
-
   }
 
   refreshImages() {

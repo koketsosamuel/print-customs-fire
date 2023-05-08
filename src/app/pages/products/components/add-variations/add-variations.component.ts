@@ -25,6 +25,7 @@ export class AddVariationsComponent {
       name: '',
       options: [],
     },
+    printingPositions: [],
   };
 
   constructor(

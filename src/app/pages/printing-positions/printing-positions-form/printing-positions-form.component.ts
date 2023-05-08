@@ -1,6 +1,7 @@
 import { A } from '@angular/cdk/keycodes';
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ICanvasPositionInfo } from 'src/app/models/canvas-position-info.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
 import { PrintingPositionsService } from 'src/app/services/printing-positions/printing-positions.service';
@@ -20,6 +21,15 @@ export class PrintingPositionsFormComponent implements OnInit {
     updatedAt: new Date(),
     images: [],
     shortName: '',
+    canvasPositionInfo: {
+      x: 0,
+      y: 0,
+      w: 0,
+      h: 0,
+      maxH: 0,
+      maxW: 0,
+      z: 0,
+    },
   };
   newImages: Blob[] = [];
 
@@ -48,6 +58,8 @@ export class PrintingPositionsFormComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.printingPosition);
+
     !this.edit
       ? this.printingPositionsService.add(this.printingPosition).then(() => {
           this.router.navigate(['/printing-positions/view']);
@@ -73,5 +85,9 @@ export class PrintingPositionsFormComponent implements OnInit {
         this.printingPosition.images?.push(event.target.files[i]);
       }
     }
+  }
+
+  setCanvasPositionInfo(canvasPositionInfo: ICanvasPositionInfo) {
+    this.printingPosition.canvasPositionInfo = canvasPositionInfo;
   }
 }

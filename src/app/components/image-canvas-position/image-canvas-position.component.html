@@ -1,0 +1,29 @@
+<div class='p-4 bg-grey-100'>
+
+  <div class='px-2'>
+    <mat-checkbox [(ngModel)]="allowDrag">drag</mat-checkbox>
+    <mat-checkbox [disabled]="true" [checked]="!allowDrag">resize</mat-checkbox>
+    <mat-card class='mx-2'>
+      <mat-card-content class='bg-blue-200'>
+        <mat-chip-listbox>
+          <mat-chip>X: {{canvasPositionInfo.x}}</mat-chip>
+          <mat-chip>Y: {{canvasPositionInfo.y}}</mat-chip>
+          <mat-chip>W: {{canvasPositionInfo.w}}</mat-chip>
+          <mat-chip>H: {{canvasPositionInfo.h}}</mat-chip>
+          <mat-chip>MaxH: {{canvasPositionInfo.maxH}}</mat-chip>
+          <mat-chip>MaxW: {{canvasPositionInfo.maxW}}</mat-chip>
+        </mat-chip-listbox>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="d-flex justify-content-center pt-4">
+    <div class='canvas-container' [ngStyle]="{
+      backgroundImage: imgSrc
+    }">
+      <div cdkDrag #canvasContainer [cdkDragDisabled]="!allowDrag" (cdkDragEnded)="getCanvasPosition()" (click)="getCanvasPosition()"
+        class='text-center d-flex align-items-center justify-content-center'>
+        Printing Position
+      </div>
+    </div>
+  </div>
+</div>

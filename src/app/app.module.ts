@@ -48,6 +48,11 @@ import { PrintingPositionsFormComponent } from './pages/printing-positions/print
 import { PrintingPositionsComponent } from './pages/printing-positions/printing-positions/printing-positions.component';
 import { PrintingMethodsFormComponent } from './pages/printing-methods/printing-methods-form/printing-methods-form.component';
 import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-methods-view/printing-methods-view.component';
+import { PrintingPostionsSelectComponent } from './pages/printing-positions/printing-postions-select/printing-postions-select.component';
+import { ImageCardOptionComponent } from './components/image-card-option/image-card-option.component';
+import { ImageCardOptionsSelectionComponent } from './components/image-card-options-selection/image-card-options-selection.component';
+import { ImageCanvasPositionComponent } from './components/image-canvas-position/image-canvas-position.component';
+import { AddPrintingPositionsComponent } from './pages/products/components/add-printing-positions/add-printing-positions.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +74,11 @@ import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-
     PrintingPositionsComponent,
     PrintingMethodsFormComponent,
     PrintingMethodsViewComponent,
+    PrintingPostionsSelectComponent,
+    ImageCardOptionComponent,
+    ImageCardOptionsSelectionComponent,
+    ImageCanvasPositionComponent,
+    AddPrintingPositionsComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

@@ -13,6 +13,7 @@ export default interface IProduct {
   images?: IImage[];
   keywords: string[];
   variations: IVariation;
+  printingPositions: string[];
 }
 
 export interface IImage {

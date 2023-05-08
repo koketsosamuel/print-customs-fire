@@ -1,0 +1,17 @@
+.canvas-container {
+  overflow: hidden;
+  border: #09f 1px solid;
+  display: inline-block;
+  height: 600px !important;
+  width: 600px !important;
+  padding: 0px;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  div {
+    border: #09f dashed 2px;
+    resize: both;
+    cursor: pointer;
+    overflow: hidden;
+  }
+}

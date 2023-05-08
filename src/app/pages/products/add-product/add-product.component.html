@@ -1,5 +1,13 @@
 <mat-stepper #stepper [selectedIndex]="selectedStepIndex" [linear]="!edit">
 
+  <mat-step label='Printing Positions'>
+    <app-printing-postions-select [product]="product"></app-printing-postions-select>
+     <div class='mt-4'>
+      <button mat-flat-button matStepperPrevious color="primary">Back</button>&nbsp;
+      <button mat-flat-button matStepperNext color="primary">Next</button>
+    </div>
+  </mat-step>
+
   <mat-step label="Product Information">
     <app-product-form [edit]="edit" (submitProductEvent)="submitProduct($event)" [categories]="categories"
       [subCategoryGroups]="subCategoryGroups" [product]='product'
@@ -21,10 +29,8 @@
       <button mat-flat-button matStepperNext color="primary">Next</button>
     </div>
   </mat-step>
-  
-  <mat-step label='Printing Positions'>
 
-  </mat-step>
+
 
   <mat-step label='Printing Methods'>
 

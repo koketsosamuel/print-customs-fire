@@ -1,0 +1,8 @@
+<mat-card>
+  <img [src]="imageSelectOption.imgSrc" mat-card-image
+    (click)="imageSelectOption.selected = !imageSelectOption.selected">
+  <div class='p-2'>
+    <mat-checkbox [checked]="imageSelectOption.selected"
+      (change)="imageSelectOption.selected = !imageSelectOption.selected">{{imageSelectOption.name}}</mat-checkbox>
+  </div>
+</mat-card>
