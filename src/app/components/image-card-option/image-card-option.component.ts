@@ -8,10 +8,44 @@ import { IImageCardOption } from 'src/app/models/image-card-option.interface';
 })
 export class ImageCardOptionComponent {
   @Input() imageSelectOption: IImageCardOption = {
-    name: 'Option 1',
-    value: 'dgds',
+    name: '',
+    value: '',
     object: {},
     selected: false,
-    imgSrc: 'https://picsum.photos/200',
+    imgSrc: '',
   };
+
+  getImageCss(url: string) {
+    return `url(${url})`;
+  }
+
+  getCanvasPos() {
+    return {
+      width: this.getPosPercentage(
+        this.imageSelectOption.object['canvasPositionInfo'].w,
+        this.imageSelectOption.object['canvasPositionInfo'].maxW
+      ),
+      height: this.getPosPercentage(
+        this.imageSelectOption.object['canvasPositionInfo'].h,
+        this.imageSelectOption.object['canvasPositionInfo'].maxH
+      ),
+
+      left: this.getPosPercentage(
+        this.imageSelectOption.object['canvasPositionInfo'].x,
+        this.imageSelectOption.object['canvasPositionInfo'].maxW
+      ),
+      top: this.getPosPercentage(
+        this.imageSelectOption.object['canvasPositionInfo'].y,
+        this.imageSelectOption.object['canvasPositionInfo'].maxH
+      ),
+    };
+  }
+
+  getPosPercentage(value: number, total: number) {
+    return Math.ceil((value / total) * 100) + '%';
+  }
+
+  toggleSelection() {
+    this.imageSelectOption.selected = !this.imageSelectOption.selected;
+  }
 }

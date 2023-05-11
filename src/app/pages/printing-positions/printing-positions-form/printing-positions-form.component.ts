@@ -52,14 +52,11 @@ export class PrintingPositionsFormComponent implements OnInit {
           });
 
         this.printingPosition = res.value;
-        console.log(params, this.printingPosition);
       }
     });
   }
 
   submit() {
-    console.log(this.printingPosition);
-
     !this.edit
       ? this.printingPositionsService.add(this.printingPosition).then(() => {
           this.router.navigate(['/printing-positions/view']);

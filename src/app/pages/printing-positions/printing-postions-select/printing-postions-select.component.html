@@ -2,4 +2,5 @@
   <h1>Select Printing Positions</h1>
   <app-image-card-options-selection [options]='printingPositionsOptions'
     (changeEvent)="updatePositions($event)"></app-image-card-options-selection>
+    <button mat-flat-button color="primary" class='mt-4' (click)="saveUpdates()">Update</button>
 </div>

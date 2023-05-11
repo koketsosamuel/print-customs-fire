@@ -26,8 +26,6 @@ export class StorageService {
     collectionName: string,
     folder: string
   ) {
-    console.log('uploading');
-
     this.loadingSpinner.show();
     const imagesUpload = await Promise.all(
       images.map(async (image) => {
@@ -61,6 +59,7 @@ export class StorageService {
         .delete()
         .pipe(
           catchError((err) => {
+            this.alertService.error('Error removing image');
             reject(err);
             throw new Error(err);
           })

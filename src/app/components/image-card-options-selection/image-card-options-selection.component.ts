@@ -1,4 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  AfterViewInit,
+} from '@angular/core';
 import { IImageCardOption } from 'src/app/models/image-card-option.interface';
 
 @Component({
@@ -9,12 +16,28 @@ import { IImageCardOption } from 'src/app/models/image-card-option.interface';
 export class ImageCardOptionsSelectionComponent {
   @Input() options: IImageCardOption[] = [];
   @Output() changeEvent = new EventEmitter<string[]>();
+  selected: any[] = [];
 
   sendValues() {
-    this.changeEvent.emit(
-      this.options
+    this.selected = [
+      ...this.options
         .filter((opt) => opt.selected)
-        .map((opt) => opt.object[opt.value])
-    );
+        .map((opt) => opt.object[opt.value]),
+    ];
+
+    this.changeEvent.emit(this.selected);
+  }
+
+  removeOpt(option: string) {
+    this.options.filter(
+      (opt) => opt.selected && opt.object[opt.value] === option
+    )[0].selected = false;
+    this.sendValues();
+  }
+
+  getSelectedOptionValues(option: string) {
+    return this.options.filter(
+      (opt) => opt.selected && opt.object[opt.value] === option
+    )[0];
   }
 }

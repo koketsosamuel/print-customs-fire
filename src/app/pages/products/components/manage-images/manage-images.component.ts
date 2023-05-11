@@ -78,7 +78,6 @@ export class ManageImagesComponent {
                 this.processingUpload = false;
               });
           })
-          .catch(console.log)
           .finally(() => {
             this.loadingSpinner.hide();
           });

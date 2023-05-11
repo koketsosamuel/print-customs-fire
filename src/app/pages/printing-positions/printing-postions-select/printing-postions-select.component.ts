@@ -4,6 +4,7 @@ import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 import IProduct from 'src/app/models/product.interface';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
 import { PrintingPositionsService } from 'src/app/services/printing-positions/printing-positions.service';
+import { ProductService } from 'src/app/services/product/product.service';
 
 @Component({
   selector: 'app-printing-postions-select',
@@ -14,10 +15,12 @@ export class PrintingPostionsSelectComponent implements OnInit {
   @Input() product!: IProduct;
   printingPositions: IPrintingPosition[] = [];
   printingPositionsOptions: IImageCardOption[] = [];
+  selectedPositions: string[] = [];
 
   constructor(
     private readonly printingPositionsService: PrintingPositionsService,
-    private readonly loadingSpinner: LoadingSpinnerService
+    private readonly loadingSpinner: LoadingSpinnerService,
+    private readonly productService: ProductService
   ) {}
 
   async ngOnInit() {
@@ -32,13 +35,26 @@ export class PrintingPostionsSelectComponent implements OnInit {
       name: pp.name,
       object: pp,
       imgSrc: pp.images?.[0]?.link,
-      selected: this.product?.printingPositions.includes(pp.id || ''),
+      selected: !!this.product?.printingPositions.includes(pp.id || ''),
       value: 'id',
     }));
   }
 
   updatePositions(values: string[]) {
-    this.product.printingPositions = values;
-    console.log(this.product);
+    this.selectedPositions = values;
+  }
+
+  saveUpdates() {
+    this.loadingSpinner.show();
+    this.productService
+      .update(this.product.id || '', {
+        printingPositions: this.selectedPositions,
+      })
+      .then(() => {
+        this.product.printingPositions = [...this.selectedPositions];
+      })
+      .finally(() => {
+        this.loadingSpinner.hide();
+      });
   }
 }

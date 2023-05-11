@@ -52,7 +52,6 @@ export class PrintingMethodsFormComponent implements OnInit {
           });
 
         this.printingMethod = res.value;
-        console.log(params, this.printingMethod);
       }
     });
   }

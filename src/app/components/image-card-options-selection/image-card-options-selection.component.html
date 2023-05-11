@@ -1,5 +1,19 @@
 <div class="row">
-  <div class="col-xs-4 col-sm-4 col-6 col-md-4 col-lg-2 py-2" *ngFor="let opt of options" (click)='sendValues()'>
-    <app-image-card-option [imageSelectOption]='opt'></app-image-card-option>
+  <section *ngIf="selected.length > 0" class='mb-3'>
+      <mat-chip-listbox>
+        <mat-chip *ngFor="let s of selected" (removed)="removeOpt(s)"
+          >{{ getSelectedOptionValues(s).name }}
+          <button matChipRemove attr.aria-label="remove opt">
+            <mat-icon>cancel</mat-icon>
+          </button></mat-chip
+        >
+      </mat-chip-listbox>
+  </section>
+  <div
+    class="col-xs-4 col-sm-4 col-6 col-md-4 col-lg-3 py-2"
+    *ngFor="let opt of options"
+    (click)="sendValues()"
+  >
+    <app-image-card-option [imageSelectOption]="opt"></app-image-card-option>
   </div>
 </div>

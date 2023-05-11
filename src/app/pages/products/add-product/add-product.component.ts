@@ -37,7 +37,6 @@ export class AddProductComponent implements OnInit {
           this.productId = params.productId;
           this.edit = true;
           await this.getProduct();
-          console.log(this.product);
 
           if (this.product.categories.length > 0) {
             await this.getSubCategories();
