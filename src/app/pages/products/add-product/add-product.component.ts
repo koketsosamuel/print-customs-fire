@@ -67,6 +67,7 @@ export class AddProductComponent implements OnInit {
       options: [],
     },
     printingPositions: [],
+    printingMethods: {},
   };
   productId: string | null = null;
   categories: ICategory[] = [];

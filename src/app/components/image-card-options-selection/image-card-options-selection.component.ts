@@ -19,25 +19,27 @@ export class ImageCardOptionsSelectionComponent {
   selected: any[] = [];
 
   sendValues() {
-    this.selected = [
+    const values = [
       ...this.options
         .filter((opt) => opt.selected)
-        .map((opt) => opt.object[opt.value]),
+        .map((opt) => opt.object?.[opt.value]),
     ];
+    this.selected = values?.map((v) => this.getSelectedOptionValues(v));
 
-    this.changeEvent.emit(this.selected);
+    this.changeEvent.emit(values);
+    this;
   }
 
   removeOpt(option: string) {
     this.options.filter(
-      (opt) => opt.selected && opt.object[opt.value] === option
+      (opt) => opt.selected && opt.object?.[opt.value] === option
     )[0].selected = false;
     this.sendValues();
   }
 
   getSelectedOptionValues(option: string) {
     return this.options.filter(
-      (opt) => opt.selected && opt.object[opt.value] === option
+      (opt) => opt.selected && opt.object?.[opt.value] === option
     )[0];
   }
 }

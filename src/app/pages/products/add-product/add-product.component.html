@@ -42,5 +42,7 @@
     </div>
   </mat-step>
 
-  <mat-step label="Printing Methods"> </mat-step>
+  <mat-step label="Printing Methods">
+    <app-printing-methods-select [product]='product' *ngIf="product.id && product.printingPositions.length > 0"></app-printing-methods-select>
+  </mat-step>
 </mat-stepper>

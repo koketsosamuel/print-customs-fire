@@ -53,6 +53,7 @@ import { ImageCardOptionComponent } from './components/image-card-option/image-c
 import { ImageCardOptionsSelectionComponent } from './components/image-card-options-selection/image-card-options-selection.component';
 import { ImageCanvasPositionComponent } from './components/image-canvas-position/image-canvas-position.component';
 import { AddPrintingPositionsComponent } from './pages/products/components/add-printing-positions/add-printing-positions.component';
+import { PrintingMethodsSelectComponent } from './pages/printing-methods/printing-methods-select/printing-methods-select.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +80,7 @@ import { AddPrintingPositionsComponent } from './pages/products/components/add-p
     ImageCardOptionsSelectionComponent,
     ImageCanvasPositionComponent,
     AddPrintingPositionsComponent,
+    PrintingMethodsSelectComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

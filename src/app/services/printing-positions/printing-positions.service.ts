@@ -14,6 +14,7 @@ import { IImage } from 'src/app/models/product.interface';
 export class PrintingPositionsService {
   COLLECTION_NAME = 'PrintingPositions' as const;
   STORAGE_FOLDER_NAME = 'printing-positions-images' as const;
+  printingPositions: IPrintingPosition[] = [];
 
   constructor(
     private readonly db: DbService,
@@ -105,7 +106,7 @@ export class PrintingPositionsService {
     sortBy = 'name',
     asc = true,
     where: [string, WhereFilterOp, any][] = [],
-    limit: number | null = 20,
+    limit: number | null = null,
     after: AngularFirestoreDocument | null = null
   ) {
     return this.db.getDocumentsOrderedByWhere(

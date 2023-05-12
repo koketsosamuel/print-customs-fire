@@ -1,0 +1,22 @@
+<mat-expansion-panel
+  hideToggle
+  *ngFor="let printingPositionSection of printingPositionsSections"
+  class="mt-4"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      {{ printingPositionSection.printingPosition.name }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <div class="grey-100">
+    <app-image-card-options-selection
+    [options]="printingPositionSection.printingMethodsOptions"
+    (changeEvent)="updateMethods($event, printingPositionSection.printingPosition.id || '')"
+  ></app-image-card-options-selection>
+  </div>
+</mat-expansion-panel>
+
+<button mat-flat-button color="primary" class="mt-4" (click)="saveUpdates()">
+  Update
+</button>

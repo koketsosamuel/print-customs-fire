@@ -11,22 +11,7 @@ import { ProductService } from 'src/app/services/product/product.service';
   styleUrls: ['./add-variations.component.scss'],
 })
 export class AddVariationsComponent {
-  @Input() product: IProduct = {
-    name: '',
-    description: '',
-    price: 0,
-    promotion: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    categories: [],
-    subCategories: [],
-    keywords: [],
-    variations: {
-      name: '',
-      options: [],
-    },
-    printingPositions: [],
-  };
+  @Input() product!: IProduct;
 
   constructor(
     private readonly confimDialogue: ConfirmDialogueService,

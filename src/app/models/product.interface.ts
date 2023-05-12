@@ -14,6 +14,7 @@ export default interface IProduct {
   keywords: string[];
   variations: IVariation;
   printingPositions: string[];
+  printingMethods: Record<string, string[]>;
 }
 
 export interface IImage {
