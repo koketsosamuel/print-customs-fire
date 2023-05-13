@@ -41,6 +41,7 @@ export class ViewSubCategoryComponent implements OnInit {
     createdAt: new Date(),
     updatedAt: new Date(),
     active: true,
+    images: [],
   };
 
   constructor(

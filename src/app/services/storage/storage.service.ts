@@ -10,6 +10,8 @@ import { LoadingSpinnerService } from '../loading-spinner/loading-spinner.servic
   providedIn: 'root',
 })
 export class StorageService {
+  BASE_IMAGE_FOLDER = 'images/';
+
   constructor(
     private readonly storage: AngularFireStorage,
     private readonly loadingSpinner: LoadingSpinnerService,
@@ -23,18 +25,19 @@ export class StorageService {
   async uploadImages(
     images: Blob[] | any[],
     item: { id: string; name: string },
-    collectionName: string,
-    folder: string
+    collectionName: string
   ) {
     this.loadingSpinner.show();
     const imagesUpload = await Promise.all(
       images.map(async (image) => {
         const fileName = this.getFileName(item, collectionName, image);
-        const res = await this.uploadFile(folder, fileName, image).catch(
-          (error) => {
-            this.alertService.error('Error uploading image: ' + fileName);
-          }
-        );
+        const res = await this.uploadFile(
+          this.BASE_IMAGE_FOLDER + collectionName,
+          fileName,
+          image
+        ).catch((error) => {
+          this.alertService.error('Error uploading image: ' + fileName);
+        });
         return res;
       })
     )

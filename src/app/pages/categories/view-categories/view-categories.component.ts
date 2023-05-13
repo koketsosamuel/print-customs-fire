@@ -18,6 +18,7 @@ export class ViewCategoriesComponent implements OnInit {
     'Name',
     'Description',
     'Status',
+    'Image',
     'Created At',
     'Updated At',
     'Action',

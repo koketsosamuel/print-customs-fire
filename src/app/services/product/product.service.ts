@@ -59,8 +59,7 @@ export class ProductService {
     return this.storageService.uploadImages(
       images,
       { id: product.id || '', name: product.name },
-      this.COLLECTION_NAME,
-      'product-images'
+      this.COLLECTION_NAME
     );
   }
 }

@@ -18,9 +18,11 @@ export class AddCategoryComponent implements OnInit {
     createdAt: new Date(),
     updatedAt: new Date(),
     active: true,
+    images: [],
   };
-
+  edit = false;
   categoryId: string | null = null;
+  newImages: Blob[] = [];
 
   constructor(
     private readonly categoryService: CategoryService,
@@ -31,6 +33,7 @@ export class AddCategoryComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((p: any) => {
       if (p.categoryId) {
+        this.edit = true;
         this.loadingSpinner.show();
         this.categoryId = p.categoryId;
         this.categoryService
@@ -51,9 +54,21 @@ export class AddCategoryComponent implements OnInit {
 
   async updateCategory() {
     this.categoryService
-      .update(this.categoryId || '', this.category)
+      .update(this.categoryId || '', this.category, this.newImages)
       .then(() => {
         this.router.navigate(['/category/view']);
       });
+  }
+
+  selectImage(event: any) {
+    if (this.edit) {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.newImages?.push(event.target.files[i]);
+      }
+    } else {
+      for (let i = 0; i < event.target.files.length; i++) {
+        this.category.images?.push(event.target.files[i]);
+      }
+    }
   }
 }

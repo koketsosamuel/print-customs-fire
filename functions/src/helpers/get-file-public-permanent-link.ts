@@ -4,8 +4,9 @@ export function getFilePublicPermanentLink(
   bucketName: string,
   object: ObjectMetadata | { metadata: any; name: string }
 ) {
-  return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${object?.name?.replace(
-    '/',
-    '%2F'
-  )}?alt=media&token=${object.metadata?.firebaseStorageDownloadTokens}`;
+  return `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${object?.name
+    ?.split('/')
+    .join('%2F')}?alt=media&token=${
+    object.metadata?.firebaseStorageDownloadTokens
+  }`;
 }

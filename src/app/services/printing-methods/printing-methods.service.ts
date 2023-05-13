@@ -13,7 +13,6 @@ import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 })
 export class PrintingMethodsService {
   COLLECTION_NAME = 'PrintingMethods' as const;
-  STORAGE_FOLDER_NAME = 'printing-methods-images' as const;
 
   constructor(
     private readonly loadingSpinnerService: LoadingSpinnerService,
@@ -41,8 +40,7 @@ export class PrintingMethodsService {
           id: savedPrintingMethod.id || '',
           name: savedPrintingMethod.name,
         },
-        this.COLLECTION_NAME,
-        this.STORAGE_FOLDER_NAME
+        this.COLLECTION_NAME
       );
       this.alertService.success('Printing method image successfully saved');
 
@@ -73,8 +71,7 @@ export class PrintingMethodsService {
         await this.storage.uploadImages(
           newImages,
           { id, name: data.name },
-          this.COLLECTION_NAME,
-          this.STORAGE_FOLDER_NAME
+          this.COLLECTION_NAME
         );
       }
 

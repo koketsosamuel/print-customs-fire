@@ -1,48 +1,54 @@
-<mat-stepper #stepper [selectedIndex]="selectedStepIndex" [linear]="!edit">
-  <mat-step label="Product Information">
-    <app-product-form
-      [edit]="edit"
-      (submitProductEvent)="submitProduct($event)"
-      [categories]="categories"
-      [subCategoryGroups]="subCategoryGroups"
-      [product]="product"
-      (getSubCategories)="getSubCategories($event)"
-    ></app-product-form>
-  </mat-step>
+<div class="container mt-4">
+  <mat-stepper #stepper [selectedIndex]="selectedStepIndex" [linear]="!edit">
+    <mat-step label="Product Information">
+      <app-product-form
+        [edit]="edit"
+        (submitProductEvent)="submitProduct($event)"
+        [categories]="categories"
+        [subCategoryGroups]="subCategoryGroups"
+        [product]="product"
+        (getSubCategories)="getSubCategories($event)"
+      ></app-product-form>
+    </mat-step>
 
-  <mat-step label="Images">
-    <app-manage-images
-      [product]="product"
-      (refreshProduct)="getProduct()"
-    ></app-manage-images>
-    <div class="mt-4">
-      <button mat-flat-button matStepperPrevious color="primary">Back</button
-      >&nbsp;
-      <button mat-flat-button matStepperNext color="primary">Next</button>
-    </div>
-  </mat-step>
+    <mat-step label="Images">
+      <app-manage-images
+        [product]="product"
+        (refreshProduct)="getProduct()"
+      ></app-manage-images>
+      <div class="mt-4">
+        <button mat-flat-button matStepperPrevious color="primary">Back</button
+        >&nbsp;
+        <button mat-flat-button matStepperNext color="primary">Next</button>
+      </div>
+    </mat-step>
 
-  <mat-step label="Variations">
-    <app-add-variations [product]="product" *ngIf='product.id' />
-    <div class="mt-4">
-      <button mat-flat-button matStepperPrevious color="primary">Back</button
-      >&nbsp;
-      <button mat-flat-button matStepperNext color="primary">Next</button>
-    </div>
-  </mat-step>
+    <mat-step label="Variations">
+      <app-add-variations [product]="product" *ngIf="product.id" />
+      <div class="mt-4">
+        <button mat-flat-button matStepperPrevious color="primary">Back</button
+        >&nbsp;
+        <button mat-flat-button matStepperNext color="primary">Next</button>
+      </div>
+    </mat-step>
 
-  <mat-step label="Printing Positions">
-    <app-printing-postions-select *ngIf='product.id'
-      [product]="product"
-    ></app-printing-postions-select>
-    <div class="mt-4">
-      <button mat-flat-button matStepperPrevious color="primary">Back</button
-      >&nbsp;
-      <button mat-flat-button matStepperNext color="primary">Next</button>
-    </div>
-  </mat-step>
+    <mat-step label="Printing Positions">
+      <app-printing-postions-select
+        *ngIf="product.id"
+        [product]="product"
+      ></app-printing-postions-select>
+      <div class="mt-4">
+        <button mat-flat-button matStepperPrevious color="primary">Back</button
+        >&nbsp;
+        <button mat-flat-button matStepperNext color="primary">Next</button>
+      </div>
+    </mat-step>
 
-  <mat-step label="Printing Methods">
-    <app-printing-methods-select [product]='product' *ngIf="product.id && product.printingPositions.length > 0"></app-printing-methods-select>
-  </mat-step>
-</mat-stepper>
+    <mat-step label="Printing Methods">
+      <app-printing-methods-select
+        [product]="product"
+        *ngIf="product.id && product.printingPositions.length > 0"
+      ></app-printing-methods-select>
+    </mat-step>
+  </mat-stepper>
+</div>

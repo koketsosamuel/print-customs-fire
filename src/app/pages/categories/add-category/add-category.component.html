@@ -1,5 +1,5 @@
-<div class="col-8 mx-auto">
-  <h1>{{categoryId ? 'Edit' : 'Add'}} Category</h1>
+<div class="container mt-4">
+  <h1>{{edit ? 'Edit' : 'Add'}} Category</h1>
 
   <form (submit)='categoryId ? updateCategory() : saveCategory()'>
     <mat-form-field class="w-100">
@@ -11,6 +11,24 @@
       <mat-label>Description</mat-label>
       <textarea name='desc' matInput [(ngModel)]="category.description"></textarea>
     </mat-form-field>
+
+    <div
+          *ngIf="edit && category.images?.[0]"
+          class="bg-grey-300 p-4 mb-4"
+        >
+          <h3>Current image</h3>
+          <img [src]="category.images[0].link" alt="Current" />
+        </div>
+
+        <div class="mb-3">
+          Insert image new
+          <input
+            (change)="selectImage($event)"
+            type="file"
+            name="pp_image"
+            id=""
+          />
+        </div>
 
     <button mat-flat-button color="primary">{{categoryId ? 'Update' : 'Create'}}</button>
   </form>

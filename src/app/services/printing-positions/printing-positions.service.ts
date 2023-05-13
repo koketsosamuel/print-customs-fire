@@ -13,7 +13,6 @@ import { IImage } from 'src/app/models/product.interface';
 })
 export class PrintingPositionsService {
   COLLECTION_NAME = 'PrintingPositions' as const;
-  STORAGE_FOLDER_NAME = 'printing-positions-images' as const;
   printingPositions: IPrintingPosition[] = [];
 
   constructor(
@@ -29,14 +28,11 @@ export class PrintingPositionsService {
       this.loadingSpinnerService.show();
       const imagesBlob = [...(printingPosition.images || [])];
       printingPosition.images = [];
-      savedPrintingPosition = await this.db
-        .addDocument(this.COLLECTION_NAME, printingPosition)
-        .then((doc) => {
-          this.alertService.success(
-            'Printing position info successfully saved'
-          );
-          return doc;
-        });
+      savedPrintingPosition = await this.db.addDocument(
+        this.COLLECTION_NAME,
+        printingPosition
+      );
+      this.alertService.success('Printing position info successfully saved');
 
       await this.storage.uploadImages(
         imagesBlob || [],
@@ -44,8 +40,7 @@ export class PrintingPositionsService {
           id: savedPrintingPosition.id || '',
           name: savedPrintingPosition.name,
         },
-        this.COLLECTION_NAME,
-        this.STORAGE_FOLDER_NAME
+        this.COLLECTION_NAME
       );
       this.alertService.success('Printing position image successfully saved');
       await this.db.updateById(
@@ -82,8 +77,7 @@ export class PrintingPositionsService {
         await this.storage.uploadImages(
           newImages,
           { id, name: data.name },
-          this.COLLECTION_NAME,
-          this.STORAGE_FOLDER_NAME
+          this.COLLECTION_NAME
         );
       }
 

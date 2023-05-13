@@ -5,12 +5,11 @@ admin.initializeApp();
 const db = admin.firestore();
 const storage = admin.storage();
 const bucketName = 'custom-prints-aae9c.appspot.com';
-import { config } from '../../config/config';
 import { getOriginalImagePath } from './helpers/get-original-image-path';
 import { generateImageObject } from './helpers/generate-image-object';
 import 'firebase-functions/logger/compat';
 
-export const addImageToProduct = functions
+export const addImageToCollection = functions
   .runWith({
     maxInstances: 1,
   })
@@ -19,58 +18,66 @@ export const addImageToProduct = functions
     const isImage = object.contentType
       ? object.contentType.startsWith('image/')
       : false;
+    const isSvg = !!object.contentType?.includes('svg');
 
-    if (!isImage || !object.metadata?.resizedImage) return false;
+    if (isSvg || (isImage && object.metadata?.resizedImage)) {
+      const imageNameArr = object.name?.split('/') || [];
+      const imageName = imageNameArr.pop() || '';
 
-    const imageNameArr = object.name?.split('/') || [];
-    const imageName = imageNameArr.pop() || '';
+      const itemID = imageName?.split('_')[0];
+      const collection = imageName?.split('_')[1];
 
-    const itemID = imageName?.split('_')[0];
-    const collection = imageName?.split('_')[1];
+      await db
+        .collection(collection)
+        .doc(itemID || '')
+        .update({
+          images: firestore.FieldValue.arrayUnion(
+            await generateImageObject(object, bucketName)
+          ),
+        });
 
-    await db
-      .collection(collection)
-      .doc(itemID || '')
-      .update({
-        images: firestore.FieldValue.arrayUnion(
-          await generateImageObject(object, bucketName, imageName)
-        ),
-      });
+      return true;
+    }
 
-    return true;
+    return false;
   });
 
-export const removeDeletedImageFromProduct = functions.storage
+export const removeDeletedImageFromCollectionRow = functions.storage
   .object()
   .onDelete(async (object) => {
     const isImage = object.contentType
       ? object.contentType.startsWith('image/')
       : false;
+    const isSvg = !!object.contentType?.includes('svg');
 
-    if (!isImage || !object.metadata?.resizedImage) return false;
+    if (isSvg || (isImage && object.metadata?.resizedImage)) {
+      const imageNameArr = object.name?.split('/') || [];
+      const imageName = imageNameArr[imageNameArr.length - 1];
 
-    const imageNameArr = object.name?.split('/') || [];
-    const imageName = imageNameArr[imageNameArr.length - 1];
+      const itemID = imageName?.split('_')[0];
+      const collection = imageName?.split('_')[1];
 
-    const itemID = imageName?.split('_')[0];
-    const collection = imageName?.split('_')[1];
+      // UPDATE COLLECTION DOC
+      await db
+        .collection(collection)
+        .doc(itemID)
+        .update({
+          images: firestore.FieldValue.arrayRemove(
+            await generateImageObject(object, bucketName)
+          ),
+        });
 
-    // UPDATE COLLECTION DOC
-    await db
-      .collection(collection)
-      .doc(itemID)
-      .update({
-        images: firestore.FieldValue.arrayRemove(
-          await generateImageObject(object, bucketName, imageName)
-        ),
-      });
+      // DELETE ORIGINAL IMAGE
+      if (!isSvg) {
+        const originalImageName = getOriginalImagePath(imageName || '');
+        await storage
+          .bucket(bucketName)
+          .file('images/' + collection + '/' + originalImageName)
+          .delete();
+      }
 
-    // DELETE ORIGINAL IMAGE
-    const originalImageName = getOriginalImagePath(imageName || '');
-    await storage
-      .bucket(bucketName)
-      .file(config.storage.productImagesFolder + '/' + originalImageName)
-      .delete();
+      return true;
+    }
 
-    return true;
+    return false;
   });
