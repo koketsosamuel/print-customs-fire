@@ -28,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -55,7 +56,7 @@ import { ImageCanvasPositionComponent } from './components/image-canvas-position
 import { AddPrintingPositionsComponent } from './pages/products/components/add-printing-positions/add-printing-positions.component';
 import { PrintingMethodsSelectComponent } from './pages/printing-methods/printing-methods-select/printing-methods-select.component';
 import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
-import { NgParticlesModule } from 'ng-particles';
+import { BannerComponent } from './pages/customer-facing/home-page/banner/banner.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { NgParticlesModule } from 'ng-particles';
     AddPrintingPositionsComponent,
     PrintingMethodsSelectComponent,
     HomePageComponent,
+    BannerComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -123,7 +125,7 @@ import { NgParticlesModule } from 'ng-particles';
     FormsModule,
     QuillModule.forRoot(),
     MatProgressBarModule,
-    NgParticlesModule,
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,54 @@
+.cat-box-list {
+  gap: 12px;
+}
+
+.cat-box {
+  width: 4em;
+  aspect-ratio: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  img {
+    max-width: 60%;
+    max-height: 60%;
+  }
+}
+
+.cat-box:hover {
+  transform: translate3d(0px, -5px, 10px) rotate(-7deg);
+  box-shadow: 0px 0px 10px #fff;
+}
+
+.cat-box:active {
+  transform: translate3d(0px, 0px, 10px);
+}
+
+.cat-box::after {
+  clear: both;
+}
+
+.steps {
+  aspect-ratio: 1/1;
+  gap: 12px;
+  max-width: 70%;
+
+  .step {
+    width: calc(50% - 6px);
+    aspect-ratio: 1/1;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    * {
+      flex-basis: 100%;
+    }
+  }
+}
+

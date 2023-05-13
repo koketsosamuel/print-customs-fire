@@ -55,7 +55,7 @@ export class CategoryService {
     sortBy = 'name',
     asc = true,
     where: [string, WhereFilterOp, any][] = [],
-    limit: number | null = 20,
+    limit: number | null = null,
     after: AngularFirestoreDocument | null = null
   ) {
     return await this.db.getDocumentsOrderedByWhere(

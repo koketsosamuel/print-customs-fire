@@ -1,0 +1,66 @@
+<div class="bg-teal-300">
+  <header class="container py-5">
+    <section class="row">
+      <div class="col-md-8">
+        <h1 class="fg-grey-100"><b>Print it in a jiffy!</b></h1>
+        <h1 class="fg-white font-weight-bolder">
+          Your ideas <span class="fg-yellow">ink-spire</span> us, to print the
+          best quality!
+        </h1>
+        <button mat-flat-button class="bg-teal fg-yellow">Explore!</button>
+
+        <div class="py-5 categories-container">
+          <div class="col-md-8">
+            <div class="">
+              <div class="d-flex flex-wrap cat-box-list">
+                <div
+                  class="cat-main-box"
+                  *ngFor="let category of categories"
+                  [matTooltip]="category.name"
+                >
+                  <div class="upper"></div>
+                  <div class="bg-mint-green cat-box">
+                    <img [src]="category?.images?.[0]?.link" alt="" />
+                  </div>
+                  <div class="below"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 fg-white">
+        <h2 class="fg-yellow">Quick and Easy process</h2>
+        <div class="steps d-flex flex-wrap fg-white">
+          <div class="step bg-yellow-200 fg-grey-800" matTooltip="Maybe a t-shirt">
+            <div>
+              <div><mat-icon>coffee</mat-icon></div>
+              <h3>Select an Item</h3>
+            </div>
+          </div>
+          <div class="step bg-teal fg-white" matTooltip="Maybe a nyan cat">
+            <div>
+              <div>
+                <mat-icon class="fg-white">upload</mat-icon>
+              </div>
+              <h3>Upload your design</h3>
+            </div>
+          </div>
+          <div class="step bg-teal-200">
+            <div>
+              <div><mat-icon class="mat-18 fg-white">credit_card</mat-icon></div>
+              <h3>Checkout with secure payment</h3>
+            </div>
+          </div>
+          <div class="step bg-green-300">
+            <div>
+              <mat-icon>local_shipping</mat-icon>
+              <h3>Receive your cool printed design!</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </header>
+</div>
