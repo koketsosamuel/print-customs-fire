@@ -7,3 +7,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .cursor {
   cursor: pointer;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Comfortaa', cursive !important;
+  font-weight: 500;
+}
+
+.bg-mint-green {
+  background-color: #99edc3;
+}
+
+.fg-mint-green {
+  color: #99edc3;
+}
+
+.fg-mint-green-darker {
+  color: #36dd8a;
+}

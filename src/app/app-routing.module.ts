@@ -9,6 +9,7 @@ import { PrintingPositionsFormComponent } from './pages/printing-positions/print
 import { PrintingPositionsComponent } from './pages/printing-positions/printing-positions/printing-positions.component';
 import { PrintingMethodsFormComponent } from './pages/printing-methods/printing-methods-form/printing-methods-form.component';
 import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-methods-view/printing-methods-view.component';
+import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,10 @@ const routes: Routes = [
   {
     path: 'printing-methods/view',
     component: PrintingMethodsViewComponent,
+  },
+  {
+    path: '',
+    component: HomePageComponent,
   },
 ];
 

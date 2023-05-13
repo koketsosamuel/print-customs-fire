@@ -1,0 +1,23 @@
+.categories-container {
+  height: 300px;
+}
+
+.cat-box {
+  height: 80px;
+  width: 80px;
+  aspect-ratio: 1/1;
+
+  img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+}
+
+.cat-box:not(:first-child) {
+  margin-left: 20px;
+}
+
+#tsparticles {
+  z-index: -1000 !important;
+}
+

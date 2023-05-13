@@ -54,6 +54,8 @@ import { ImageCardOptionsSelectionComponent } from './components/image-card-opti
 import { ImageCanvasPositionComponent } from './components/image-canvas-position/image-canvas-position.component';
 import { AddPrintingPositionsComponent } from './pages/products/components/add-printing-positions/add-printing-positions.component';
 import { PrintingMethodsSelectComponent } from './pages/printing-methods/printing-methods-select/printing-methods-select.component';
+import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
+import { NgParticlesModule } from 'ng-particles';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,7 @@ import { PrintingMethodsSelectComponent } from './pages/printing-methods/printin
     ImageCanvasPositionComponent,
     AddPrintingPositionsComponent,
     PrintingMethodsSelectComponent,
+    HomePageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -120,6 +123,7 @@ import { PrintingMethodsSelectComponent } from './pages/printing-methods/printin
     FormsModule,
     QuillModule.forRoot(),
     MatProgressBarModule,
+    NgParticlesModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
