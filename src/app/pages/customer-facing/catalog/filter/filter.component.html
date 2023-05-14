@@ -1,0 +1,113 @@
+<mat-card class="rounded-corners">
+  <mat-card-content class="bg-teal-100 rounded-corners">
+    <section>
+      <header class="p-3 d-flex align-items-center">
+        <h4 class="m-0 fg-teal-800">Filters</h4>
+      </header>
+      <main class="p-2">
+        <div class="bg-white px-4 py-2 rounded-corners mb-2 price-range">
+          <div>
+            <mat-slider min="0" max="10000">
+              <input matSliderStartThumb [(ngModel)]="filter.minPrice" />
+              <input matSliderEndThumb [(ngModel)]="filter.maxPrice" />
+            </mat-slider>
+          </div>
+          <p *ngIf="!filter.maxPrice">Price range: <mat-chip>None</mat-chip></p>
+          <p *ngIf="filter.maxPrice">
+            Price Range: From&nbsp;<mat-chip>R{{ filter.minPrice }}</mat-chip
+            >&nbsp;To&nbsp;<mat-chip>R{{ filter.maxPrice }}</mat-chip>
+          </p>
+        </div>
+        <mat-accordion>
+          <mat-expansion-panel
+            expanded
+            class="mat-elevation-z0 rounded-corners mb-2"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>Category</mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="list-box">
+              <mat-selection-list
+                (selectionChange)="selectedCategories($event)"
+                [(ngModel)]="filter.categories"
+              >
+                <mat-list-option
+                  *ngFor="let category of categories"
+                  [value]="category.id"
+                >
+                  {{ category.name }}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="mat-elevation-z0 rounded-corners mb-2">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Sub Categories</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngIf="!subsLoading && subCategoryGroups.length == 0">
+              Select categories first
+            </p>
+            <mat-progress-bar
+              *ngIf="subsLoading"
+              mode="indeterminate"
+            ></mat-progress-bar>
+
+            <div class="list-box">
+              <mat-selection-list
+                [(ngModel)]="filter.subCategories"
+                *ngFor="let subCategoryGroup of subCategoryGroups"
+              >
+                <h3 matSubheader>{{ subCategoryGroup.category.name }}</h3>
+                <p
+                  class="pl-4"
+                  *ngIf="subCategoryGroup.subCategories.length == 0"
+                >
+                  -- No Sub-categories --
+                </p>
+                <mat-list-option
+                  *ngFor="let subCategory of subCategoryGroup.subCategories"
+                  [value]="subCategory.id"
+                >
+                  {{ subCategory.name }}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="mat-elevation-z0 rounded-corners mb-2">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Brands</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="list-box">
+              <mat-selection-list [(ngModel)]="filter.brands">
+                <mat-list-option
+                  *ngFor="let brand of brands"
+                  [value]="brand.id"
+                >
+                  {{ brand.name }}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="mat-elevation-z0 rounded-corners mb-2">
+            <mat-expansion-panel-header>
+              <mat-panel-title>Printing Methods</mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="list-box">
+              <mat-selection-list [(ngModel)]="filter.printingMethods">
+                <mat-list-option
+                  *ngFor="let printingMethod of printingMethods"
+                  [value]="printingMethod.id"
+                >
+                  {{ printingMethod.name }}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </main>
+    </section>
+    <button mat-flat-button color="primary" class="mx-2">Apply Filters</button>
+  </mat-card-content>
+</mat-card>

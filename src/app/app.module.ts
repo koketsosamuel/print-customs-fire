@@ -30,6 +30,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
@@ -58,6 +59,7 @@ import { PrintingMethodsSelectComponent } from './pages/printing-methods/printin
 import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
 import { BannerComponent } from './pages/customer-facing/home-page/banner/banner.component';
 import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
+import { FilterComponent } from './pages/customer-facing/catalog/filter/filter.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +90,7 @@ import { BrandFormComponent } from './pages/brands/brand-form/brand-form.compone
     HomePageComponent,
     BannerComponent,
     BrandFormComponent,
+    FilterComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -128,6 +131,7 @@ import { BrandFormComponent } from './pages/brands/brand-form/brand-form.compone
     QuillModule.forRoot(),
     MatProgressBarModule,
     MatTooltipModule,
+    MatSliderModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -64,10 +64,9 @@ export class SubCategoryService {
           'name',
           true,
           category,
-          [],
+          [['active', '==', true]],
           null
         );
-
         return { category, subCategories };
       })
     );
