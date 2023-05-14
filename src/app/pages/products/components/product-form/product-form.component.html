@@ -37,6 +37,15 @@
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field appearance="fill" class='w-100'>
+      <mat-label>Brands</mat-label>
+      <mat-select name='brands-selected' [(ngModel)]="product.brands" multiple (closed)="selectionClosed()">
+        <mat-option *ngFor="let brand of brands" [value]="brand.id">
+          {{brand.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field class="example-chip-list" appearance="fill" class='w-100'>
       <mat-label>Keywords</mat-label>
       <mat-chip-grid #chipGrid aria-label="Enter fruits">

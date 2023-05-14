@@ -68,6 +68,9 @@ export class AddProductComponent implements OnInit {
     },
     printingPositions: [],
     printingMethods: {},
+    printingMethodsSearchableArr: [],
+    searchTerms: [],
+    brands: [],
   };
   productId: string | null = null;
   categories: ICategory[] = [];

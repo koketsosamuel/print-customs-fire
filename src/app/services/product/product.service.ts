@@ -36,6 +36,9 @@ export class ProductService {
 
   update(id: string, product: IProduct | Record<string, any>) {
     product.updatedAt = new Date();
+    if (product.printingMethods) {
+      product.printingMethodsSearchableArr = this.getAllPrintingMethods(product.printingMethods);
+    }
     this.loadingSpinner.show();
     return this.db
       .updateById(this.COLLECTION_NAME, id, product)
@@ -61,5 +64,15 @@ export class ProductService {
       { id: product.id || '', name: product.name },
       this.COLLECTION_NAME
     );
+  }
+
+  private getAllPrintingMethods(
+    printingMethodsPerLocation: Record<string, string[]>
+  ) {
+    let arr: string[] = [];
+    Object.values(printingMethodsPerLocation).forEach((v) => {
+      arr = [...arr, ...v];
+    });
+    return arr;
   }
 }

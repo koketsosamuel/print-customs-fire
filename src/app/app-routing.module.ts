@@ -10,6 +10,7 @@ import { PrintingPositionsComponent } from './pages/printing-positions/printing-
 import { PrintingMethodsFormComponent } from './pages/printing-methods/printing-methods-form/printing-methods-form.component';
 import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-methods-view/printing-methods-view.component';
 import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
+import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
 
 const routes: Routes = [
   {
@@ -71,6 +72,14 @@ const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
+  },
+  {
+    path: 'admin/brands/add',
+    component: BrandFormComponent,
+  },
+  {
+    path: 'admin/brands/edit/:brandId',
+    component: BrandFormComponent,
   },
 ];
 

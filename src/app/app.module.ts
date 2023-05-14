@@ -57,6 +57,7 @@ import { AddPrintingPositionsComponent } from './pages/products/components/add-p
 import { PrintingMethodsSelectComponent } from './pages/printing-methods/printing-methods-select/printing-methods-select.component';
 import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
 import { BannerComponent } from './pages/customer-facing/home-page/banner/banner.component';
+import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { BannerComponent } from './pages/customer-facing/home-page/banner/banner
     PrintingMethodsSelectComponent,
     HomePageComponent,
     BannerComponent,
+    BrandFormComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

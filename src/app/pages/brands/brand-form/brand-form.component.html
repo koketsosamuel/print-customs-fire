@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h1>{{ edit ? "Edit" : "Add" }} Brand</h1>
+
+  <form (submit)="submit()" autocomplete="off">
+    <mat-form-field class="w-100">
+      <mat-label>Name</mat-label>
+      <input
+        name="pp_name"
+        matInput
+        placeholder="Ex. T-Shirt A4 Large Front"
+        [(ngModel)]="brand.name"
+      />
+    </mat-form-field>
+
+    <div *ngIf="edit && brand.images?.[0]" class="bg-grey-300 p-4 mb-4">
+      <h3>Current image</h3>
+      <img [src]="brand.images?.[0]?.link" alt="Current" />
+    </div>
+
+    <div class="mb-3">
+      Insert image new
+      <input (change)="selectImage($event)" type="file" name="pp_image" id="" />
+    </div>
+    <button mat-flat-button color="primary">
+      {{ edit ? "Update" : "Create" }}
+    </button>
+  </form>
+</div>

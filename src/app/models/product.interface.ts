@@ -15,6 +15,9 @@ export default interface IProduct {
   variations: IVariation;
   printingPositions: string[];
   printingMethods: Record<string, string[]>;
+  printingMethodsSearchableArr: string[];
+  searchTerms: string[];
+  brands: string[];
 }
 
 export interface IImage {
