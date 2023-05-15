@@ -4,6 +4,7 @@ import { IBrand } from 'src/app/models/brand.interface';
 import ICategory from 'src/app/models/category.interface';
 import { IFilter } from 'src/app/models/filter.interface';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
+import { ISort } from 'src/app/models/sort.interface';
 import ISubCategory from 'src/app/models/sub-category.interface';
 import { BrandsService } from 'src/app/services/brands/brands.service';
 import { CategoryService } from 'src/app/services/category/category.service';
@@ -18,6 +19,10 @@ import { SubCategoryService } from 'src/app/services/sub-category/sub-category.s
 })
 export class FilterComponent implements OnInit {
   categories: ICategory[] = [];
+  sortOptions: ISort[] = [
+    { name: 'Popular', value: { field: 'createdAt', ascending: false } },
+    { name: 'A - Z', value: { field: 'name', ascending: false } },
+  ];
   @Input() filter: IFilter = {
     categories: [],
     minPrice: 0,
@@ -25,6 +30,7 @@ export class FilterComponent implements OnInit {
     subCategories: [],
     brands: [],
     printingMethods: [],
+    sort: this.sortOptions[0],
   };
   subCategoryGroups: any[] = [];
   subsLoading = false;
@@ -88,5 +94,9 @@ export class FilterComponent implements OnInit {
 
   applyFilters() {
     this.change.emit(this.filter);
+  }
+
+  setSort(sort: ISort) {
+    this.filter.sort = sort;
   }
 }

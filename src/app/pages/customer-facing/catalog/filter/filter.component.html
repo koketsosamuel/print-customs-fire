@@ -2,7 +2,16 @@
   <mat-card-content class="bg-teal-100 rounded-corners">
     <section>
       <header class="p-3 d-flex align-items-center">
-        <h4 class="m-0 fg-teal-800">Filters</h4>
+        <div>
+          <h4 class="m-0 fg-teal-800 d-flex align-items-center">
+            <mat-icon>tune</mat-icon>&nbsp;<span>Filters</span>&nbsp;|&nbsp;Sort
+            By:&nbsp;<button mat-stroked-button color="primary" [matMenuTriggerFor]="sortMenu">{{filter.sort.name}}</button>
+          </h4>
+
+          <mat-menu #sortMenu>
+            <button mat-menu-item *ngFor="let sortOption of sortOptions" (click)='setSort(sortOption)'>{{sortOption.name}}</button>
+          </mat-menu>
+        </div>
       </header>
       <main class="p-2">
         <div class="bg-white px-4 py-2 rounded-corners mb-2 price-range">
@@ -108,6 +117,6 @@
         </mat-accordion>
       </main>
     </section>
-    <button mat-flat-button color="primary" class="mx-2">Apply Filters</button>
+    <button mat-flat-button color="primary" class="mx-2">Apply Filters & Sort</button>
   </mat-card-content>
 </mat-card>
