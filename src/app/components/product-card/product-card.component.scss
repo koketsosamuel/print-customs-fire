@@ -1,0 +1,16 @@
+img {
+  max-width: 100%;
+  min-height: 100px;
+}
+
+.colors-block {
+  gap: 5px;
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+  }
+  .color-circle:hover {
+    border: 1px solid #222;
+  }
+}

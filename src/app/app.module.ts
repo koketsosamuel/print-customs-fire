@@ -60,6 +60,7 @@ import { HomePageComponent } from './pages/customer-facing/home-page/home-page.c
 import { BannerComponent } from './pages/customer-facing/home-page/banner/banner.component';
 import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
 import { FilterComponent } from './pages/customer-facing/catalog/filter/filter.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { FilterComponent } from './pages/customer-facing/catalog/filter/filter.c
     BannerComponent,
     BrandFormComponent,
     FilterComponent,
+    ProductCardComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

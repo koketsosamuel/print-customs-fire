@@ -1,0 +1,40 @@
+<mat-card
+  class="rounded-corners cursor"
+  [routerLink]="'/products/' + product.name + '/' + product.id"
+>
+  <mat-card-content class="rounded-corners">
+    <img
+      class="rounded-corners"
+      [src]="product?.images?.[0]"
+      alt=""
+    />
+    <h2 class="fg-teal-300 pt-2 pb-0 mb-2">{{ product.name }}</h2>
+    <div class="colors-block d-flex" *ngIf="product.variations.options.length">
+      <h4 class="m-0 p-0 fg-teal">Colors:</h4>
+      <div
+        class="color-circle"
+        *ngFor="let c of product.variations.options"
+        [matTooltip]="c.name"
+        [ngStyle]="{ backgroundColor: c.optionColor }"
+      ></div>
+    </div>
+    <div class="d-flex">
+      <h2
+        class="fg-white p-2 mb-0 bg-teal mt-2 d-inline-block rounded-corners"
+        matTooltip="*vat included"
+      >
+        From R {{ product.price }}
+      </h2>
+      &nbsp;
+      <button
+        mat-icon-button
+        color="accent"
+        class="mt-2"
+        matTooltip="Add to cart"
+        (click)="addToCart($event)"
+      >
+        <mat-icon>add_shopping_cart</mat-icon>
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>
