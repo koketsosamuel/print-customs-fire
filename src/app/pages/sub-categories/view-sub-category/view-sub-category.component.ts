@@ -15,7 +15,6 @@ import { UtilService } from 'src/app/services/util/util.service';
 })
 export class ViewSubCategoryComponent implements OnInit {
   displayedColumns: string[] = [
-    'ID',
     'Name',
     'Description',
     'Status',

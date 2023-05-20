@@ -1,35 +1,48 @@
 <div class="container mt-4">
-  <h1>{{edit ? 'Edit' : 'Add'}} Category</h1>
+  <h1>{{ edit ? "Edit" : "Add" }} Category</h1>
 
-  <form (submit)='categoryId ? updateCategory() : saveCategory()'>
+
+
+  <div class="row">
+    <div class="col-md-6 col-lg-8"><form (submit)="categoryId ? updateCategory() : saveCategory()">
     <mat-form-field class="w-100">
       <mat-label>Name</mat-label>
-      <input name='name' matInput placeholder="Ex. Corporate Clothing" [(ngModel)]="category.name" />
+      <input
+        name="name"
+        matInput
+        placeholder="Ex. Corporate Clothing"
+        [(ngModel)]="category.name"
+      />
     </mat-form-field>
 
     <mat-form-field class="w-100">
       <mat-label>Description</mat-label>
-      <textarea name='desc' matInput [(ngModel)]="category.description"></textarea>
+      <textarea
+        name="desc"
+        matInput
+        [(ngModel)]="category.description"
+      ></textarea>
     </mat-form-field>
 
-    <div
-          *ngIf="edit && category.images?.[0]"
-          class="bg-grey-300 p-4 mb-4 current-image"
-        >
-          <h3>Current image</h3>
-          <img [src]="category.images[0].link" alt="Current" />
-        </div>
 
-        <div class="mb-3">
-          Insert image new
-          <input
-            (change)="selectImage($event)"
-            type="file"
-            name="pp_image"
-            id=""
-          />
-        </div>
 
-    <button mat-flat-button color="primary">{{categoryId ? 'Update' : 'Create'}}</button>
-  </form>
+    <div class="mb-3">
+      Insert image new
+      <input (change)="selectImage($event)" type="file" name="pp_image" id="" />
+    </div>
+
+    <button mat-flat-button color="primary">
+      {{ categoryId ? "Update" : "Create" }}
+    </button>
+  </form></div>
+    <div class="col-md-6 col-lg-4">
+      <div
+      *ngIf="edit && category.images?.[0]"
+      class="bg-teal-300 p-4 mb-4 current-image"
+    >
+      <h3>Current image</h3>
+      <img [src]="category.images[0].link" alt="Current" />
+    </div>
+    </div>
+  </div>
 </div>

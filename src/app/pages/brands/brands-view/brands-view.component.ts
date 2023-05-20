@@ -1,46 +1,40 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
-import ICategory from 'src/app/models/category.interface';
-import { CategoryService } from 'src/app/services/category/category.service';
-import { ConfirmDialogueService } from 'src/app/services/confirm-dialogue/confirm-dialogue.service';
+import { IBrand } from 'src/app/models/brand.interface';
+import { IPrintingMethod } from 'src/app/models/printing-method.interface';
+import { BrandsService } from 'src/app/services/brands/brands.service';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
+import { PrintingMethodsService } from 'src/app/services/printing-methods/printing-methods.service';
 import { UtilService } from 'src/app/services/util/util.service';
 
 @Component({
-  selector: 'app-view-categories',
-  templateUrl: './view-categories.component.html',
-  styleUrls: ['./view-categories.component.scss'],
+  selector: 'app-brands-view',
+  templateUrl: './brands-view.component.html',
+  styleUrls: ['./brands-view.component.scss'],
 })
-export class ViewCategoriesComponent implements OnInit {
-  displayedColumns: string[] = [
-    'Name',
-    'Description',
-    'Status',
-    'Image',
-    'Created At',
-    'Updated At',
-    'Action',
-  ];
-  categories: ICategory[] = [];
+export class BrandsViewComponent implements OnInit {
+  displayedColumns: string[] = ['Name', 'Image', 'Action'];
+  brands: IBrand[] = [];
   sortBy: string = 'name';
   ascending: boolean = true;
   filter: any = {
     active: null,
   };
   after: string | null = null;
-  perpage: number = 10;
+  perpage: number = 20;
   afterDoc!: AngularFirestoreDocument;
   hasNext: boolean = false;
   params: any = {};
 
   constructor(
-    private readonly categorySrevice: CategoryService,
-    private readonly router: Router,
-    private readonly route: ActivatedRoute,
     public readonly utilService: UtilService,
+    private readonly router: Router,
+    private readonly brandsService: BrandsService,
+    private readonly route: ActivatedRoute,
     private readonly loadingSpinner: LoadingSpinnerService
   ) {}
+
   ngOnInit() {
     this.route.queryParams.subscribe(async (params: any) => {
       this.params = params;
@@ -58,20 +52,43 @@ export class ViewCategoriesComponent implements OnInit {
       this.after = params.after || null;
 
       if (this.after) {
-        const afterDoc = this.categorySrevice.getCategoryById(this.after);
+        const afterDoc = this.brandsService.getBrandById(this.after);
         afterDoc.then(async (d: any) => {
-          await this.getCategories(d.doc);
+          await this.getPrintingMethods(d.doc);
           this.loadingSpinner.hide();
         });
       } else {
-        await this.getCategories();
+        await this.getPrintingMethods();
         this.loadingSpinner.hide();
       }
     });
   }
 
-  async getCategories(after: any = null) {
-    this.categories = await this.categorySrevice.getCategories(
+  goPrev() {
+    window.history.back();
+  }
+
+  async hasNextPage() {
+    if (this.brands.length < this.perpage) {
+      this.hasNext = false;
+    } else {
+      const afterDoc = this.brandsService.getBrandById(this.after || '');
+      afterDoc.then(async (d: any) => {
+        this.afterDoc = d.doc;
+        const res = await this.brandsService.getBrands(
+          this.sortBy,
+          this.ascending,
+          [],
+          this.perpage,
+          this.afterDoc
+        );
+        this.hasNext = !!res.length;
+      });
+    }
+  }
+
+  async getPrintingMethods(after: any = null) {
+    this.brands = await this.brandsService.getBrands(
       this.sortBy,
       this.ascending,
       this.filter.active ? [['active', '==', this.filter.active]] : [],
@@ -79,15 +96,15 @@ export class ViewCategoriesComponent implements OnInit {
       after
     );
 
-    this.after = this.categories.length
-      ? this.categories[this.categories.length - 1]?.id || null
+    this.after = this.brands.length
+      ? this.brands[this.brands.length - 1]?.id || null
       : null;
 
     this.hasNextPage();
   }
 
   async paginate(reset = true) {
-    this.router.navigate(['/admin/categories/view'], {
+    this.router.navigate(['/admin/printing-methods/view'], {
       queryParams: {
         perpage: this.perpage,
         sortBy: this.sortBy,
@@ -98,34 +115,5 @@ export class ViewCategoriesComponent implements OnInit {
       },
     });
     this.hasNext = false;
-  }
-
-  async hasNextPage() {
-    if (this.categories.length < this.perpage) {
-      this.hasNext = false;
-    } else {
-      const afterDoc = this.categorySrevice.getCategoryById(this.after || '');
-      afterDoc.then(async (d: any) => {
-        this.afterDoc = d.doc;
-        const res = await this.categorySrevice.getCategories(
-          this.sortBy,
-          this.ascending,
-          this.filter.active ? [['active', '==', this.filter.active]] : [],
-          1,
-          this.afterDoc
-        );
-        this.hasNext = !!res.length;
-      });
-    }
-  }
-
-  goPrev() {
-    window.history.back();
-  }
-
-  toggleStatus(category: ICategory) {
-    this.categorySrevice.toggleStatus(category, () => {
-      this.paginate();
-    });
   }
 }

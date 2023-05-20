@@ -65,6 +65,7 @@ import { SingleProductViewComponent } from './pages/customer-facing/single-produ
 import { HorizontalCardsComponent } from './components/horizontal-cards/horizontal-cards.component';
 import { CategoriesListComponent } from './components/categories-list/categories-list.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
     HorizontalCardsComponent,
     CategoriesListComponent,
     AdminPageComponent,
+    BrandsViewComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

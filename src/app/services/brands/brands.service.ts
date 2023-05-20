@@ -50,7 +50,7 @@ export class BrandsService {
     sortBy = 'name',
     asc = true,
     where: [string, WhereFilterOp, any][] = [],
-    limit: number | null = null,
+    limit: number | null = 20,
     after: AngularFirestoreDocument | null = null
   ) {
     return await this.db.getDocumentsOrderedByWhere(

@@ -13,7 +13,6 @@ import { UtilService } from 'src/app/services/util/util.service';
 })
 export class PrintingPositionsComponent implements OnInit {
   displayedColumns: string[] = [
-    'ID',
     'Name',
     'Short Name',
     'Description',

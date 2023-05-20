@@ -13,6 +13,7 @@ import { HomePageComponent } from './pages/customer-facing/home-page/home-page.c
 import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
 import { SingleProductViewComponent } from './pages/customer-facing/single-product-view/single-product-view.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
+import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.component';
 
 const routes: Routes = [
   {
@@ -90,6 +91,10 @@ const routes: Routes = [
   {
     path: 'admin-view',
     component: AdminPageComponent,
+  },
+  {
+    path: 'admin/brands/view',
+    component: BrandsViewComponent,
   },
 ];
 
