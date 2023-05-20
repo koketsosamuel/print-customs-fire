@@ -104,7 +104,7 @@ export class BrandsViewComponent implements OnInit {
   }
 
   async paginate(reset = true) {
-    this.router.navigate(['/admin/printing-methods/view'], {
+    this.router.navigate(['/admin/brands/view'], {
       queryParams: {
         perpage: this.perpage,
         sortBy: this.sortBy,
