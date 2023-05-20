@@ -1,4 +1,4 @@
-<div class=" mx-auto">
+<div class="container">
   <h1>{{edit ? 'Edit' : 'Add'}} Printing Method</h1>
 
   <form (submit)='submit()' autocomplete='off'>
@@ -84,7 +84,7 @@
       </div>
     </div>
 
-    <div *ngIf="edit && printingMethod.images?.[0]" class='bg-grey-300 p-4 mb-4'>
+    <div *ngIf="edit && printingMethod.images?.[0]" class='bg-grey-300 p-4 mb-4 current-image'>
       <h3>Current image</h3>
       <img [src]="printingMethod.images[0].link" alt="Current">
     </div>

@@ -35,7 +35,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title>Category</mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="list-box">
+            <div class="list-box scroll-bar-custom">
               <mat-selection-list
                 (selectionChange)="selectedCategories($event)"
                 [(ngModel)]="filter.categories"
@@ -61,7 +61,7 @@
               mode="indeterminate"
             ></mat-progress-bar>
 
-            <div class="list-box">
+            <div class="list-box scroll-bar-custom">
               <mat-selection-list
                 [(ngModel)]="filter.subCategories"
                 *ngFor="let subCategoryGroup of subCategoryGroups"
@@ -87,7 +87,7 @@
               <mat-panel-title>Brands</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <div class="list-box">
+            <div class="list-box scroll-bar-custom">
               <mat-selection-list [(ngModel)]="filter.brands">
                 <mat-list-option
                   *ngFor="let brand of brands"
@@ -103,7 +103,7 @@
               <mat-panel-title>Printing Methods</mat-panel-title>
             </mat-expansion-panel-header>
 
-            <div class="list-box">
+            <div class="list-box scroll-bar-custom">
               <mat-selection-list [(ngModel)]="filter.printingMethods">
                 <mat-list-option
                   *ngFor="let printingMethod of printingMethods"

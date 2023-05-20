@@ -48,7 +48,7 @@ export class AddCategoryComponent implements OnInit {
 
   saveCategory() {
     this.categoryService.addCategory(this.category).then(() => {
-      this.router.navigate(['/category/view']);
+      this.router.navigate(['/admin/category/view']);
     });
   }
 
@@ -56,7 +56,7 @@ export class AddCategoryComponent implements OnInit {
     this.categoryService
       .update(this.categoryId || '', this.category, this.newImages)
       .then(() => {
-        this.router.navigate(['/category/view']);
+        this.router.navigate(['/admin/category/view']);
       });
   }
 

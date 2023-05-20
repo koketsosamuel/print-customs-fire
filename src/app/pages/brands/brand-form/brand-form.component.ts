@@ -42,12 +42,12 @@ export class BrandFormComponent implements OnInit {
   submit() {
     !this.edit
       ? this.brandsService.addBrand(this.brand).then(() => {
-          this.router.navigate(['/printing-positions/view']);
+          this.router.navigate(['/admin/brands/view']);
         })
       : this.brandsService
           .update(this.brand.id || '', this.brand, this.newImages)
           .then(() => {
-            this.router.navigate(['/brands/view']);
+            this.router.navigate(['/admin/brands/view']);
           });
   }
 

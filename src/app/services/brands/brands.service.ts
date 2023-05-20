@@ -38,7 +38,7 @@ export class BrandsService {
         },
         this.COLLECTION_NAME
       );
-      this.router.navigate(['/brand/view']);
+      this.router.navigate(['/admin/brand/view']);
     } catch (error) {
       this.alertService.error('Error saving brand, please retry!');
     } finally {

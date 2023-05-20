@@ -49,7 +49,10 @@ export class AddSubCategoryComponent implements OnInit {
     this.subCategoryService
       .update(this.subCategoryId || '', this.subCategory)
       .then(() => {
-        this.router.navigate(['/sub-category/view', this.subCategory.category]);
+        this.router.navigate([
+          '/admin/sub-category/view',
+          this.subCategory.category,
+        ]);
       })
       .finally(() => {
         this.loadingSpinner.hide();

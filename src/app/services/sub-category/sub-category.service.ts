@@ -29,7 +29,10 @@ export class SubCategoryService {
       .addDocument(this.COLLECTION_NAME, subCategory)
       .then(() => {
         this.alert.success('Sub-Category saved!');
-        this.router.navigate(['/sub-category/view', subCategory.category]);
+        this.router.navigate([
+          '/admin/sub-category/view',
+          subCategory.category,
+        ]);
       })
       .catch((err) => {
         this.alert.error('Error saving sub-category, please retry!');

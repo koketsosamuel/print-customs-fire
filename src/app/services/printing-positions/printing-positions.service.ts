@@ -74,14 +74,18 @@ export class PrintingPositionsService {
           );
         }
         data.images = [];
+        await this.db.updateById(this.COLLECTION_NAME, data.id || '', data);
+
         await this.storage.uploadImages(
           newImages,
           { id, name: data.name },
           this.COLLECTION_NAME
         );
+      } else {
+        await this.db.updateById(this.COLLECTION_NAME, data.id || '', data);
       }
 
-      await this.db.updateById(this.COLLECTION_NAME, data.id || '', data);
+      this.alertService.success('Success updating printing position');
     } catch (error: any) {
       this.loadingSpinnerService.hide();
       this.alertService.error(

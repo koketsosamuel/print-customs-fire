@@ -74,7 +74,7 @@ export class PrintingPositionsComponent implements OnInit {
   }
 
   async paginate(reset = true) {
-    this.router.navigate(['/printing-positions/view'], {
+    this.router.navigate(['/admin/printing-positions/view'], {
       queryParams: {
         perpage: this.perpage,
         sortBy: this.sortBy,

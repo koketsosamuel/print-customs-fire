@@ -1,23 +1,13 @@
 <section>
-  <app-banner></app-banner>
+  <app-banner [categories]="categories"></app-banner>
   <div class="container mt-4 pb-4">
-    <h1>Explore our range</h1>
     <div class="row">
-      <div class="col-4">
-        <app-filter></app-filter>
+      <div class="col-lg-3">
+        <app-categories-list [categories]="categories"></app-categories-list>
       </div>
-      <div class="col-8">
-        <div class="row">
-          <div class="col-4">
-            <app-product-card></app-product-card>
-          </div>
-          <div class="col-4">
-            <app-product-card></app-product-card>
-          </div>
-          <div class="col-4">
-            <app-product-card></app-product-card>
-          </div>
-        </div>
+      <div class="col-lg-9">
+        <app-horizontal-cards heading="Popular"></app-horizontal-cards>
+        <app-horizontal-cards heading="Best Selling"></app-horizontal-cards>
       </div>
     </div>
   </div>

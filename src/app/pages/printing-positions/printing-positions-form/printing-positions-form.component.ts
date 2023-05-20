@@ -59,7 +59,7 @@ export class PrintingPositionsFormComponent implements OnInit {
   submit() {
     !this.edit
       ? this.printingPositionsService.add(this.printingPosition).then(() => {
-          this.router.navigate(['/printing-positions/view']);
+          this.router.navigate(['/admin/printing-positions/view']);
         })
       : this.printingPositionsService
           .update(
@@ -68,7 +68,7 @@ export class PrintingPositionsFormComponent implements OnInit {
             this.newImages
           )
           .then(() => {
-            this.router.navigate(['/printing-positions/view']);
+            this.router.navigate(['/admin/admin/printing-positions/view']);
           });
   }
 

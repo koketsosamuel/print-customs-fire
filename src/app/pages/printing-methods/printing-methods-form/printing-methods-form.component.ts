@@ -59,7 +59,7 @@ export class PrintingMethodsFormComponent implements OnInit {
   submit() {
     !this.edit
       ? this.printingMethodsService.add(this.printingMethod).then(() => {
-          this.router.navigate(['/printing-methods/view']);
+          this.router.navigate(['/admin/printing-methods/view']);
         })
       : this.printingMethodsService
           .update(
@@ -68,7 +68,7 @@ export class PrintingMethodsFormComponent implements OnInit {
             this.newImages
           )
           .then(() => {
-            this.router.navigate(['/printing-methods/view']);
+            this.router.navigate(['/admin/printing-methods/view']);
           });
   }
 

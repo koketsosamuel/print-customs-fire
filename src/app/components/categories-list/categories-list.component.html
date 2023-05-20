@@ -1,0 +1,12 @@
+<aside>
+  <h2 class="fg-grey-800">Find Categories</h2>
+
+  <div class="list-box scroll-bar-custom">
+    <div
+      class="cursor rounded-corners bg-mint-green fg grey-800 p-4 mb-4 category"
+      *ngFor="let category of categories"
+    >
+      <h4 class="m-0">{{ category.name }}</h4>
+    </div>
+  </div>
+</aside>

@@ -110,7 +110,7 @@ export class ViewSubCategoryComponent implements OnInit {
   }
 
   async paginate(reset = true) {
-    this.router.navigate(['/sub-category/view', this.categoryId], {
+    this.router.navigate(['/admin/sub-category/view', this.categoryId], {
       queryParams: {
         perpage: this.perpage,
         sortBy: this.sortBy,

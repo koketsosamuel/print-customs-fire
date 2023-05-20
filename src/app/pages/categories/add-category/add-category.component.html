@@ -14,7 +14,7 @@
 
     <div
           *ngIf="edit && category.images?.[0]"
-          class="bg-grey-300 p-4 mb-4"
+          class="bg-grey-300 p-4 mb-4 current-image"
         >
           <h3>Current image</h3>
           <img [src]="category.images[0].link" alt="Current" />

@@ -61,6 +61,10 @@ import { BannerComponent } from './pages/customer-facing/home-page/banner/banner
 import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
 import { FilterComponent } from './pages/customer-facing/catalog/filter/filter.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
+import { SingleProductViewComponent } from './pages/customer-facing/single-product-view/single-product-view.component';
+import { HorizontalCardsComponent } from './components/horizontal-cards/horizontal-cards.component';
+import { CategoriesListComponent } from './components/categories-list/categories-list.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +97,10 @@ import { ProductCardComponent } from './components/product-card/product-card.com
     BrandFormComponent,
     FilterComponent,
     ProductCardComponent,
+    SingleProductViewComponent,
+    HorizontalCardsComponent,
+    CategoriesListComponent,
+    AdminPageComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

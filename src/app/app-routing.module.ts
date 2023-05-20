@@ -11,38 +11,40 @@ import { PrintingMethodsFormComponent } from './pages/printing-methods/printing-
 import { PrintingMethodsViewComponent } from './pages/printing-methods/printing-methods-view/printing-methods-view.component';
 import { HomePageComponent } from './pages/customer-facing/home-page/home-page.component';
 import { BrandFormComponent } from './pages/brands/brand-form/brand-form.component';
+import { SingleProductViewComponent } from './pages/customer-facing/single-product-view/single-product-view.component';
+import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 
 const routes: Routes = [
   {
-    path: 'category/add',
+    path: 'admin/category/add',
     component: AddCategoryComponent,
   },
   {
-    path: 'category/view',
+    path: 'admin/categories/view',
     component: ViewCategoriesComponent,
   },
   {
-    path: 'category/edit/:categoryId',
+    path: 'admin/category/edit/:categoryId',
     component: AddCategoryComponent,
   },
   {
-    path: 'sub-category/add/:categoryId',
+    path: 'admin/sub-category/add/:categoryId',
     component: AddSubCategoryComponent,
   },
   {
-    path: 'sub-category/view/:categoryId',
+    path: 'admin/sub-category/view/:categoryId',
     component: ViewSubCategoryComponent,
   },
   {
-    path: 'sub-category/edit/:categoryId/:subCategoryId',
+    path: 'admin/sub-category/edit/:categoryId/:subCategoryId',
     component: AddSubCategoryComponent,
   },
   {
-    path: 'product/add',
+    path: 'admin/product/add',
     component: AddProductComponent,
   },
   {
-    path: 'product/edit/:productId',
+    path: 'admin/product/edit/:productId',
     component: AddProductComponent,
   },
   {
@@ -50,23 +52,23 @@ const routes: Routes = [
     component: PrintingPositionsFormComponent,
   },
   {
-    path: 'printing-positions/view',
+    path: 'admin/printing-positions/view',
     component: PrintingPositionsComponent,
   },
   {
-    path: 'printing-positions/edit/:printingPositionId',
+    path: 'admin/printing-positions/edit/:printingPositionId',
     component: PrintingPositionsFormComponent,
   },
   {
-    path: 'printing-methods/add',
+    path: 'admin/printing-methods/add',
     component: PrintingMethodsFormComponent,
   },
   {
-    path: 'printing-methods/edit/:printingMethodId',
+    path: 'admin/printing-methods/edit/:printingMethodId',
     component: PrintingMethodsFormComponent,
   },
   {
-    path: 'printing-methods/view',
+    path: 'admin/printing-methods/view',
     component: PrintingMethodsViewComponent,
   },
   {
@@ -80,6 +82,14 @@ const routes: Routes = [
   {
     path: 'admin/brands/edit/:brandId',
     component: BrandFormComponent,
+  },
+  {
+    path: 'products/:name/:id',
+    component: SingleProductViewComponent,
+  },
+  {
+    path: 'admin-view',
+    component: AdminPageComponent,
   },
 ];
 

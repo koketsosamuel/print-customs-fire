@@ -68,14 +68,16 @@ export class PrintingMethodsService {
           );
         }
         data.images = [];
+        await this.db.updateById(this.COLLECTION_NAME, id, data);
         await this.storage.uploadImages(
           newImages,
           { id, name: data.name },
           this.COLLECTION_NAME
         );
+      } else {
+        await this.db.updateById(this.COLLECTION_NAME, id, data);
       }
 
-      await this.db.updateById(this.COLLECTION_NAME, id, data);
       this.alertService.success('Printing method successfully updated');
     } catch (error: any) {
       this.loadingSpinnerService.hide();

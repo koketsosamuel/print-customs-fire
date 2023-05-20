@@ -37,7 +37,9 @@ export class ProductService {
   update(id: string, product: IProduct | Record<string, any>) {
     product.updatedAt = new Date();
     if (product.printingMethods) {
-      product.printingMethodsSearchableArr = this.getAllPrintingMethods(product.printingMethods);
+      product.printingMethodsSearchableArr = this.getAllPrintingMethods(
+        product.printingMethods
+      );
     }
     this.loadingSpinner.show();
     return this.db
@@ -74,5 +76,20 @@ export class ProductService {
       arr = [...arr, ...v];
     });
     return arr;
+  }
+
+  getSearchTerms(name: string, keywords: string[]) {
+    //abcdef
+    const words = [name, ...keywords];
+    let len = words.length;
+    for (let i = 0; i < name.length; i++) {
+      for (let j = i; j < name.length; j++) {
+        if (len + j <= name.length) {
+          words.push(name.substring(j, len + j));
+        }
+      }
+      len--;
+    }
+    return words;
   }
 }

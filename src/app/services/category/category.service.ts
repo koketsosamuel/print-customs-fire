@@ -43,7 +43,7 @@ export class CategoryService {
         },
         this.COLLECTION_NAME
       );
-      this.router.navigate(['/category/view']);
+      this.router.navigate(['/admin/category/view']);
     } catch (error) {
       this.alert.error('Error saving category, please retry!');
     } finally {
@@ -83,15 +83,18 @@ export class CategoryService {
           );
         }
         data.images = [];
+        await this.db.updateById(this.COLLECTION_NAME, id || '', data);
         await this.storageService.uploadImages(
           newImages,
           { id, name: data.name },
           this.COLLECTION_NAME
         );
+      } else {
+        await this.db.updateById(this.COLLECTION_NAME, id || '', data);
       }
 
-      await this.db.updateById(this.COLLECTION_NAME, id || '', data);
       this.alert.success('Category has been updated');
+
     } catch (err) {
       this.alert.error('Error updating category');
     } finally {
