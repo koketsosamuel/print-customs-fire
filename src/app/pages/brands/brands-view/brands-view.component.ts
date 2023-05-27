@@ -54,11 +54,11 @@ export class BrandsViewComponent implements OnInit {
       if (this.after) {
         const afterDoc = this.brandsService.getBrandById(this.after);
         afterDoc.then(async (d: any) => {
-          await this.getPrintingMethods(d.doc);
+          await this.getBrands(d.doc);
           this.loadingSpinner.hide();
         });
       } else {
-        await this.getPrintingMethods();
+        await this.getBrands();
         this.loadingSpinner.hide();
       }
     });
@@ -87,7 +87,7 @@ export class BrandsViewComponent implements OnInit {
     }
   }
 
-  async getPrintingMethods(after: any = null) {
+  async getBrands(after: any = null) {
     this.brands = await this.brandsService.getBrands(
       this.sortBy,
       this.ascending,

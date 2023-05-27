@@ -17,7 +17,10 @@ export default interface IProduct {
   printingMethods: Record<string, string[]>;
   printingMethodsSearchableArr: string[];
   searchTerms: string[];
-  brands: string[];
+  brand: string;
+  active: boolean;
+  unitsSold: number;
+  rank: number;
 }
 
 export interface IImage {

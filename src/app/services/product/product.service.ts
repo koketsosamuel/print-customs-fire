@@ -4,6 +4,9 @@ import { AlertService } from '../alert/alert.service';
 import { DbService } from '../db/db.service';
 import { LoadingSpinnerService } from '../loading-spinner/loading-spinner.service';
 import { StorageService } from '../storage/storage.service';
+import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { WhereFilterOp } from '@angular/fire/firestore';
+import { IFilter } from 'src/app/models/filter.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -91,5 +94,46 @@ export class ProductService {
       len--;
     }
     return words;
+  }
+
+  getProducts(
+    sortBy: string = 'price',
+    asc = false,
+    where: [string, WhereFilterOp, any][] = [],
+    limit: number | null = null,
+    after: AngularFirestoreDocument | null = null
+  ) {
+    return this.db.getDocumentsOrderedByWhere(
+      this.COLLECTION_NAME,
+      sortBy,
+      asc,
+      where,
+      limit,
+      after
+    );
+  }
+
+  generateFirebaseWhereClause(filter: IFilter): [string, WhereFilterOp, any][] {
+    const whereClause: [string, WhereFilterOp, any][] = [];
+
+    if (!filter.subCategory && filter.category) {
+      whereClause.push(['categories', 'array-contains', filter.category]);
+    } else if (filter.subCategory) {
+      whereClause.push(['subCategories', 'array-contains', filter.subCategory]);
+    }
+
+    if (filter.minPrice !== undefined && filter.minPrice > 0) {
+      whereClause.push(['price', '>=', filter.minPrice]);
+    }
+
+    if (filter.maxPrice !== undefined && filter.maxPrice > filter.minPrice) {
+      whereClause.push(['price', '<=', filter.maxPrice]);
+    }
+
+    if (filter.brand) {
+      whereClause.push(['brand', '==', filter.brand]);
+    }
+
+    return whereClause;
   }
 }

@@ -1,0 +1,97 @@
+<div class="container mt-4">
+  <h1>
+        Products
+        <button mat-mini-fab color="primary" routerLink="/admin/product/add">
+          <mat-icon>add</mat-icon>
+        </button>
+      </h1>
+  <div class="row">
+    <div class="col-lg-4"><app-filter (change)="getProducts($event)"></app-filter></div>
+    <div class="col-lg-8">
+
+
+      <table mat-table [dataSource]="products" class="mat-elevation-z8">
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Categories">
+          <th mat-header-cell *matHeaderCellDef>Categories</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-chip-listbox>
+              <mat-chip *ngFor="let cat of element.categories">{{
+                cat
+              }}</mat-chip>
+            </mat-chip-listbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Image">
+          <th mat-header-cell *matHeaderCellDef>Image</th>
+          <td mat-cell *matCellDef="let element">
+            <a
+              mat-flat-button
+              color="accent"
+              *ngIf="element.images?.[0]"
+              [href]="element.images?.[0]?.link"
+              target="_blank"
+              >See</a
+            >
+            <span *ngIf="!element.images?.[0]">No image yet</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="fg-red" *ngIf="!element.active">Disabled</span>
+            <span class="fg-green" *ngIf="element.active">Active</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Price">
+          <th mat-header-cell *matHeaderCellDef>Price</th>
+          <td mat-cell *matCellDef="let element">
+            R{{element.price}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell *matHeaderCellDef>Action</th>
+          <td mat-cell *matCellDef="let element">
+            <button
+              mat-mini-fab
+              color="primary"
+              [routerLink]="'/admin/product/edit/' + element.id"
+              title="edit printing-methods"
+            >
+              <mat-icon>edit</mat-icon></button
+            >&nbsp;
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <div class="py-4">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="goPrev()"
+          [disabled]="!params.after"
+        >
+          Prev</button
+        >&nbsp;
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="paginate(false)"
+          [disabled]="!hasNext"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

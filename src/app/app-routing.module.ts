@@ -14,6 +14,7 @@ import { BrandFormComponent } from './pages/brands/brand-form/brand-form.compone
 import { SingleProductViewComponent } from './pages/customer-facing/single-product-view/single-product-view.component';
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.component';
+import { ProductsViewComponent } from './pages/products/products-view/products-view.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,10 @@ const routes: Routes = [
   {
     path: 'admin/brands/view',
     component: BrandsViewComponent,
+  },
+  {
+    path: 'admin/products/view',
+    component: ProductsViewComponent,
   },
 ];
 

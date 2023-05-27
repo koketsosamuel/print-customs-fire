@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import IProduct from 'src/app/models/product.interface';
 
 @Component({
@@ -7,29 +7,7 @@ import IProduct from 'src/app/models/product.interface';
   styleUrls: ['./product-card.component.scss'],
 })
 export class ProductCardComponent {
-  colors = [
-    { name: 'red', hex: '#f20430' },
-    { name: 'blue', hex: '#09f' },
-  ];
-  product: IProduct = {
-    name: 'Awesome t-shirt',
-    id: 'dfg',
-    description: '',
-    price: 0,
-    promotion: '',
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    categories: [],
-    subCategories: [],
-    keywords: [],
-    variations: { name: '', options: [] },
-    printingPositions: [],
-    printingMethods: {},
-    printingMethodsSearchableArr: [],
-    searchTerms: [],
-    brands: [],
-    images: [],
-  };
+  @Input() product!: IProduct;
 
   addToCart(e: Event) {
     e.stopPropagation();

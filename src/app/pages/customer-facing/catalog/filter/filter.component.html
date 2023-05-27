@@ -5,40 +5,81 @@
         <div>
           <h4 class="m-0 fg-teal-800 d-flex align-items-center">
             <mat-icon>tune</mat-icon>&nbsp;<span>Filters</span>&nbsp;|&nbsp;Sort
-            By:&nbsp;<button mat-stroked-button color="primary" [matMenuTriggerFor]="sortMenu">{{filter.sort.name}}</button>
+            By:&nbsp;<button
+              mat-stroked-button
+              color="primary"
+              [matMenuTriggerFor]="sortMenu"
+            >
+              {{ filter.sort?.name || "No Sort" }}
+            </button>
           </h4>
 
           <mat-menu #sortMenu>
-            <button mat-menu-item *ngFor="let sortOption of sortOptions" (click)='setSort(sortOption)'>{{sortOption.name}}</button>
+            <button
+              mat-menu-item
+              *ngFor="let sortOption of sortOptions"
+              (click)="setSort(sortOption)"
+            >
+              {{ sortOption.name }}
+            </button>
           </mat-menu>
         </div>
       </header>
       <main class="p-2">
-        <div class="bg-white px-4 py-2 rounded-corners mb-2 price-range">
-          <div>
-            <mat-slider min="0" max="10000">
-              <input matSliderStartThumb [(ngModel)]="filter.minPrice" />
-              <input matSliderEndThumb [(ngModel)]="filter.maxPrice" />
-            </mat-slider>
-          </div>
-          <p *ngIf="!filter.maxPrice">Price range: <mat-chip>None</mat-chip></p>
-          <p *ngIf="filter.maxPrice">
-            Price Range: From&nbsp;<mat-chip>R{{ filter.minPrice }}</mat-chip
-            >&nbsp;To&nbsp;<mat-chip>R{{ filter.maxPrice }}</mat-chip>
-          </p>
-        </div>
         <mat-accordion>
           <mat-expansion-panel
             expanded
             class="mat-elevation-z0 rounded-corners mb-2"
           >
             <mat-expansion-panel-header>
-              <mat-panel-title>Category</mat-panel-title>
+              <mat-panel-title>Price Range&nbsp;&nbsp;
+                <div
+                  class="clear-filter-pill bg-red fg-white rounded-corners cursor"
+                  *ngIf="selectedPriceRange.length > 0"
+                  (click)='clearFilter($event, "selectedPriceRange")'
+                >
+                  clear filter
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="bg-white rounded-corners mb-2 price-range">
+              <div class="list-box scroll-bar-custom">
+                <mat-selection-list
+                  (selectionChange)="selectPriceRange()"
+                  [(ngModel)]="selectedPriceRange"
+                  [multiple]="false"
+                >
+                  <mat-list-option
+                    *ngFor="let range of priceRanges"
+                    [value]="range.name"
+                  >
+                    {{ range.name }}
+                  </mat-list-option>
+                </mat-selection-list>
+              </div>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel
+            expanded
+            class="mat-elevation-z0 rounded-corners mb-2"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title>Category&nbsp;&nbsp;
+                <div
+                  class="clear-filter-pill bg-red fg-white rounded-corners cursor"
+                  *ngIf="filter.category.length > 0"
+                  (click)='clearFilter($event, "category")'
+                >
+                  clear filter
+                </div>
+              </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="list-box scroll-bar-custom">
               <mat-selection-list
-                (selectionChange)="selectedCategories($event)"
-                [(ngModel)]="filter.categories"
+                (selectionChange)="selectedCategories()"
+                [(ngModel)]="filter.category"
+                [multiple]="false"
               >
                 <mat-list-option
                   *ngFor="let category of categories"
@@ -51,10 +92,25 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="mat-elevation-z0 rounded-corners mb-2">
             <mat-expansion-panel-header>
-              <mat-panel-title>Sub Categories</mat-panel-title>
+              <mat-panel-title
+                >Sub Categories&nbsp;&nbsp;
+                <div
+                  class="clear-filter-pill bg-red fg-white rounded-corners cursor"
+                  *ngIf="filter.subCategory.length > 0"
+                  (click)="clearFilter($event, 'subCategory')"
+                >
+                  clear filter
+                </div>
+              </mat-panel-title>
             </mat-expansion-panel-header>
-            <p *ngIf="!subsLoading && subCategoryGroups.length == 0">
+            <p *ngIf="!subsLoading && filter.category?.length == 0">
               Select categories first
+            </p>
+            <p
+              class="pl-4"
+              *ngIf="subCategories.length == 0 && filter.category.length > 0"
+            >
+              -- No Sub-categories --
             </p>
             <mat-progress-bar
               *ngIf="subsLoading"
@@ -63,18 +119,11 @@
 
             <div class="list-box scroll-bar-custom">
               <mat-selection-list
-                [(ngModel)]="filter.subCategories"
-                *ngFor="let subCategoryGroup of subCategoryGroups"
+                [(ngModel)]="filter.subCategory"
+                [multiple]="false"
               >
-                <h3 matSubheader>{{ subCategoryGroup.category.name }}</h3>
-                <p
-                  class="pl-4"
-                  *ngIf="subCategoryGroup.subCategories.length == 0"
-                >
-                  -- No Sub-categories --
-                </p>
                 <mat-list-option
-                  *ngFor="let subCategory of subCategoryGroup.subCategories"
+                  *ngFor="let subCategory of subCategories"
                   [value]="subCategory.id"
                 >
                   {{ subCategory.name }}
@@ -84,11 +133,21 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="mat-elevation-z0 rounded-corners mb-2">
             <mat-expansion-panel-header>
-              <mat-panel-title>Brands</mat-panel-title>
+              <mat-panel-title
+                >Brands &nbsp;&nbsp;
+
+                <div
+                  class="clear-filter-pill bg-red fg-white rounded-corners cursor"
+                  *ngIf="filter.brand.length > 0"
+                  (click)="clearFilter($event, 'brand')"
+                >
+                  clear filter
+                </div>
+              </mat-panel-title>
             </mat-expansion-panel-header>
 
             <div class="list-box scroll-bar-custom">
-              <mat-selection-list [(ngModel)]="filter.brands">
+              <mat-selection-list [(ngModel)]="filter.brand" [multiple]="false">
                 <mat-list-option
                   *ngFor="let brand of brands"
                   [value]="brand.id"
@@ -98,25 +157,16 @@
               </mat-selection-list>
             </div>
           </mat-expansion-panel>
-          <mat-expansion-panel class="mat-elevation-z0 rounded-corners mb-2">
-            <mat-expansion-panel-header>
-              <mat-panel-title>Printing Methods</mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div class="list-box scroll-bar-custom">
-              <mat-selection-list [(ngModel)]="filter.printingMethods">
-                <mat-list-option
-                  *ngFor="let printingMethod of printingMethods"
-                  [value]="printingMethod.id"
-                >
-                  {{ printingMethod.name }}
-                </mat-list-option>
-              </mat-selection-list>
-            </div>
-          </mat-expansion-panel>
         </mat-accordion>
       </main>
     </section>
-    <button mat-flat-button color="primary" class="mx-2">Apply Filters & Sort</button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="mx-2"
+      (click)="applyFilters()"
+    >
+      Apply Filters & Sort
+    </button>
   </mat-card-content>
 </mat-card>

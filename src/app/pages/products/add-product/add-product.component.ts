@@ -70,7 +70,10 @@ export class AddProductComponent implements OnInit {
     printingMethods: {},
     printingMethodsSearchableArr: [],
     searchTerms: [],
-    brands: [],
+    brand: '',
+    active: false,
+    unitsSold: 0,
+    rank: 0,
   };
   productId: string | null = null;
   categories: ICategory[] = [];

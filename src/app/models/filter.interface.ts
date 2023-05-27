@@ -1,11 +1,11 @@
 import { ISort } from './sort.interface';
 
 export interface IFilter {
-  categories: string[];
+  category: string | null;
   minPrice: number;
   maxPrice: number;
-  subCategories: string[];
-  brands: string[];
-  printingMethods: string[];
-  sort: ISort;
+  subCategory: string | null;
+  brand: string | null;
+  printingMethod: string | null;
+  sort: ISort | null;
 }
