@@ -1,13 +1,16 @@
 <mat-card
-  class="rounded-corners cursor"
+  class="rounded-corners cursor product-card"
   [routerLink]="'/products/' + product.name + '/' + product.id"
 >
   <mat-card-content class="rounded-corners">
-    <img
+   <div class="d-flex justify-content-center align-items-center image-container">
+     <img
       class="rounded-corners"
-      [src]="product.images?.[0]"
+      [src]="product.images?.[0]?.link"
       alt=""
+
     />
+   </div>
     <h2 class="fg-teal-300 pt-2 pb-0 mb-2">{{ product.name }}</h2>
     <div class="colors-block d-flex" *ngIf="product.variations.options.length">
       <h4 class="m-0 p-0 fg-teal">Colors:</h4>
@@ -19,11 +22,11 @@
       ></div>
     </div>
     <div class="d-flex">
-      <h2
+      <h3
         class="fg-white p-2 mb-0 bg-teal mt-2 d-inline-block rounded-corners"
       >
         From R {{ product.price }}
-      </h2>
+      </h3>
       &nbsp;
       <button
         mat-icon-button

@@ -6,8 +6,8 @@
         <app-categories-list [categories]="categories"></app-categories-list>
       </div>
       <div class="col-lg-9">
-        <app-horizontal-cards heading="Popular"></app-horizontal-cards>
-        <app-horizontal-cards heading="Best Selling"></app-horizontal-cards>
+        <app-horizontal-cards heading="New to our catalogue" [products]="newestProducts"></app-horizontal-cards>
+        <app-horizontal-cards heading="Best Selling" [products]="bestSellingProducts"></app-horizontal-cards>
       </div>
     </div>
   </div>

@@ -89,12 +89,15 @@ export class ProductsViewComponent {
 
   async getProducts(filterAndSort: IFilterComponentOutput) {
     this.products = await this.productsService.getProducts(
-      filterAndSort.sort?.value.field || '',
-      !!filterAndSort.sort?.value.ascending,
-      filterAndSort.where,
+      this.filterAndSort.sort?.value.field || '',
+      !!this.filterAndSort.sort?.value.ascending,
+      this.filterAndSort.where,
       this.perpage,
       this.afterDoc || null
     );
+
+    console.log([]);
+
 
     this.after = this.products.length
       ? this.products[this.products.length - 1]?.id || null
