@@ -24,14 +24,18 @@ export class ProductsViewComponent {
     'Action',
   ];
   products: IProduct[] = [];
-  sortBy: string = 'name';
   ascending: boolean = true;
   after: string | null = null;
   perpage: number = 20;
-  afterDoc!: AngularFirestoreDocument;
+  afterDoc: AngularFirestoreDocument | null = null;
   hasNext: boolean = false;
   params: any = {};
   categories: ICategory[] = [];
+  filterAndSort: IFilterComponentOutput = {
+    where: [],
+    sort: { name: 'Cheapest', value: { field: 'price', ascending: true } },
+  };
+  hasNextLoading = false;
 
   constructor(
     public readonly utilService: UtilService,
@@ -42,21 +46,16 @@ export class ProductsViewComponent {
     private readonly categoriesService: CategoryService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.route.queryParams.subscribe(async (params: any) => {
       this.params = params;
-      this.loadingSpinner.show();
-      this.sortBy = params.sortBy || this.sortBy;
       this.perpage = params.perpage || this.perpage;
-
-      this.ascending =
-        params.ascending === 'false' ? false : true || this.ascending;
       this.after = params.after || null;
-
-      // get categories
-      this.categories = await this.categoriesService.getCategories();
-      this.loadingSpinner.hide();
     });
+
+    this.loadingSpinner.show();
+    this.categories = await this.categoriesService.getCategories();
+    this.loadingSpinner.hide();
   }
 
   goPrev() {
@@ -64,20 +63,26 @@ export class ProductsViewComponent {
   }
 
   async hasNextPage() {
+    this.afterDoc = null;
+    this.hasNextLoading = true;
+
     if (this.products.length < this.perpage) {
       this.hasNext = false;
+      this.hasNextLoading = false;
     } else {
       const afterDoc = this.productsService.getProduct(this.after || '');
       afterDoc.then(async (d: any) => {
-        this.afterDoc = d.doc;
+        this.afterDoc = d?.doc || null;
+
         const res = await this.productsService.getProducts(
-          this.sortBy,
-          this.ascending,
+          this.filterAndSort.sort?.value.field,
+          this.filterAndSort.sort?.value.ascending,
           [],
           this.perpage,
           this.afterDoc
         );
         this.hasNext = !!res.length;
+        this.hasNextLoading = false;
       });
     }
   }
@@ -87,7 +92,8 @@ export class ProductsViewComponent {
       filterAndSort.sort?.value.field || '',
       !!filterAndSort.sort?.value.ascending,
       filterAndSort.where,
-      this.perpage
+      this.perpage,
+      this.afterDoc || null
     );
 
     this.after = this.products.length
@@ -107,11 +113,10 @@ export class ProductsViewComponent {
   async paginate(reset = true) {
     this.router.navigate(['/admin/products/view'], {
       queryParams: {
+        ...this.params,
         perpage: this.perpage,
-        sortBy: this.sortBy,
-        ascending: this.ascending,
         after: reset ? null : this.after,
-        r: Math.ceil(Math.random() * 222),
+        r: Math.ceil(Math.random() * 2322),
       },
     });
     this.hasNext = false;

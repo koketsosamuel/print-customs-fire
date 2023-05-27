@@ -79,7 +79,7 @@
           mat-flat-button
           color="primary"
           (click)="goPrev()"
-          [disabled]="!params.after"
+          [disabled]="!params.after || hasNextLoading"
         >
           Prev</button
         >&nbsp;

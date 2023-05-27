@@ -84,6 +84,7 @@ export class FilterComponent implements OnInit {
   subsLoading = false;
   brands: IBrand[] = [];
   printingMethods: IPrintingMethod[] = [];
+  hasBeenEmitted = false;
 
   @Output() change = new EventEmitter<IFilterComponentOutput>();
 
@@ -149,6 +150,7 @@ export class FilterComponent implements OnInit {
       ),
       sort: this.filter.sort,
     });
+    this.hasBeenEmitted = true;
   }
 
   async initialLoad() {
