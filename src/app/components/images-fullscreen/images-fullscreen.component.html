@@ -1,0 +1,14 @@
+<div class='mb-0 pb-0 container p-4'>
+  <div class="fullscreen-container d-flex justify-content-center">
+    <app-single-product-view-images
+      [fullscreenMode]="true"
+      [images]="data.images"
+      [index]="data.index"
+    ></app-single-product-view-images>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+     <button mat-dialog-close mat-flat-button color="warn">Close</button>
+
+</div>

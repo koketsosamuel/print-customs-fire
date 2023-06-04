@@ -1,0 +1,36 @@
+footer {
+  display: flex;
+  gap: 20px;
+  .image-cube {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1/1;
+    width: 80px;
+
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .selected {
+    border: var(--mint-green) solid 3px;
+  }
+}
+
+.image-container {
+  max-width: 100%;
+
+  position: relative;
+  img {
+    max-width: 100%;
+  }
+  .fullscreen-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+  }
+}
+
+section {
+}

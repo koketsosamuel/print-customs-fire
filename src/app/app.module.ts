@@ -67,6 +67,8 @@ import { CategoriesListComponent } from './components/categories-list/categories
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.component';
 import { ProductsViewComponent } from './pages/products/products-view/products-view.component';
+import { SingleProductViewImagesComponent } from './components/single-product-view-images/single-product-view-images.component';
+import { ImagesFullscreenComponent } from './components/images-fullscreen/images-fullscreen.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +107,8 @@ import { ProductsViewComponent } from './pages/products/products-view/products-v
     AdminPageComponent,
     BrandsViewComponent,
     ProductsViewComponent,
+    SingleProductViewImagesComponent,
+    ImagesFullscreenComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
