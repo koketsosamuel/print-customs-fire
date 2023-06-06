@@ -15,6 +15,7 @@ import { SingleProductViewComponent } from './pages/customer-facing/single-produ
 import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.component';
 import { ProductsViewComponent } from './pages/products/products-view/products-view.component';
+import { ProductCatalogueComponent } from './pages/customer-facing/catalog/product-catalogue/product-catalogue.component';
 
 const routes: Routes = [
   {
@@ -100,6 +101,10 @@ const routes: Routes = [
   {
     path: 'admin/products/view',
     component: ProductsViewComponent,
+  },
+  {
+    path: 'catalogue',
+    component: ProductCatalogueComponent,
   },
 ];
 

@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h1>Our Products</h1>
+  <div class="row">
+    <div class="col-lg-4"><app-filter (change)="getProducts($event)"></app-filter></div>
+    <div class="col-lg-8">
+
+
+     <app-horizontal-cards [products]="products"></app-horizontal-cards>
+      <div class="pl-4">
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="goPrev()"
+          [disabled]="!params.after || hasNextLoading"
+        >
+          Prev</button
+        >&nbsp;
+        <button
+          mat-flat-button
+          color="primary"
+          (click)="paginate(false)"
+          [disabled]="!hasNext"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

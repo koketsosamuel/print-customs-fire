@@ -10,23 +10,15 @@ import { ProductService } from 'src/app/services/product/product.service';
 import { UtilService } from 'src/app/services/util/util.service';
 
 @Component({
-  selector: 'app-products-view',
-  templateUrl: './products-view.component.html',
-  styleUrls: ['./products-view.component.scss'],
+  selector: 'app-product-catalogue',
+  templateUrl: './product-catalogue.component.html',
+  styleUrls: ['./product-catalogue.component.scss'],
 })
-export class ProductsViewComponent {
-  displayedColumns: string[] = [
-    'Name',
-    'Categories',
-    'Image',
-    'Status',
-    'Price',
-    'Action',
-  ];
+export class ProductCatalogueComponent {
   products: IProduct[] = [];
   ascending: boolean = true;
   after: string | null = null;
-  perpage: number = 20;
+  perpage: number = 12;
   afterDoc: AngularFirestoreDocument | null = null;
   hasNext: boolean = false;
   params: any = {};
@@ -97,8 +89,7 @@ export class ProductsViewComponent {
       this.afterDoc || null
     );
 
-    console.log([]);
-
+    console.log(this.products);
 
     this.after = this.products.length
       ? this.products[this.products.length - 1]?.id || null

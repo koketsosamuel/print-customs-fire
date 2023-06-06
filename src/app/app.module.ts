@@ -71,6 +71,7 @@ import { SingleProductViewImagesComponent } from './components/single-product-vi
 import { ImagesFullscreenComponent } from './components/images-fullscreen/images-fullscreen.component';
 import { PrintingMethodsChipsComponent } from './components/printing-methods-chips/printing-methods-chips.component';
 import { FancyCardComponent } from './components/fancy-card/fancy-card.component';
+import { ProductCatalogueComponent } from './pages/customer-facing/catalog/product-catalogue/product-catalogue.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +114,7 @@ import { FancyCardComponent } from './components/fancy-card/fancy-card.component
     ImagesFullscreenComponent,
     PrintingMethodsChipsComponent,
     FancyCardComponent,
+    ProductCatalogueComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
