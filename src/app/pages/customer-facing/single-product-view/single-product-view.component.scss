@@ -1,0 +1,12 @@
+.colors-block {
+  gap: 5px;
+  .color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+  }
+  .color-circle {
+    border: 1px solid #222;
+    box-shadow: 2px 2px 10px #adadad;
+  }
+}

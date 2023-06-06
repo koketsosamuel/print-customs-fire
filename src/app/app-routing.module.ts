@@ -86,7 +86,7 @@ const routes: Routes = [
     component: BrandFormComponent,
   },
   {
-    path: 'products/:name/:id',
+    path: 'products/:name/:productId',
     component: SingleProductViewComponent,
   },
   {
@@ -104,7 +104,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'disabled' }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -57,7 +57,7 @@ export class DbService {
     return this.firestore.collection(collection).doc(id).update(data);
   }
 
-  getDocumentById(collection: string, id: string) {
+  getDocumentById(collection: string, id: string): Promise<any> {
     const promise = new Promise((resolve, reject) => {
       this.firestore
         .collection(collection)

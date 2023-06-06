@@ -1,0 +1,8 @@
+<h3 class="mt-4 mb-0 py-0">Available Printing methods:</h3>
+
+<mat-chip-listbox>
+  <mat-chip *ngFor="let method of printingMethodsAvailable" [matTooltip]="method.name">{{
+    method.shortName
+  }}</mat-chip>
+</mat-chip-listbox>
+<mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>

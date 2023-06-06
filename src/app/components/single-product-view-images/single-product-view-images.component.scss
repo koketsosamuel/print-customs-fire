@@ -7,7 +7,8 @@ footer {
     align-items: center;
     aspect-ratio: 1/1;
     width: 80px;
-
+    background-size: contain;
+    box-sizing: border-box;
     img {
       max-width: 100%;
     }
@@ -15,13 +16,15 @@ footer {
 
   .selected {
     border: var(--mint-green) solid 3px;
+    background-color: var(--mint-green) ;
   }
 }
 
 .image-container {
-  max-width: 100%;
-
+  width: 100%;
   position: relative;
+  aspect-ratio: 1/1 !important;
+  box-sizing: border-box;
   img {
     max-width: 100%;
   }

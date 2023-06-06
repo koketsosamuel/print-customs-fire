@@ -69,6 +69,7 @@ import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.comp
 import { ProductsViewComponent } from './pages/products/products-view/products-view.component';
 import { SingleProductViewImagesComponent } from './components/single-product-view-images/single-product-view-images.component';
 import { ImagesFullscreenComponent } from './components/images-fullscreen/images-fullscreen.component';
+import { PrintingMethodsChipsComponent } from './components/printing-methods-chips/printing-methods-chips.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { ImagesFullscreenComponent } from './components/images-fullscreen/images
     ProductsViewComponent,
     SingleProductViewImagesComponent,
     ImagesFullscreenComponent,
+    PrintingMethodsChipsComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

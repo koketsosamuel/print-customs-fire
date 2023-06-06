@@ -14,11 +14,7 @@ export class SingleProductViewImagesComponent {
     { link: 'https://picsum.photos/804', path: '' },
     { link: 'https://picsum.photos/806', path: '' },
     { link: 'https://picsum.photos/808', path: '' },
-    { link: 'https://picsum.photos/800', path: '' },
-    { link: 'https://picsum.photos/802', path: '' },
-    { link: 'https://picsum.photos/804', path: '' },
-    { link: 'https://picsum.photos/806', path: '' },
-    { link: 'https://picsum.photos/808', path: '' },
+
   ];
 
   @Input() index: number = 0;
