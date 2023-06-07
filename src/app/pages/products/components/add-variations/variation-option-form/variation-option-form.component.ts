@@ -11,5 +11,6 @@ export class VariationOptionFormComponent {
     name: '',
     additionalCost: 0,
     optionColor: null,
+    imagePath: null,
   };
 }

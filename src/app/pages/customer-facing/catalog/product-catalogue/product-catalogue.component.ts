@@ -84,12 +84,10 @@ export class ProductCatalogueComponent {
     this.products = await this.productsService.getProducts(
       this.filterAndSort.sort?.value.field || '',
       !!this.filterAndSort.sort?.value.ascending,
-      this.filterAndSort.where,
+      [['active', '==', true], ...this.filterAndSort.where],
       this.perpage,
       this.afterDoc || null
     );
-
-    console.log(this.products);
 
     this.after = this.products.length
       ? this.products[this.products.length - 1]?.id || null

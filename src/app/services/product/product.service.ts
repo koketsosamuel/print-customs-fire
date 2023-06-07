@@ -76,7 +76,11 @@ export class ProductService {
   ) {
     let arr: string[] = [];
     Object.values(printingMethodsPerLocation).forEach((v) => {
-      arr = [...arr, ...v];
+      v.forEach((m) => {
+        if (!arr.includes(m)) {
+          arr.push(m);
+        }
+      });
     });
     return arr;
   }

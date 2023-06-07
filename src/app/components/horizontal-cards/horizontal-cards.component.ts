@@ -9,4 +9,5 @@ import IProduct from 'src/app/models/product.interface';
 export class HorizontalCardsComponent {
   @Input() products: IProduct[] = [];
   @Input() heading: string = '';
+  @Input() large = false;
 }

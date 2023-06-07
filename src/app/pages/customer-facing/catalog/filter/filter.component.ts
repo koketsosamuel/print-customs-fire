@@ -186,6 +186,8 @@ export class FilterComponent implements OnInit {
 
     if (params.sort) {
       this.filter.sort = this.sortOptions.find((s) => s.name == params.sort);
+    } else {
+      this.filter.sort = this.sortOptions[0];
     }
   }
 

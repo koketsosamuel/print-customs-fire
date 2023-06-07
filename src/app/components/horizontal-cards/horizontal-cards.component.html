@@ -1,7 +1,7 @@
 <section>
   <h2 class='fg-grey-800'>{{heading}}</h2>
   <div class="row">
-    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4" *ngFor="let product of products">
+    <div [ngClass]="{'col-xl-3': large}" class="col-lg-4 col-md-4 col-sm-6 mb-4" *ngFor="let product of products">
       <app-product-card [product]="product" ></app-product-card>
     </div>
 

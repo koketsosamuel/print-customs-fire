@@ -5,6 +5,8 @@
     <div
       class="cursor rounded-corners bg-mint-green fg grey-800 p-4 mb-4 category"
       *ngFor="let category of categories"
+      [routerLink]="['/catalogue']"
+      [queryParams]="{ category: category.id }"
     >
       <h4 class="m-0">{{ category.name }}</h4>
     </div>

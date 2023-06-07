@@ -35,7 +35,8 @@
           </div>
 
           <div class="d-flex align-items-center gap-20 mt-4">
-            <button mat-flat-button color="primary">Add to cart</button>
+            <button mat-flat-button color="primary">Customize</button>
+            <button mat-flat-button color="accent">Add to cart</button>
             <h2 class="d-inline my-0 fg-teal">
               <b>R {{ product.price }}</b>
             </h2>
@@ -54,6 +55,7 @@
     <app-horizontal-cards
       heading="You may also be interested in:"
       [products]="relatedProducts"
+      [large]="true"
     ></app-horizontal-cards>
   </section>
 </div>

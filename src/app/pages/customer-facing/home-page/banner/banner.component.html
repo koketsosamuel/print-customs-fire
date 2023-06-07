@@ -17,12 +17,12 @@
                   class="cat-main-box"
                   *ngFor="let category of categories"
                   [matTooltip]="category.name"
+                  [routerLink]="['/catalogue']"
+                  [queryParams]="{category: category.id}"
                 >
-                  <div class="upper"></div>
                   <div class="bg-mint-green cat-box rounded-corners">
                     <img [src]="category?.images?.[0]?.link" alt="" />
                   </div>
-                  <div class="below"></div>
                 </div>
               </div>
             </div>
