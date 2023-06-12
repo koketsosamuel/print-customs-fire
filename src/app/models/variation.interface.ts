@@ -9,6 +9,7 @@ export interface IVariationOption {
   additionalCost: number;
   optionColor: string | null;
   imagePath: string | null;
+  quantityAvailable: number;
 }
 
 export interface ISubVariation {

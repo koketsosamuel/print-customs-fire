@@ -1,0 +1,35 @@
+<section *ngIf="subVariations">
+  <h2 class="fg-teal-300">Choose quantities for: {{ subVariations.name }}</h2>
+  <form action="">
+    <div class="row">
+      <div *ngFor="let opt of subVariations.options" class="col-md-6 col-lg-4">
+        <mat-form-field class="w-100">
+          <mat-label>
+            {{ opt.name }}
+          </mat-label>
+          <input
+            matInput
+            type="number"
+            [disabled]="opt.quantityAvailable <= 0"
+            [name]="'quantity-for-' + opt.name"
+            [(ngModel)]="optionQuantities[opt.name].quantities"
+            [max]='opt.quantityAvailable'
+            (keyup)="validate()"
+          />
+          <mat-hint
+            >additional cost:
+            <b class='fg-teal-300'>
+              {{ opt.additionalCost ? "R " + opt.additionalCost : "None" }}
+            </b>
+            - available:
+            <b class="fg-teal-300">{{ opt.quantityAvailable }}</b></mat-hint
+          >
+        </mat-form-field>
+      </div>
+    </div>
+
+    <footer class="mt-4">
+      <button matStepperNext mat-flat-button color="primary" (click)="saveQuantities()" class="" [disabled]="!validated" >Next</button>
+    </footer>
+  </form>
+</section>

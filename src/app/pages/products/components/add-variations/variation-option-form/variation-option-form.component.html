@@ -1,20 +1,26 @@
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-3">
     <mat-form-field class="w-100">
       <mat-label>Name</mat-label>
       <input name='option-name' type='text' matInput [(ngModel)]="option.name" />
     </mat-form-field>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <mat-form-field class="w-100">
       <mat-label>Additional Cost</mat-label>
       <input name='price' type='number' matInput [(ngModel)]="option.additionalCost" />
     </mat-form-field>
   </div>
-  <div class="col-md-4">
+  <div class="col-md-3">
     <mat-form-field class="w-100">
       <mat-label>Background</mat-label>
       <input name='option-color' type='color' matInput [(ngModel)]="option.optionColor" />
+    </mat-form-field>
+  </div>
+  <div class="col-md-3">
+    <mat-form-field class="w-100">
+      <mat-label>Available Quantity</mat-label>
+      <input name='option-quantity' type='number' matInput [(ngModel)]="option.quantityAvailable" />
     </mat-form-field>
   </div>
 

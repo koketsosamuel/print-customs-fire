@@ -16,6 +16,7 @@ import { AdminPageComponent } from './pages/admin-page/admin-page.component';
 import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.component';
 import { ProductsViewComponent } from './pages/products/products-view/products-view.component';
 import { ProductCatalogueComponent } from './pages/customer-facing/catalog/product-catalogue/product-catalogue.component';
+import { CustomizeProductComponent } from './pages/customer-facing/customize-product/customize-product.component';
 
 const routes: Routes = [
   {
@@ -105,6 +106,10 @@ const routes: Routes = [
   {
     path: 'catalogue',
     component: ProductCatalogueComponent,
+  },
+  {
+    path: 'customize/:productId',
+    component: CustomizeProductComponent,
   },
 ];
 

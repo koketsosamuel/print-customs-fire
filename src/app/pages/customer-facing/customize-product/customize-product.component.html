@@ -1,0 +1,21 @@
+<section class="container mt-4">
+  <h1>Customize: {{product?.name}}</h1>
+
+  <mat-stepper #stepper>
+    <mat-step label="Quantities" *ngIf="hasSubVariations">
+      <app-product-quantities (change)="setQuantities($event)" [subVariations]="product.variations.subVariations || {name:'', options: []}"></app-product-quantities>
+    </mat-step>
+    <mat-step label="Printing Locations">
+
+    </mat-step>
+    <mat-step label="Printing Methods">
+
+    </mat-step>
+    <mat-step label="Upload Artwork">
+
+    </mat-step>
+    <mat-step label="Confirm">
+
+    </mat-step>
+    </mat-stepper>
+</section>
