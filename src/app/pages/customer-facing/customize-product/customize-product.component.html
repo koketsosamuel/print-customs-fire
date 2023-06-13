@@ -5,8 +5,8 @@
     <mat-step label="Quantities" *ngIf="hasSubVariations">
       <app-product-quantities (change)="setQuantities($event)" [subVariations]="product.variations.subVariations || {name:'', options: []}"></app-product-quantities>
     </mat-step>
-    <mat-step label="Printing Locations">
-
+    <mat-step label="Printing Locations" *ngIf="product?.name">
+      <app-select-customization-positions [availableLocations]="product.printingPositions"></app-select-customization-positions>
     </mat-step>
     <mat-step label="Printing Methods">
 

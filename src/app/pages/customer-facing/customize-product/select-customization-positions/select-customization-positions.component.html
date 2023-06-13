@@ -1,0 +1,20 @@
+<section>
+  <h1 class="fg-teal-300">Printing Locations</h1>
+
+  <app-image-card-options-selection
+    [options]="options"
+    (changeEvent)="updatedSelectedPrintingLocations($event)"
+  >
+  </app-image-card-options-selection>
+
+  <footer class='mt-4'>
+    <button
+      mat-flat-button
+      color="primary"
+      matStepperNext
+      [disabled]="!selectedOptions.length"
+    >
+      Next
+    </button>
+  </footer>
+</section>

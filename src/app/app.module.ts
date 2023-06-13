@@ -74,6 +74,7 @@ import { FancyCardComponent } from './components/fancy-card/fancy-card.component
 import { ProductCatalogueComponent } from './pages/customer-facing/catalog/product-catalogue/product-catalogue.component';
 import { CustomizeProductComponent } from './pages/customer-facing/customize-product/customize-product.component';
 import { ProductQuantitiesComponent } from './pages/customer-facing/customize-product/product-quantities/product-quantities.component';
+import { SelectCustomizationPositionsComponent } from './pages/customer-facing/customize-product/select-customization-positions/select-customization-positions.component';
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { ProductQuantitiesComponent } from './pages/customer-facing/customize-pr
     ProductCatalogueComponent,
     CustomizeProductComponent,
     ProductQuantitiesComponent,
+    SelectCustomizationPositionsComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
