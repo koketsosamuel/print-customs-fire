@@ -75,6 +75,8 @@ import { ProductCatalogueComponent } from './pages/customer-facing/catalog/produ
 import { CustomizeProductComponent } from './pages/customer-facing/customize-product/customize-product.component';
 import { ProductQuantitiesComponent } from './pages/customer-facing/customize-product/product-quantities/product-quantities.component';
 import { SelectCustomizationPositionsComponent } from './pages/customer-facing/customize-product/select-customization-positions/select-customization-positions.component';
+import { SelectCustomPrintingMethodsComponent } from './pages/customer-facing/customize-product/select-custom-printing-methods/select-custom-printing-methods.component';
+import { MethodSelectDialogComponent } from './pages/customer-facing/customize-product/select-custom-printing-methods/method-select-dialog/method-select-dialog.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +123,8 @@ import { SelectCustomizationPositionsComponent } from './pages/customer-facing/c
     CustomizeProductComponent,
     ProductQuantitiesComponent,
     SelectCustomizationPositionsComponent,
+    SelectCustomPrintingMethodsComponent,
+    MethodSelectDialogComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

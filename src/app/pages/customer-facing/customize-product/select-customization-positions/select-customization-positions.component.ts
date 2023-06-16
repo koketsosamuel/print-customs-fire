@@ -12,7 +12,7 @@ export class SelectCustomizationPositionsComponent implements OnInit {
   @Input() availableLocations: string[] = [];
   options: IImageCardOption[] = [];
   @Input() selectedOptions: string[] = [];
-  @Output() change = new EventEmitter<string[]>();
+  @Output() change = new EventEmitter<any[]>();
 
   constructor(
     private readonly printingPositionsService: PrintingPositionsService,
@@ -31,8 +31,8 @@ export class SelectCustomizationPositionsComponent implements OnInit {
 
         return {
           name: printingLocation.name,
-          value: 'id',
-          object: printingLocation,
+          value: 'printingLocation',
+          object: { ...printingLocation, printingLocation },
           imgSrc: printingLocation.images[0].link,
           selected: !!this.selectedOptions.includes(printingLocation.id),
         };

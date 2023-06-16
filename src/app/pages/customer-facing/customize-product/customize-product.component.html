@@ -1,15 +1,15 @@
 <section class="container mt-4">
   <h1>Customize: {{product?.name}}</h1>
 
-  <mat-stepper #stepper>
+  <mat-stepper #stepper [linear]="true">
     <mat-step label="Quantities" *ngIf="hasSubVariations">
       <app-product-quantities (change)="setQuantities($event)" [subVariations]="product.variations.subVariations || {name:'', options: []}"></app-product-quantities>
     </mat-step>
     <mat-step label="Printing Locations" *ngIf="product?.name">
-      <app-select-customization-positions [availableLocations]="product.printingPositions"></app-select-customization-positions>
+      <app-select-customization-positions (change)="setPrintingLocations($event)" [availableLocations]="product.printingPositions"></app-select-customization-positions>
     </mat-step>
     <mat-step label="Printing Methods">
-
+      <app-select-custom-printing-methods *ngIf="printingPositionsSelected.length > 0" [product]="product" [printingPositions]="printingPositionsSelected"></app-select-custom-printing-methods>
     </mat-step>
     <mat-step label="Upload Artwork">
 

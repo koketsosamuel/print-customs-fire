@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IPrintingMethod } from 'src/app/models/printing-method.interface';
+import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 import IProduct from 'src/app/models/product.interface';
 import { IVariationOption } from 'src/app/models/variation.interface';
 import { AlertService } from 'src/app/services/alert/alert.service';
@@ -18,6 +20,7 @@ export class CustomizeProductComponent implements OnInit {
     string,
     { quantities: string | null; option: IVariationOption }
   > = {};
+  printingPositionsSelected: IPrintingPosition[] = [];
 
   constructor(
     private readonly productService: ProductService,
@@ -50,6 +53,10 @@ export class CustomizeProductComponent implements OnInit {
 
   setQuantities(event: any) {
     this.quantities = event;
-    console.log(this.quantities);
+  }
+
+  setPrintingLocations(locations: any) {
+    this.printingPositionsSelected = locations;
+    console.log(this.printingPositionsSelected);
   }
 }
