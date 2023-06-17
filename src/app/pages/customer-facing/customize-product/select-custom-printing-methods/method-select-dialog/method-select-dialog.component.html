@@ -4,7 +4,7 @@
 
 
     <mat-selection-list [multiple]="false" [(ngModel)]="methodSelected">
-      <mat-list-option *ngFor="let m of data?.methods" [value]="">
+      <mat-list-option *ngFor="let m of data?.printingInfo.methods" [value]="m">
         <h3 matListItemTitle>{{ m.name }}</h3>
         <p matListItemLine class='m-0 p-0 fg-teal'>
           {{ m.description }}
@@ -16,7 +16,7 @@
     </mat-selection-list>
 
     <footer class='d-flex gap-20 mt-4'>
-      <button mat-flat-button color='primary' [disabled]="methodSelected.length == 0">Save</button>
+      <button mat-flat-button color='primary' [disabled]="methodSelected.length == 0" [matDialogClose]='methodSelected'>Save</button>
       <button mat-flat-button mat-dialog-close>Close</button>
     </footer>
 </div>

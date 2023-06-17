@@ -1,7 +1,5 @@
 <section>
-  <h1 class="d-flex align-items-center fg-grey-900">
-    <mat-icon>brush</mat-icon>&nbsp;Printing Methods
-  </h1>
+  <h1 class='d-flex align-items-center fg-grey-900'><mat-icon>cloud_upload</mat-icon>&nbsp;Upload artwork</h1>
 
   <div class="col-lg-6 col-md-8 col-sm-12">
     <div
@@ -10,12 +8,12 @@
     >
     <h3 class="fg-grey-800 m-0 p-0">{{ info.printingPosition.name }}</h3>
     <h3 *ngIf="info.selectedMethod" class="m-0 fg-teal-800 p-0 d-flex align-items-center"><mat-icon>check_box</mat-icon><b>{{info.selectedMethod.name}}</b></h3>
-    <button mat-flat-button color="primary" (click)="chooseMethod(info)">{{!info.selectedMethod?.name ? 'Choose' : 'Change'}} method</button>
+    <button mat-flat-button color="primary" (click)="uploadArt(info)">{{!info?.artWork ? 'Upload' : 'Change'}} Artwork</button>
     </div>
   </div>
 
   <footer class="gap-20 d-flex mt-4">
-    <button mat-flat-button color="primary" matStepperNext (click)="savePrintingInfo()">Save and continue</button>
+    <button mat-flat-button color="primary" matStepperNext>Save and continue</button>
     <button mat-flat-button color="accent" matStepperPrevious>Back</button>
   </footer>
 </section>

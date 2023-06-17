@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
@@ -6,6 +6,7 @@ import IProduct from 'src/app/models/product.interface';
 import { PrintingMethodsService } from 'src/app/services/printing-methods/printing-methods.service';
 import { MethodSelectDialogComponent } from './method-select-dialog/method-select-dialog.component';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
+import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 
 @Component({
   selector: 'app-select-custom-printing-methods',
@@ -15,11 +16,8 @@ import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-
 export class SelectCustomPrintingMethodsComponent implements OnInit {
   @Input() product!: IProduct;
   @Input() printingPositions: IPrintingPosition[] = [];
-  methods: {
-    printingPosition: IPrintingPosition;
-    methods: IPrintingMethod[];
-    selectedMethod: IPrintingMethod | null;
-  }[] = [];
+  printingInfo: IPrintingInfo[] = [];
+  @Output() change = new EventEmitter<IPrintingInfo[]>();
 
   constructor(
     private readonly printingMethodsService: PrintingMethodsService,
@@ -29,7 +27,7 @@ export class SelectCustomPrintingMethodsComponent implements OnInit {
 
   async ngOnInit() {
     this.loadingSpinnerService.show();
-    this.methods = await Promise.all(
+    this.printingInfo = await Promise.all(
       this.printingPositions.map(async (printingPosition) => {
         console.log(this.product);
 
@@ -43,19 +41,32 @@ export class SelectCustomPrintingMethodsComponent implements OnInit {
           )
         );
 
-        return { printingPosition, methods, selectedMethod: null };
+        return {
+          printingPosition,
+          methods,
+          selectedMethod: null,
+          artWork: null,
+        };
       })
     ).finally(() => {
       this.loadingSpinnerService.hide();
     });
   }
 
-  openY(methods: any) {
-    console.log(this.methods);
+  chooseMethod(printingInfo: any) {
+    this.dialog
+      .open(MethodSelectDialogComponent, {
+        data: { printingInfo },
+        minWidth: '400px',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        printingInfo.selectedMethod =
+          data?.length > 0 ? data[0] : printingInfo.selectedMethod;
+      });
+  }
 
-    this.dialog.open(MethodSelectDialogComponent, {
-      data: { methods, x: 44 },
-      minWidth: '400px',
-    });
+  savePrintingInfo() {
+    this.change.emit(this.printingInfo);
   }
 }

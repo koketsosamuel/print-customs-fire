@@ -1,21 +1,32 @@
 <section class="container mt-4">
-  <h1>Customize: {{product?.name}}</h1>
+  <h1>Customize: {{ product?.name }}</h1>
 
   <mat-stepper #stepper [linear]="true">
     <mat-step label="Quantities" *ngIf="hasSubVariations">
-      <app-product-quantities (change)="setQuantities($event)" [subVariations]="product.variations.subVariations || {name:'', options: []}"></app-product-quantities>
+      <app-product-quantities
+        (change)="setQuantities($event)"
+        [subVariations]="
+          product.variations.subVariations || { name: '', options: [] }
+        "
+      ></app-product-quantities>
     </mat-step>
     <mat-step label="Printing Locations" *ngIf="product?.name">
-      <app-select-customization-positions (change)="setPrintingLocations($event)" [availableLocations]="product.printingPositions"></app-select-customization-positions>
+      <app-select-customization-positions
+        (change)="setPrintingLocations($event)"
+        [availableLocations]="product.printingPositions"
+      ></app-select-customization-positions>
     </mat-step>
     <mat-step label="Printing Methods">
-      <app-select-custom-printing-methods *ngIf="printingPositionsSelected.length > 0" [product]="product" [printingPositions]="printingPositionsSelected"></app-select-custom-printing-methods>
+      <app-select-custom-printing-methods
+        *ngIf="printingPositionsSelected.length > 0"
+        [product]="product"
+        [printingPositions]="printingPositionsSelected"
+        (change)="setPrintingInfo($event)"
+      ></app-select-custom-printing-methods>
     </mat-step>
     <mat-step label="Upload Artwork">
-
+      <app-upload-artwork *ngIf="printingInfo.length > 0" [printingInfo]="printingInfo"></app-upload-artwork>
     </mat-step>
-    <mat-step label="Confirm">
-
-    </mat-step>
-    </mat-stepper>
+    <mat-step label="Confirm"> </mat-step>
+  </mat-stepper>
 </section>

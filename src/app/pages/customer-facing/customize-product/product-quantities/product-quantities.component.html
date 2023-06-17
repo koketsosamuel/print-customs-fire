@@ -1,5 +1,7 @@
 <section *ngIf="subVariations">
-  <h2 class="fg-teal-300">Choose quantities for: {{ subVariations.name }}</h2>
+  <h1 class="d-flex align-items-center fg-grey-900">
+    <mat-icon>contract</mat-icon>&nbsp;Quantities
+  </h1>
   <form action="">
     <div class="row">
       <div *ngFor="let opt of subVariations.options" class="col-md-6 col-lg-4">

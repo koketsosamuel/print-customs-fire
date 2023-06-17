@@ -9,9 +9,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class MethodSelectDialogComponent {
   methodSelected: string[] = [];
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    console.log(data);
-    for (let i = 0; i < data.methods.methods; i++) {
-      console.log(data.methods.methods[i]);
-    }
+    this.methodSelected = data.printingInfo.selectedMethod
+      ? [data.printingInfo.selectedMethod]
+      : [];
+    console.log(this.methodSelected, data);
+
   }
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 import IProduct from 'src/app/models/product.interface';
@@ -21,6 +22,11 @@ export class CustomizeProductComponent implements OnInit {
     { quantities: string | null; option: IVariationOption }
   > = {};
   printingPositionsSelected: IPrintingPosition[] = [];
+  selectedPrintingMethods: {
+    position: IPrintingPosition;
+    method: IPrintingMethod;
+  }[] = [];
+  printingInfo: IPrintingInfo[] = [];
 
   constructor(
     private readonly productService: ProductService,
@@ -58,5 +64,11 @@ export class CustomizeProductComponent implements OnInit {
   setPrintingLocations(locations: any) {
     this.printingPositionsSelected = locations;
     console.log(this.printingPositionsSelected);
+  }
+
+  setPrintingInfo(printingInfoArr: IPrintingInfo[]) {
+    console.log(printingInfoArr);
+
+    this.printingInfo = printingInfoArr;
   }
 }
