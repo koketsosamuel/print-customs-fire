@@ -18,6 +18,7 @@ import { ICanvasPositionInfo } from 'src/app/models/canvas-position-info.interfa
 })
 export class ImageCanvasPositionComponent implements AfterViewInit, OnInit {
   @Input() imgSrc: string = '';
+  @Input() displayMode: boolean = false;
   allowDrag = false;
   @ViewChild('canvasContainer') canvasContainer!: ElementRef;
   @Input() canvasPositionInfo: ICanvasPositionInfo = {

@@ -19,10 +19,8 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "skipLibCheck": true,
-    "lib": [
-      "ES2022",
-      "dom"
-    ]
+    "lib": ["ES2022", "dom"],
+    "types": ["fabric"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -1,9 +1,9 @@
 <div class='p-4 bg-grey-100'>
 
-  <div class='px-2'>
+  <div class='px-2' *ngIf="!displayMode">
     <mat-checkbox [(ngModel)]="allowDrag">drag</mat-checkbox>
-    <mat-checkbox [disabled]="true" [checked]="!allowDrag">resize</mat-checkbox>
-    <mat-card class='mx-2'>
+    <mat-checkbox [disabled]="true" [checked]="!allowDrag" >resize</mat-checkbox>
+    <mat-card class='mx-2' >
       <mat-card-content class='bg-blue-200'>
         <mat-chip-listbox>
           <mat-chip>X: {{canvasPositionInfo.x}}</mat-chip>
@@ -22,7 +22,8 @@
     }">
       <div cdkDrag #canvasContainer [cdkDragDisabled]="!allowDrag" (cdkDragEnded)="getCanvasPosition()" (click)="getCanvasPosition()"
         class='text-center d-flex align-items-center justify-content-center'>
-        Printing Position
+        <canvas id="canvas" *ngIf="displayMode" [height]='canvasPositionInfo.h' [width]='canvasPositionInfo.w'></canvas>
+        <span *ngIf="!displayMode">Printing position</span>
       </div>
     </div>
   </div>

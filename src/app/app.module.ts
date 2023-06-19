@@ -78,6 +78,7 @@ import { SelectCustomizationPositionsComponent } from './pages/customer-facing/c
 import { SelectCustomPrintingMethodsComponent } from './pages/customer-facing/customize-product/select-custom-printing-methods/select-custom-printing-methods.component';
 import { MethodSelectDialogComponent } from './pages/customer-facing/customize-product/select-custom-printing-methods/method-select-dialog/method-select-dialog.component';
 import { UploadArtworkComponent } from './pages/customer-facing/customize-product/upload-artwork/upload-artwork.component';
+import { UploadArtworkDialogComponent } from './pages/customer-facing/customize-product/upload-artwork-dialog/upload-artwork-dialog.component';
 
 @NgModule({
   declarations: [
@@ -127,6 +128,7 @@ import { UploadArtworkComponent } from './pages/customer-facing/customize-produc
     SelectCustomPrintingMethodsComponent,
     MethodSelectDialogComponent,
     UploadArtworkComponent,
+    UploadArtworkDialogComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

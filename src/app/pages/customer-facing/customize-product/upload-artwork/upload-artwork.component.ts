@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
+import { UploadArtworkDialogComponent } from '../upload-artwork-dialog/upload-artwork-dialog.component';
 
 @Component({
   selector: 'app-upload-artwork',
@@ -9,5 +11,9 @@ import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 export class UploadArtworkComponent {
   @Input() printingInfo: IPrintingInfo[] = [];
 
-  uploadArt(info: IPrintingInfo) {}
+  constructor(private readonly dialog: MatDialog) {}
+
+  uploadArt(info: IPrintingInfo) {
+    this.dialog.open(UploadArtworkDialogComponent, { data: { info } });
+  }
 }

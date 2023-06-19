@@ -1,0 +1,13 @@
+<h1 mat-dialog-title class="mb-0">Upload artwork</h1>
+<div matDialogContent>
+  <div class='d-flex gap-20'>
+    <button mat-flat-button color="primary" class='mb-4' (click)="fileInput.click()">Upload</button>
+    <button mat-flat-button color="primary" class='mb-4' (click)="saveCanvasView()">Save</button>
+    <input type="file" (change)="handleFileInput($event)" class='d-none' #fileInput >
+  </div>
+  <app-image-canvas-position
+    [imgSrc]="data.info.printingPosition.images?.[0]?.link"
+    [canvasPositionInfo]="data.info.printingPosition.canvasPositionInfo"
+    [displayMode]="true"
+  ></app-image-canvas-position>
+</div>
