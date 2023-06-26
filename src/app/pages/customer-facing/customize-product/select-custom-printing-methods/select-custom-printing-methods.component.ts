@@ -45,7 +45,7 @@ export class SelectCustomPrintingMethodsComponent implements OnInit {
           printingPosition,
           methods,
           selectedMethod: null,
-          artWork: null,
+          artwork: null,
         };
       })
     ).finally(() => {
