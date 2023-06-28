@@ -1,5 +1,5 @@
 <h1 mat-dialog-title class="mb-0">Upload artwork</h1>
-<div matDialogContent>
+<mat-dialog-content class="full-screen-dialog-content">
   <div class='d-flex gap-20' *ngIf="!data.viewOnly">
     <button mat-flat-button color="primary" class='mb-4' (click)="fileInput.click()">Upload</button>
     <button mat-flat-button color="primary" class='mb-4' (click)="saveCanvasView()" [mat-dialog-close]='artwork'>Save</button>
@@ -11,6 +11,6 @@
     [canvasPositionInfo]="data.printingInfo.printingPosition.canvasPositionInfo"
     [displayMode]="true"
   ></app-image-canvas-position>
+</mat-dialog-content>
 
-</div>
 

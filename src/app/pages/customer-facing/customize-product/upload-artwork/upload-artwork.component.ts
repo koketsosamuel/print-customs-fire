@@ -18,7 +18,8 @@ export class UploadArtworkComponent {
     this.dialog
       .open(UploadArtworkDialogComponent, {
         data: { printingInfo, viewOnly },
-        panelClass: 'dialog-div',
+        maxWidth: '100vw',
+        maxHeight: '100vh',
       })
       .afterClosed()
       .subscribe((artwork: null | IArtwork) => {
