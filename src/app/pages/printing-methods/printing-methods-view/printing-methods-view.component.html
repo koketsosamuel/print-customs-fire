@@ -42,21 +42,10 @@
       <td mat-cell *matCellDef="let element">{{ element.shortName }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Costs">
-      <th mat-header-cell *matHeaderCellDef>Costs</th>
+    <ng-container matColumnDef="Cost">
+      <th mat-header-cell *matHeaderCellDef>Cost</th>
       <td mat-cell *matCellDef="let element">
-        <p class='my-0 py-1' title='Per Quantity Cost'>PQC:&nbsp;<b>R&nbsp;{{ element.perQuantityCost }}</b></p>
-        <p class='my-0 py-1' title='Per Color Cost'>PCC:&nbsp;<b>R&nbsp;{{ element.perColorCost }}</b></p>
-        <p class='my-0 py-1' title='Setup Fee (applies per color)'>SF:&nbsp;<b>R&nbsp;{{ element.setupFee }}</b></p>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="Conditions">
-      <th mat-header-cell *matHeaderCellDef>Conditions</th>
-      <td mat-cell *matCellDef="let element">
-        <p class='my-0 py-1'>Quantity Range:&nbsp;<b>{{ element.minQuantity }} - {{element.maxQuantity}}</b></p>
-        <p class='my-0 py-1'>Thin Lines:&nbsp;<b>{{ element.thinLines ? 'Yes' : 'No' }}</b></p>
-        <p class='my-0 py-1'>Max Colors:&nbsp;<b>{{ element.maxNumberOfColors }}</b></p>
+        R&nbsp;{{element.costPerSquareInch}}
       </td>
     </ng-container>
 

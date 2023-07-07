@@ -1,5 +1,12 @@
 <section class="container mt-4">
   <h1>Customize: {{ product?.name }}</h1>
+  <div class="col-lg-3 col-md-4 mb-4" *ngIf="totalPrice > 0">
+    <mat-card class='rounded-corners'>
+      <mat-card-content class='bg-teal-100 rounded-corners'>
+        <h2 class="fg-green-700" >Cost so far: <b>R {{totalPrice}}</b></h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
 
   <mat-stepper #stepper [linear]="true">
     <mat-step label="Quantities" *ngIf="hasSubVariations">
@@ -25,8 +32,11 @@
       ></app-select-custom-printing-methods>
     </mat-step>
     <mat-step label="Upload Artwork">
-      <app-upload-artwork *ngIf="printingInfo.length > 0" [printingInfo]="printingInfo"></app-upload-artwork>
+      <app-upload-artwork *ngIf="printingInfo.length > 0" [printingInfo]="printingInfo"  (change)='setPrintingInfoArtwork($event)'></app-upload-artwork>
     </mat-step>
     <mat-step label="Confirm"> </mat-step>
   </mat-stepper>
+
+
+
 </section>

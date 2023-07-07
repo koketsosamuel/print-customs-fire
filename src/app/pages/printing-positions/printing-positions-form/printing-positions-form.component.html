@@ -25,6 +25,17 @@
         </mat-form-field>
 
         <mat-form-field class="w-100">
+          <mat-label>Area in square inches</mat-label>
+          <input
+            name="pp_areae"
+            matInput
+            type="number"
+            placeholder="Ex. Large Front"
+            [(ngModel)]="printingPosition.areaInSquareInches"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
           <mat-label>Description</mat-label>
           <textarea
             name="pp_desc"

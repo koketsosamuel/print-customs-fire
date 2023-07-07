@@ -21,14 +21,7 @@ export class PrintingMethodsFormComponent implements OnInit {
     updatedAt: new Date(),
     images: [],
     shortName: '',
-    thinLines: false,
-    maxNumberOfColors: 0,
-    minNumberOfColors: 0,
-    minQuantity: 0,
-    maxQuantity: 0,
-    perColorCost: 0,
-    setupFee: 0,
-    perQuantityCost: 0,
+    costPerSquareInch: 0,
   };
   newImages: Blob[] = [];
 

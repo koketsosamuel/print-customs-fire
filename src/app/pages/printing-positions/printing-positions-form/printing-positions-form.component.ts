@@ -30,6 +30,7 @@ export class PrintingPositionsFormComponent implements OnInit {
       maxW: 0,
       z: 0,
     },
+    areaInSquareInches: 0,
   };
   newImages: Blob[] = [];
 

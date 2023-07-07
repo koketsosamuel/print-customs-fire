@@ -7,6 +7,7 @@ export interface IPrintingPosition {
   description: string;
   shortName: string;
   images?: IImage[] | any[];
+  areaInSquareInches: number;
   active: boolean;
   createdAt: Date;
   updatedAt: Date;

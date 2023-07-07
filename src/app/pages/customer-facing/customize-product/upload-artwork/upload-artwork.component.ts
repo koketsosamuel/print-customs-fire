@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { UploadArtworkDialogComponent } from '../upload-artwork-dialog/upload-artwork-dialog.component';
@@ -11,6 +11,7 @@ import { IArtwork } from 'src/app/models/artwork.interface';
 })
 export class UploadArtworkComponent {
   @Input() printingInfo: IPrintingInfo[] = [];
+  @Output() change = new EventEmitter<IPrintingInfo[]>();
 
   constructor(private readonly dialog: MatDialog) {}
 
@@ -28,5 +29,9 @@ export class UploadArtworkComponent {
         }
         console.log(printingInfo, this.printingInfo);
       });
+  }
+
+  saveArtWork() {
+    this.change.emit(this.printingInfo);
   }
 }
