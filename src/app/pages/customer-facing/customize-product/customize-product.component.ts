@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ICanvasPositionInfo } from 'src/app/models/canvas-position-info.interface';
+import { ICostBreakdown } from 'src/app/models/cost-breakdown.interface';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
@@ -22,6 +23,7 @@ export class CustomizeProductComponent implements OnInit {
     string,
     { quantities: number | null; option: IVariationOption }
   > = {};
+  totalQuantity: number = 0;
   printingPositionsSelected: IPrintingPosition[] = [];
   selectedPrintingMethods: {
     position: IPrintingPosition;
@@ -29,6 +31,16 @@ export class CustomizeProductComponent implements OnInit {
   }[] = [];
   totalPrice: number = 0;
   printingInfo: IPrintingInfo[] = [];
+  costBreakdown: ICostBreakdown = {
+    productCostPerUnit: 0,
+    brandingCosts: {
+      locationCosts: [],
+      totalCost: 0,
+    },
+    totalCost: 0,
+    quantity: 0,
+    totalProductBaseCost: 0,
+  };
 
   constructor(
     private readonly productService: ProductService,
@@ -40,7 +52,13 @@ export class CustomizeProductComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(async (params: any) => {
-      this.getProduct(params.productId);
+      await this.getProduct(params.productId);
+
+      this.route.queryParams.subscribe((qParams: any) => {
+        if (qParams.quantity) {
+          this.totalPriceCalculation(Number(qParams.quantity));
+        }
+      });
     });
   }
 
@@ -61,7 +79,6 @@ export class CustomizeProductComponent implements OnInit {
 
   setQuantities(event: any) {
     this.quantities = event;
-    console.log(event);
     this.totalPriceCalculation();
   }
 
@@ -77,24 +94,36 @@ export class CustomizeProductComponent implements OnInit {
 
   setPrintingInfoArtwork(printingInfoArr: IPrintingInfo[]) {
     this.printingInfo = printingInfoArr;
-    this.totalPriceCalculation();
+    this.totalPriceCalculation(this.totalQuantity);
   }
 
-  totalPriceCalculation() {
+  totalPriceCalculation(totalQuantity = 0) {
     const productBasePrice = this.product.price;
     let sum = 0;
     const hasSubVariations =
       this.product.variations.subVariations?.options.length;
-    let totalQuantity = 0;
+    this.totalQuantity = totalQuantity;
+
+    const _costBreakDown: ICostBreakdown = {
+      productCostPerUnit: 0,
+      brandingCosts: {
+        locationCosts: [],
+        totalCost: 0,
+      },
+      totalCost: 0,
+      quantity: 0,
+      totalProductBaseCost: 0,
+    };
 
     if (hasSubVariations) {
       Object.values(this.quantities).forEach((q) => {
-        totalQuantity += q.quantities ? q.quantities : 0;
+        this.totalQuantity += q.quantities ? q.quantities : 0;
         sum += q.quantities ? q.quantities * q.option.additionalCost : 0;
       });
     }
 
-    sum += totalQuantity * productBasePrice;
+    sum += this.totalQuantity * productBasePrice;
+    _costBreakDown.totalProductBaseCost = this.totalQuantity * productBasePrice;
 
     this.printingInfo
       .filter((pi) => !!pi.artwork)
@@ -111,17 +140,30 @@ export class CustomizeProductComponent implements OnInit {
           p.selectedMethod!.costPerSquareInch *
           p.printingPosition.areaInSquareInches;
 
-        console.log(
-          't',
-          Math.ceil(printingCost * (chargeableArea / canvasArea))
+        const printingCostPerUnit = Math.ceil(
+          printingCost * (chargeableArea / canvasArea)
         );
 
-        sum +=
-          Math.ceil(printingCost * (chargeableArea / canvasArea)) *
-          totalQuantity;
+        const costOfPrintingForLocation =
+          printingCostPerUnit * this.totalQuantity;
+
+        // break down logic
+        _costBreakDown.brandingCosts.locationCosts.push({
+          location: p.printingPosition.shortName,
+          costPerUnit: printingCostPerUnit,
+          total: costOfPrintingForLocation,
+        });
+
+        sum += costOfPrintingForLocation;
+        _costBreakDown.brandingCosts.totalCost += costOfPrintingForLocation;
+        this.costBreakdown.brandingCosts.totalCost += costOfPrintingForLocation;
       });
 
     this.totalPrice = sum;
+    _costBreakDown.totalCost = sum;
+    _costBreakDown.productCostPerUnit = this.product.price;
+    _costBreakDown.quantity = this.totalQuantity;
+    this.costBreakdown = _costBreakDown;
   }
 
   calculateChargeableAreaOfArtwork(

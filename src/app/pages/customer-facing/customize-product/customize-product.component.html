@@ -9,7 +9,7 @@
   </div>
 
   <mat-stepper #stepper [linear]="true">
-    <mat-step label="Quantities" *ngIf="hasSubVariations">
+    <mat-step label="Quantities" *ngIf="hasSubVariations && totalQuantity <= 0">
       <app-product-quantities
         (change)="setQuantities($event)"
         [subVariations]="
@@ -31,10 +31,13 @@
         (change)="setPrintingInfo($event)"
       ></app-select-custom-printing-methods>
     </mat-step>
+
     <mat-step label="Upload Artwork">
       <app-upload-artwork *ngIf="printingInfo.length > 0" [printingInfo]="printingInfo"  (change)='setPrintingInfoArtwork($event)'></app-upload-artwork>
     </mat-step>
-    <mat-step label="Confirm"> </mat-step>
+    <mat-step label="Confirm">
+      <app-cost-breakdown [costBreakdown]="costBreakdown"></app-cost-breakdown>
+    </mat-step>
   </mat-stepper>
 
 

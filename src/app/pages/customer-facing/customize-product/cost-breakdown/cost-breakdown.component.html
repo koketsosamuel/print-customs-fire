@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-content>
+    <h2 class="fg-teal-300">Cost Breakdown</h2>
+    <div class="d-flex align-items-center mb-2">
+      Base Cost *per unit:&nbsp;
+      <mat-chip
+        ><b>R {{ costBreakdown.productCostPerUnit }}</b></mat-chip
+      >
+    </div>
+    <div class="d-flex align-items-center mb-2">
+      Total Base Cost:&nbsp;
+      <mat-chip
+        ><b>(R {{ costBreakdown.productCostPerUnit }}) x {{costBreakdown.quantity}} = R {{costBreakdown.totalProductBaseCost}}</b></mat-chip
+      >
+    </div>
+    <div>
+      <h3 class="mb-2 mt-2 py-0 fg-teal-300">Printing Costs</h3>
+      <div
+        class="d-flex align-items-center mb-2"
+        *ngFor="let l of costBreakdown.brandingCosts.locationCosts"
+      >
+        <span>{{ l.location }}:&nbsp;</span>
+        <mat-chip
+          >Cost *per unit: <b>R {{ l.costPerUnit }}</b></mat-chip
+        >&nbsp;
+        <mat-chip
+          >Total Cost:
+          <b
+            >(R {{ l.costPerUnit }}) x {{ costBreakdown.quantity }} = R
+            {{ l.total }}</b
+          ></mat-chip
+        >
+      </div>
+    </div>
+    <div class="d-flex align-items-center">
+      <span>Total Printing Cost:&nbsp;</span>
+      <mat-chip><b>R {{ costBreakdown.brandingCosts.totalCost }}</b></mat-chip>
+    </div>
+    <h1 class="mt-2 p-4 bg-teal-100 fg-grey-900 rounded-corners col-md-4">
+      Total: <b class="fg-green-700">R {{ costBreakdown.totalCost }}</b
+      >&nbsp;<i>*VAT included</i>
+    </h1>
+  </mat-card-content>
+</mat-card>

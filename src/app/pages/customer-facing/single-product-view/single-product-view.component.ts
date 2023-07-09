@@ -27,8 +27,6 @@ export class SingleProductViewComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(async (params: any) => {
-      console.log(params);
-
       this.getProduct(params.productId);
     });
   }
@@ -82,7 +80,11 @@ export class SingleProductViewComponent implements OnInit {
     if (!this.selectedColor) {
       this.alertService.error('Select a color first');
     } else {
-      this.router.navigate(['/customize/' + this.product?.id], {});
+      this.router.navigate(['/customize/' + this.product?.id], {
+        queryParams: {
+          quantity: this.quantity,
+        },
+      });
     }
   }
 }
