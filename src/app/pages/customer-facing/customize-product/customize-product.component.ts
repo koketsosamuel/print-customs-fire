@@ -41,6 +41,7 @@ export class CustomizeProductComponent implements OnInit {
     quantity: 0,
     totalProductBaseCost: 0,
   };
+  selectedVariantIndex = -1;
 
   constructor(
     private readonly productService: ProductService,
@@ -57,6 +58,10 @@ export class CustomizeProductComponent implements OnInit {
       this.route.queryParams.subscribe((qParams: any) => {
         if (qParams.quantity) {
           this.totalPriceCalculation(Number(qParams.quantity));
+        }
+
+        if (qParams.variant) {
+          this.selectedVariantIndex = Number(qParams.variant);
         }
       });
     });
@@ -84,11 +89,9 @@ export class CustomizeProductComponent implements OnInit {
 
   setPrintingLocations(locations: any) {
     this.printingPositionsSelected = locations;
-    console.log(this.printingPositionsSelected);
   }
 
   setPrintingInfo(printingInfoArr: IPrintingInfo[]) {
-    console.log(printingInfoArr);
     this.printingInfo = printingInfoArr;
   }
 
@@ -116,6 +119,7 @@ export class CustomizeProductComponent implements OnInit {
     };
 
     if (hasSubVariations) {
+      this.totalQuantity = 0;
       Object.values(this.quantities).forEach((q) => {
         this.totalQuantity += q.quantities ? q.quantities : 0;
         sum += q.quantities ? q.quantities * q.option.additionalCost : 0;

@@ -13,21 +13,7 @@
             <b>{{ product.name }}</b>
           </h1>
 
-          <mat-card *ngIf="product.variations.options.length" class='mb-4'>
-            <mat-card-content>
-              <h4 class="m-0 p-0 fg-teal mb-3">Select color:</h4>
-              <div class="colors-block d-flex">
-                <div
-                  class="color-circle cursor"
-                  [ngClass]="{'selected-color': selectedColor && selectedColor == c.optionColor}"
-                  *ngFor="let c of product.variations.options"
-                  (click)='selectColor(c.optionColor)'
-                  [matTooltip]="c.name"
-                  [ngStyle]="{ backgroundColor: c.optionColor }"
-                ></div>
-              </div>
-            </mat-card-content>
-          </mat-card>
+          <app-color-variant-selector *ngIf="product.variations.options.length" [selectedVariantIndex]="selectedVariantIndex" (variantChanged)="selectVariant($event)" [options]="product.variations.options"></app-color-variant-selector>
 
           <div class="bg-grey-100 mb-4">
             <quill-view

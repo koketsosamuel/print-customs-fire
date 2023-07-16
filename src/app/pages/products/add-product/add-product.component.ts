@@ -74,6 +74,7 @@ export class AddProductComponent implements OnInit {
     active: false,
     unitsSold: 0,
     rank: 0,
+    quantity: 0,
   };
   productId: string | null = null;
   categories: ICategory[] = [];

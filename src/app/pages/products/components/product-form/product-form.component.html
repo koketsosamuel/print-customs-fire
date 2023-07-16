@@ -32,6 +32,17 @@
       />
     </mat-form-field>
 
+    <mat-form-field class="w-100">
+      <mat-label>Quantity</mat-label>
+      <input
+        name="quantity"
+        min="1"
+        type="number"
+        matInput
+        [(ngModel)]="product.quantity"
+      />
+    </mat-form-field>
+
     <mat-form-field appearance="fill" class="w-100">
       <mat-label>Categories</mat-label>
       <mat-select

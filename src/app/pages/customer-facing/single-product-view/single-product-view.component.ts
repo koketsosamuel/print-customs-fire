@@ -13,7 +13,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class SingleProductViewComponent implements OnInit {
   product: IProduct | null = null;
   relatedProducts: IProduct[] = [];
-  selectedColor: string | null = null;
+  selectedVariantIndex: number = -1;
   quantity: number = 1;
   hasSubVariations: boolean = false;
 
@@ -72,17 +72,24 @@ export class SingleProductViewComponent implements OnInit {
       });
   }
 
-  selectColor(color: string | null) {
-    this.selectedColor = color;
+  selectVariant(variantIndex: number) {
+    this.selectedVariantIndex = variantIndex;
   }
 
   customize() {
-    if (!this.selectedColor) {
+    if (
+      this.selectedVariantIndex < 0 &&
+      this.product?.variations.options.length
+    ) {
       this.alertService.error('Select a color first');
     } else {
       this.router.navigate(['/customize/' + this.product?.id], {
         queryParams: {
-          quantity: this.quantity,
+          quantity: !this.hasSubVariations ? this.quantity : undefined,
+          variant:
+            this.selectedVariantIndex >= 0
+              ? this.selectedVariantIndex
+              : undefined,
         },
       });
     }

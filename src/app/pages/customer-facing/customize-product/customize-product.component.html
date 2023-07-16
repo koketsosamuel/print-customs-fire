@@ -1,20 +1,29 @@
 <section class="container mt-4">
   <h1>Customize: {{ product?.name }}</h1>
+  <div class="col-md-6 col-lg-3 col-sm-8">
+    <app-color-variant-selector
+      *ngIf="product?.variations?.options?.length"
+      [options]="product.variations.options"
+      [selectedVariantIndex]="selectedVariantIndex"
+    ></app-color-variant-selector>
+  </div>
   <div class="col-lg-3 col-md-4 mb-4" *ngIf="totalPrice > 0">
-    <mat-card class='rounded-corners'>
-      <mat-card-content class='bg-teal-100 rounded-corners'>
-        <h2 class="fg-green-700" >Cost so far: <b>R {{totalPrice}}</b></h2>
+    <mat-card class="rounded-corners">
+      <mat-card-content class="bg-teal-100 rounded-corners">
+        <h2 class="fg-green-700">
+          Cost so far: <b>R {{ totalPrice }}</b>
+        </h2>
       </mat-card-content>
     </mat-card>
   </div>
 
   <mat-stepper #stepper [linear]="true">
-    <mat-step label="Quantities" *ngIf="hasSubVariations && totalQuantity <= 0">
+    <mat-step label="Quantities">
       <app-product-quantities
-        (change)="setQuantities($event)"
-        [subVariations]="
-          product.variations.subVariations || { name: '', options: [] }
-        "
+        (quantityChanged)="setQuantities($event)"
+        [product]="product"
+        [totalQuantity]="totalQuantity"
+        *ngIf="!!product"
       ></app-product-quantities>
     </mat-step>
     <mat-step label="Printing Locations" *ngIf="product?.name">
@@ -33,13 +42,14 @@
     </mat-step>
 
     <mat-step label="Upload Artwork">
-      <app-upload-artwork *ngIf="printingInfo.length > 0" [printingInfo]="printingInfo"  (change)='setPrintingInfoArtwork($event)'></app-upload-artwork>
+      <app-upload-artwork
+        *ngIf="printingInfo.length > 0"
+        [printingInfo]="printingInfo"
+        (change)="setPrintingInfoArtwork($event)"
+      ></app-upload-artwork>
     </mat-step>
     <mat-step label="Confirm">
       <app-cost-breakdown [costBreakdown]="costBreakdown"></app-cost-breakdown>
     </mat-step>
   </mat-stepper>
-
-
-
 </section>

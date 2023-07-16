@@ -21,6 +21,7 @@ export default interface IProduct {
   active: boolean;
   unitsSold: number;
   rank: number;
+  quantity: number;
 }
 
 export interface IImage {

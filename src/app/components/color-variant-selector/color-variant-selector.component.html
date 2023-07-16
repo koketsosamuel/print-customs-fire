@@ -1,0 +1,15 @@
+<mat-card *ngIf="options.length" class="mb-4">
+  <mat-card-content>
+    <h4 class="m-0 p-0 fg-teal mb-3">Select color:</h4>
+    <div class="colors-block d-flex">
+      <div
+        class="color-circle cursor"
+        *ngFor="let c of options; index as _index"
+        [ngClass]="{ 'selected-color': selectedVariantIndex == _index }"
+        (click)="selectVariant(_index)"
+        [matTooltip]="c.name"
+        [ngStyle]="{ backgroundColor: c.optionColor }"
+      ></div>
+    </div>
+  </mat-card-content>
+</mat-card>
