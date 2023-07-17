@@ -1,7 +1,7 @@
 export interface IVariation {
   name: string;
   options: IVariationOption[];
-  subVariations?: ISubVariation;
+
 }
 
 export interface IVariationOption {
@@ -10,6 +10,7 @@ export interface IVariationOption {
   optionColor: string | null;
   imagePath: string | null;
   quantityAvailable: number;
+  subVariations?: ISubVariation;
 }
 
 export interface ISubVariation {

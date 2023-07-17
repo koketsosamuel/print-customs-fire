@@ -73,9 +73,9 @@ export class CustomizeProductComponent implements OnInit {
       .getProduct(productId || '')
       .then((data: any) => {
         this.product = data.value;
-        console.log(this.product);
         this.hasSubVariations =
-          !!this.product?.variations.subVariations?.options.length;
+          !!this.product.variations.options?.[this.selectedVariantIndex]
+            ?.subVariations?.options.length;
       })
       .finally(() => {
         this.loadingSpinnerService.hide();
@@ -103,8 +103,7 @@ export class CustomizeProductComponent implements OnInit {
   totalPriceCalculation(totalQuantity = 0) {
     const productBasePrice = this.product.price;
     let sum = 0;
-    const hasSubVariations =
-      this.product.variations.subVariations?.options.length;
+
     this.totalQuantity = totalQuantity;
 
     const _costBreakDown: ICostBreakdown = {
@@ -118,7 +117,7 @@ export class CustomizeProductComponent implements OnInit {
       totalProductBaseCost: 0,
     };
 
-    if (hasSubVariations) {
+    if (this.hasSubVariations) {
       this.totalQuantity = 0;
       Object.values(this.quantities).forEach((q) => {
         this.totalQuantity += q.quantities ? q.quantities : 0;
@@ -190,8 +189,6 @@ export class CustomizeProductComponent implements OnInit {
     } else if (object.top + objectWidth > canvasInfo.h) {
       chargeableH = canvasInfo.h - object.top;
     }
-
-    console.log(chargeableH, chargeableW, chargeableH * chargeableW);
 
     return chargeableH * chargeableW;
   }

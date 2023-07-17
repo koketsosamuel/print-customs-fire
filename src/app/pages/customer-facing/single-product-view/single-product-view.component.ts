@@ -39,7 +39,8 @@ export class SingleProductViewComponent implements OnInit {
         this.product = data.value;
         console.log(this.product);
         this.hasSubVariations =
-          !!this.product?.variations.subVariations?.options.length;
+          !!this.product?.variations.options?.[this.selectedVariantIndex]
+            ?.subVariations?.options.length;
 
         this.getRelatedProducts();
       })

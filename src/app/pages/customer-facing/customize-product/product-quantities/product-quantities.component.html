@@ -2,9 +2,9 @@
   <h1 class="d-flex align-items-center fg-grey-900">
     <mat-icon>widgets</mat-icon>&nbsp;Quantities
   </h1>
-  <form action="" *ngIf="product.variations.subVariations?.options?.length">
+  <form action="" *ngIf="subVariations">
     <div class="row">
-      <div *ngFor="let opt of product.variations.subVariations?.options" class="col-md-6 col-lg-4">
+      <div *ngFor="let opt of subVariations" class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">
           <mat-label>
             {{ opt.name }}
@@ -34,7 +34,7 @@
   </form>
 
   <!-- Quantity for: no sub variations, but we have variations -->
-  <form *ngIf="!product.variations.subVariations?.options?.length && product.variations.options.length">
+  <form *ngIf="!subVariations && product.variations.options.length">
     <div class="row">
       <div class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">
@@ -57,7 +57,7 @@
   </form>
 
   <!-- Quantity for: no sub variations and variations -->
-  <form *ngIf="!product.variations.subVariations?.options?.length && !product.variations.options.length">
+  <form *ngIf="!subVariations && !product.variations.options.length">
     <div class="row">
       <div class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">

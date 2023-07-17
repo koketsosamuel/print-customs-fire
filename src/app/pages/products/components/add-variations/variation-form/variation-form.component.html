@@ -2,39 +2,68 @@
   <form>
     <mat-form-field class="w-100">
       <mat-label>Name</mat-label>
-      <input name='variation-name' type='text' matInput [(ngModel)]="variation.name" />
+      <input
+        name="variation-name"
+        type="text"
+        matInput
+        [(ngModel)]="variation.name"
+      />
     </mat-form-field>
 
     <mat-accordion>
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
-          <mat-panel-title>
-            Options
-          </mat-panel-title>
+          <mat-panel-title> Options </mat-panel-title>
         </mat-expansion-panel-header>
 
         <div>
           <div *ngFor="let opt of variation.options">
-            <mat-card class='p-4 mb-4'>
-              <app-variation-option-form [option]="opt"></app-variation-option-form>
+            <mat-card class="mb-4">
+              <mat-card-content class='bg-teal-100'>
+                <app-variation-option-form
+                [option]="opt"
+              ></app-variation-option-form>
+
+              <mat-expansion-panel hideToggle expanded class="my-4" *ngIf='isMain'>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Sub Variations </mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-variation-form  [isMain]="false"
+                  [variation]="opt.subVariations"
+                ></app-variation-form>
+              </mat-expansion-panel>
+
               <div>
-                <button type='button' mat-flat-button color="warn" (click)="removeOption(opt)">Remove Option</button>
+                <button
+                  type="button"
+                  mat-flat-button
+                  color="warn"
+                  (click)="removeOption(opt)"
+                >
+                  Remove Option
+                </button>
               </div>
+              </mat-card-content>
             </mat-card>
           </div>
 
-
-          <mat-card class='p-4 mb-4'>
-            <app-variation-option-form [option]="option"></app-variation-option-form>
+          <mat-card class="p-4 mb-4">
+            <app-variation-option-form
+              [option]="option"
+            ></app-variation-option-form>
             <div>
-              <button type='button' mat-flat-button color="primary" (click)="addOption()">Add Option</button>
+              <button
+                type="button"
+                mat-flat-button
+                color="primary"
+                (click)="addOption()"
+              >
+                Add Option
+              </button>
             </div>
           </mat-card>
-
         </div>
       </mat-expansion-panel>
     </mat-accordion>
-
-
   </form>
 </div>

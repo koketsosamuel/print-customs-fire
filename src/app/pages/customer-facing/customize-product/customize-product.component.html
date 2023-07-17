@@ -1,20 +1,22 @@
 <section class="container mt-4">
   <h1>Customize: {{ product?.name }}</h1>
-  <div class="col-md-6 col-lg-3 col-sm-8">
-    <app-color-variant-selector
-      *ngIf="product?.variations?.options?.length"
-      [options]="product.variations.options"
-      [selectedVariantIndex]="selectedVariantIndex"
-    ></app-color-variant-selector>
-  </div>
-  <div class="col-lg-3 col-md-4 mb-4" *ngIf="totalPrice > 0">
-    <mat-card class="rounded-corners">
-      <mat-card-content class="bg-teal-100 rounded-corners">
-        <h2 class="fg-green-700">
-          Cost so far: <b>R {{ totalPrice }}</b>
-        </h2>
-      </mat-card-content>
-    </mat-card>
+  <div class="row">
+    <div class="col-md-6 col-lg-3 col-sm-8">
+      <app-color-variant-selector
+        *ngIf="product?.variations?.options?.length"
+        [options]="product.variations.options"
+        [selectedVariantIndex]="selectedVariantIndex"
+      ></app-color-variant-selector>
+    </div>
+    <div class="col-lg-3 col-md-4 mb-4" *ngIf="totalPrice > 0">
+      <mat-card class="rounded-corners h-100">
+        <mat-card-content class="bg-teal-100 rounded-corners h-100 d-flex align-items-center">
+          <h2 class="fg-green-700">
+            Cost so far: <b>R {{ totalPrice }}</b>
+          </h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </div>
 
   <mat-stepper #stepper [linear]="true">
@@ -23,6 +25,7 @@
         (quantityChanged)="setQuantities($event)"
         [product]="product"
         [totalQuantity]="totalQuantity"
+        [chosenVariationIndex]="selectedVariantIndex"
         *ngIf="!!product"
       ></app-product-quantities>
     </mat-step>

@@ -1,6 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import IProduct from 'src/app/models/product.interface';
-import { ISubVariation } from 'src/app/models/variation.interface';
+import {
+  ISubVariation,
+  IVariationOption,
+} from 'src/app/models/variation.interface';
 
 @Component({
   selector: 'app-product-quantities',
@@ -15,12 +18,29 @@ export class ProductQuantitiesComponent implements OnInit {
   @Output() quantityChanged = new EventEmitter<Record<string, any>>();
   optionQuantities: Record<string, any> = {};
   validated = false;
+  hasSubVariations = false;
+  subVariations: IVariationOption[] = [];
 
   constructor() {}
 
   ngOnInit() {
-    if (this.product.variations.subVariations) {
-      this.product.variations.subVariations.options.forEach((option) => {
+    console.log(
+      this.product.variations,
+      this.product.variations?.options?.[this.chosenVariationIndex]
+        ?.subVariations
+    );
+    this.hasSubVariations =
+      !!this.product.variations?.options?.[this.chosenVariationIndex]
+        ?.subVariations?.options?.length;
+
+    // alert(this.hasSubVariations);
+
+    if (this.hasSubVariations) {
+      this.subVariations =
+        this.product.variations?.options?.[this.chosenVariationIndex]
+          .subVariations?.options || [];
+
+      this.subVariations.forEach((option) => {
         this.optionQuantities[option.name] = { quantities: null, option };
       });
     }

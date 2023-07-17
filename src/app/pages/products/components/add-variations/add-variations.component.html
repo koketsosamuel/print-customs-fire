@@ -5,21 +5,7 @@
       <app-variation-form [variation]="product.variations"></app-variation-form>
     </div>
 
-    <div><button mat-flat-button color="accent" class='mt-4' (click)="addSubVariations()"
-        *ngIf="!product.variations.subVariations">Add
-        Sub Variations</button></div>
 
-    <mat-expansion-panel hideToggle expanded *ngIf="product.variations.subVariations" class='mt-4'>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Sub Variations
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <app-variation-form [variation]="product.variations.subVariations"></app-variation-form>
-
-      <button mat-flat-button color="warn" class='mt-4' (click)="removeSubVariations()">Remove
-        Sub Variations</button>
-    </mat-expansion-panel>
   </mat-card>
   <button mat-flat-button color="warn" class='mt-4' (click)="resetVariations()">Clear Variations</button>&nbsp;
   <button mat-flat-button color="primary" class='mt-4' [disabled]="!product.id" (click)="saveChanges()">Update

@@ -19,19 +19,6 @@ export class AddVariationsComponent {
     private readonly loadingSpinner: LoadingSpinnerService
   ) {}
 
-  addSubVariations() {
-    this.product.variations.subVariations = { name: '', options: [] };
-  }
-
-  removeSubVariations() {
-    this.confimDialogue.openDialogue(
-      'Are you sure you want to remove sub variations? This action is irreversible',
-      () => {
-        delete this.product.variations.subVariations;
-      }
-    );
-  }
-
   resetVariations() {
     this.confimDialogue.openDialogue(
       'Are you sure you want to clear variations? This action is irreversible',
