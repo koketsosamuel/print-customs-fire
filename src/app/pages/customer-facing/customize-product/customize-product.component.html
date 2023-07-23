@@ -6,6 +6,7 @@
         *ngIf="product?.variations?.options?.length"
         [options]="product.variations.options"
         [selectedVariantIndex]="selectedVariantIndex"
+        [readonly]="true"
       ></app-color-variant-selector>
     </div>
     <div class="col-lg-3 col-md-4 mb-4" *ngIf="totalPrice > 0">

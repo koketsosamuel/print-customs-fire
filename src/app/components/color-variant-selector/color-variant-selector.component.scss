@@ -13,5 +13,10 @@
     border: 2px solid rgb(255, 255, 255);
     box-shadow: 2px 2px 0px var(--mint-green);
   }
+  .readonly {
+    width: 25px;
+    height: 25px;
+    border: 2px solid #cecece;
+  }
 }
 

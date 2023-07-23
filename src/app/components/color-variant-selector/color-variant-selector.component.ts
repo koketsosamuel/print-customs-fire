@@ -9,6 +9,7 @@ import { IVariationOption } from 'src/app/models/variation.interface';
 export class ColorVariantSelectorComponent {
   @Input({ required: true }) options: IVariationOption[] = [];
   @Input({ required: true }) selectedVariantIndex: number = -1;
+  @Input() readonly: boolean = false;
   @Output() variantChanged = new EventEmitter<number>();
 
   selectVariant(index: number) {

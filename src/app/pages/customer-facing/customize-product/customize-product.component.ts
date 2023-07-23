@@ -53,17 +53,17 @@ export class CustomizeProductComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(async (params: any) => {
-      await this.getProduct(params.productId);
-
       this.route.queryParams.subscribe((qParams: any) => {
         if (qParams.quantity) {
-          this.totalPriceCalculation(Number(qParams.quantity));
+          this.totalQuantity = Number(qParams.quantity);
         }
 
         if (qParams.variant) {
           this.selectedVariantIndex = Number(qParams.variant);
         }
       });
+
+      await this.getProduct(params.productId);
     });
   }
 
@@ -119,6 +119,7 @@ export class CustomizeProductComponent implements OnInit {
 
     if (this.hasSubVariations) {
       this.totalQuantity = 0;
+
       Object.values(this.quantities).forEach((q) => {
         this.totalQuantity += q.quantities ? q.quantities : 0;
         sum += q.quantities ? q.quantities * q.option.additionalCost : 0;

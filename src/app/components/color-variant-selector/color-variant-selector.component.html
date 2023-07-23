@@ -1,7 +1,9 @@
 <mat-card *ngIf="options.length" class="mb-4">
   <mat-card-content>
-    <h4 class="m-0 p-0 fg-teal mb-3">Select color:</h4>
-    <div class="colors-block d-flex">
+    <h4 class="m-0 p-0 fg-teal mb-3">
+      {{ readonly ? "Selected" : "Select" }} color:
+    </h4>
+    <div *ngIf="!readonly" class="colors-block d-flex">
       <div
         class="color-circle cursor"
         *ngFor="let c of options; index as _index"
@@ -9,6 +11,13 @@
         (click)="selectVariant(_index)"
         [matTooltip]="c.name"
         [ngStyle]="{ backgroundColor: c.optionColor }"
+      ></div>
+    </div>
+    <div class="colors-block" *ngIf="readonly">
+      <div
+        class="color-circle cursor readonly"
+        [matTooltip]="options[selectedVariantIndex].name"
+        [ngStyle]="{ backgroundColor: options[selectedVariantIndex].optionColor }"
       ></div>
     </div>
   </mat-card-content>

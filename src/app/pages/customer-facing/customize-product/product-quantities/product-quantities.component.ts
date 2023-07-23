@@ -24,16 +24,9 @@ export class ProductQuantitiesComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(
-      this.product.variations,
-      this.product.variations?.options?.[this.chosenVariationIndex]
-        ?.subVariations
-    );
     this.hasSubVariations =
       !!this.product.variations?.options?.[this.chosenVariationIndex]
         ?.subVariations?.options?.length;
-
-    // alert(this.hasSubVariations);
 
     if (this.hasSubVariations) {
       this.subVariations =
