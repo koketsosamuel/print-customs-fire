@@ -27,7 +27,6 @@ export class UploadArtworkComponent {
         if (artwork) {
           printingInfo.artwork = artwork;
         }
-        console.log(printingInfo, this.printingInfo);
       });
   }
 
