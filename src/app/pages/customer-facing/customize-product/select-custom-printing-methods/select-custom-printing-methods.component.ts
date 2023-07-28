@@ -13,45 +13,14 @@ import { IPrintingInfo } from 'src/app/models/printing-info.interface';
   templateUrl: './select-custom-printing-methods.component.html',
   styleUrls: ['./select-custom-printing-methods.component.scss'],
 })
-export class SelectCustomPrintingMethodsComponent implements OnInit {
-  @Input() product!: IProduct;
-  @Input() printingPositions: IPrintingPosition[] = [];
-  printingInfo: IPrintingInfo[] = [];
+export class SelectCustomPrintingMethodsComponent {
+  @Input({required: true}) product!: IProduct;
+  @Input({required: true}) printingInfo: IPrintingInfo[] = [];
   @Output() change = new EventEmitter<IPrintingInfo[]>();
 
   constructor(
-    private readonly printingMethodsService: PrintingMethodsService,
     private readonly dialog: MatDialog,
-    private readonly loadingSpinnerService: LoadingSpinnerService
   ) {}
-
-  async ngOnInit() {
-    this.loadingSpinnerService.show();
-    this.printingInfo = await Promise.all(
-      this.printingPositions.map(async (printingPosition) => {
-        console.log(this.product);
-
-        const methods = await Promise.all(
-          this.product.printingMethods[printingPosition.id || ''].map(
-            async (methodId) => {
-              return (
-                await this.printingMethodsService.getPrintingMethod(methodId)
-              ).value;
-            }
-          )
-        );
-
-        return {
-          printingPosition,
-          methods,
-          selectedMethod: null,
-          artwork: null,
-        };
-      })
-    ).finally(() => {
-      this.loadingSpinnerService.hide();
-    });
-  }
 
   chooseMethod(printingInfo: any) {
     this.dialog

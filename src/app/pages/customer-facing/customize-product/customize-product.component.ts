@@ -87,11 +87,21 @@ export class CustomizeProductComponent implements OnInit {
     this.totalPriceCalculation();
   }
 
-  setPrintingLocations(locations: any) {
-    this.printingPositionsSelected = locations;
-  }
+  setPrintingInfo(printingInfoArr: IPrintingInfo[], doNotReplaceExisting = true) {
+    if (!doNotReplaceExisting) {
+      this.printingInfo = this.printingInfo.filter(pi => 
+        printingInfoArr.map(_pi => _pi.printingPosition.id).includes(pi.printingPosition.id)
+      );
 
-  setPrintingInfo(printingInfoArr: IPrintingInfo[]) {
+      for (let i = 0; i < printingInfoArr.length; i++) {
+        const foundPrintingInfo = this.printingInfo.find(
+          pi => pi.printingPosition.id === printingInfoArr[i].printingPosition.id
+        );
+        if (!!foundPrintingInfo) {
+          printingInfoArr[i] = foundPrintingInfo;
+        }
+      }
+    }
     this.printingInfo = printingInfoArr;
   }
 

@@ -32,15 +32,15 @@
     </mat-step>
     <mat-step label="Printing Locations" *ngIf="product?.name">
       <app-select-customization-positions
-        (change)="setPrintingLocations($event)"
-        [availableLocations]="product.printingPositions"
+        (positionsChanged)="setPrintingInfo($event, false)"
+        [product]="product"
       ></app-select-customization-positions>
     </mat-step>
     <mat-step label="Printing Methods">
       <app-select-custom-printing-methods
-        *ngIf="printingPositionsSelected.length > 0"
+        *ngIf="printingInfo.length > 0"
         [product]="product"
-        [printingPositions]="printingPositionsSelected"
+        [printingInfo]="printingInfo"
         (change)="setPrintingInfo($event)"
       ></app-select-custom-printing-methods>
     </mat-step>
