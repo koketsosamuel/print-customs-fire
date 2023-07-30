@@ -20,6 +20,7 @@ export class PrintingPositionsFormComponent implements OnInit {
     createdAt: new Date(),
     updatedAt: new Date(),
     images: [],
+    ppi: 300,
     shortName: '',
     canvasPositionInfo: {
       x: 0,

@@ -12,4 +12,5 @@ export interface IPrintingPosition {
   createdAt: Date;
   updatedAt: Date;
   canvasPositionInfo: ICanvasPositionInfo;
+  ppi: number;
 }

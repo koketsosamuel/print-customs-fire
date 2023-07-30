@@ -36,6 +36,17 @@
         </mat-form-field>
 
         <mat-form-field class="w-100">
+          <mat-label>PPI/DPI</mat-label>
+          <input
+            name="pp_ppi"
+            matInput
+            type="number"
+            placeholder="Ex. Large Front"
+            [(ngModel)]="printingPosition.ppi"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
           <mat-label>Description</mat-label>
           <textarea
             name="pp_desc"

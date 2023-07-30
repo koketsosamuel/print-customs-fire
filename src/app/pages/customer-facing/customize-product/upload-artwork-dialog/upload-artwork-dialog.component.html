@@ -1,9 +1,9 @@
 <h1 mat-dialog-title class="mb-0">Upload artwork</h1>
 <mat-dialog-content class="full-screen-dialog-content">
-  <div class='d-flex gap-20' *ngIf="!data.viewOnly">
-    <button mat-flat-button color="primary" class='mb-4' (click)="fileInput.click()">Upload</button>
-    <button mat-flat-button color="primary" class='mb-4' (click)="saveCanvasView()" [mat-dialog-close]='artwork'>Save</button>
-    <button mat-flat-button class='mb-4' mat-dialog-close>Cancel</button>
+  <div class='d-flex gap-20' >
+    <button mat-flat-button color="primary" class='mb-4' (click)="fileInput.click()" *ngIf="!data.viewOnly">Upload</button>
+    <button mat-flat-button color="primary" class='mb-4' (click)="saveCanvasView()" [mat-dialog-close]='artwork' *ngIf="!data.viewOnly">Save</button>
+    <button mat-flat-button color="warn" class='mb-4' mat-dialog-close>{{data.viewOnly ? 'Close' : 'Cancel'}}</button>
     <input type="file" (change)="handleFileInput($event)" class='d-none' #fileInput >
   </div>
   <app-image-canvas-position

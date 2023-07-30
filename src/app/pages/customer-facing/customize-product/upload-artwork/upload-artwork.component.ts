@@ -21,6 +21,7 @@ export class UploadArtworkComponent {
         data: { printingInfo, viewOnly },
         maxWidth: '100vw',
         maxHeight: '100vh',
+        panelClass: 'custom-dialog-container'
       })
       .afterClosed()
       .subscribe((artwork: null | IArtwork) => {

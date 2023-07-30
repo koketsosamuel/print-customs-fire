@@ -68,9 +68,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
             scaleY: scaleFactor,
           });
 
-          if (this.canvasImageRef) {
-            this.canvas.remove(this.canvasImageRef);
-          }
+            this.canvas.clear();
           this.canvasImageRef = scaledImage;
           this.artwork.image = file; // store original image file
           this.canvas.add(scaledImage);

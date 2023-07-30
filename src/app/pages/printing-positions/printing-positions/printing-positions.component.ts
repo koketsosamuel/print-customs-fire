@@ -18,6 +18,7 @@ export class PrintingPositionsComponent implements OnInit {
     'Description',
     'Image',
     'Area (in^2)',
+    'PPI/DPI',
     'Created At',
     'Updated At',
     'Action',

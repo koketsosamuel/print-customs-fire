@@ -49,15 +49,13 @@ export class ImageCanvasPositionComponent implements AfterViewInit, OnInit {
       'transform',
       `translate3d(${this.canvasPositionInfo.x}px, ${this.canvasPositionInfo.y}px, ${this.canvasPositionInfo.z}px)`
     );
-    if (this.canvasPositionInfo.h > 0) {
+    if (this.canvasPositionInfo.h > 0 && this.canvasPositionInfo.w > 0) {
       this.renderer.setStyle(
         this.canvasContainer.nativeElement,
         'height',
         `${this.canvasPositionInfo.h}px`
       );
-    }
-
-    if (this.canvasPositionInfo.w > 0) {
+   
       this.renderer.setStyle(
         this.canvasContainer.nativeElement,
         'width',
