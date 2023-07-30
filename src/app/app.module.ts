@@ -82,6 +82,7 @@ import { UploadArtworkDialogComponent } from './pages/customer-facing/customize-
 import { CostBreakdownComponent } from './pages/customer-facing/customize-product/cost-breakdown/cost-breakdown.component';
 import { ProductDetailsSummaryComponent } from './pages/customer-facing/customize-product/product-details-summary/product-details-summary.component';
 import { ColorVariantSelectorComponent } from './components/color-variant-selector/color-variant-selector.component';
+import { ImageQualityMeterComponent } from './components/image-quality-meter/image-quality-meter.component';
 
 @NgModule({
   declarations: [
@@ -135,6 +136,7 @@ import { ColorVariantSelectorComponent } from './components/color-variant-select
     CostBreakdownComponent,
     ProductDetailsSummaryComponent,
     ColorVariantSelectorComponent,
+    ImageQualityMeterComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

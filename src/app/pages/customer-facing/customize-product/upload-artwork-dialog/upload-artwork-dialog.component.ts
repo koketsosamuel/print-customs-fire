@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { fabric } from 'fabric';
 import { IArtwork } from 'src/app/models/artwork.interface';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
+import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 
 @Component({
   selector: 'app-upload-artwork-dialog',
@@ -20,13 +21,14 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { printingInfo: IPrintingInfo; viewOnly: boolean }
-  ) {}
+  ) { }
   canvas!: fabric.Canvas;
   artwork: IArtwork = {
     image: null,
     mockup: null,
   };
   canvasImageRef: any = null;
+  imageQualityScore = 0;
 
   ngAfterViewInit(): void {
     this.canvas = new fabric.Canvas('canvas');
@@ -68,9 +70,11 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
             scaleY: scaleFactor,
           });
 
-            this.canvas.clear();
+          this.canvas.clear();
           this.canvasImageRef = scaledImage;
           this.artwork.image = file; // store original image file
+          this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
+          
           this.canvas.add(scaledImage);
         });
       };
@@ -95,13 +99,24 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
         this.artwork.mockup,
         () => {
           this.canvas.renderAll();
+          this.canvasImageRef = this.canvas.getObjects()[0];
+          this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
         },
         (o: any, object: any) => {
           object.set('selectable', !ref.data.viewOnly);
         }
       );
+
+
     };
 
     reader.readAsDataURL(this.artwork.image as Blob);
+  }
+
+  computeImageQuality(image: any, printingPosition: IPrintingPosition) {
+    const imagePixels = image.height * image.width;
+    const bestNumberOfPixels = printingPosition.areaInSquareInches * Math.pow(printingPosition.ppi, 2);
+    const qualityScore = (imagePixels / bestNumberOfPixels) * 100;
+    this.imageQualityScore = Number(qualityScore.toFixed(2));
   }
 }

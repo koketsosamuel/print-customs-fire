@@ -6,6 +6,8 @@
     <button mat-flat-button color="warn" class='mb-4' mat-dialog-close>{{data.viewOnly ? 'Close' : 'Cancel'}}</button>
     <input type="file" (change)="handleFileInput($event)" class='d-none' #fileInput >
   </div>
+  <app-image-quality-meter [score]="imageQualityScore"></app-image-quality-meter>
+
   <app-image-canvas-position
     [imgSrc]="data.printingInfo.printingPosition.images?.[0]?.link"
     [canvasPositionInfo]="data.printingInfo.printingPosition.canvasPositionInfo"
