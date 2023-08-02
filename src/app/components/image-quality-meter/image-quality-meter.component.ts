@@ -10,9 +10,9 @@ export class ImageQualityMeterComponent {
 
   getScoreRating() {
     if (this.score > 0 && this.score < 50) {
-      return {text: `Poor (${this.score}%)`, color: 'fg-red-600'}
+      return {text: `Poor (${this.score}%)`, color: 'fg-red-600', hint: 'the print will be low quality and pixelated'}
     } else if (this.score >= 50 && this.score < 75) {
-      return {text: `Medium (${this.score}%)`, color: 'fg-orange-600'}
+      return {text: `Medium (${this.score}%)`, color: 'fg-orange-600', hint: 'the print may be low quality and might be pixelated'}
     } else if (this.score >= 75 && this.score < 90) {
       return {text: `Satisfactory (${this.score}%)`, color: 'fg-orange-300'}
     } else if (this.score >= 90 && this.score < 100) {

@@ -85,30 +85,44 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
 
   saveCanvasView(): void {
     let json: any = this.canvas.toJSON();
-    delete json.objects[0].src;
+    console.log(this.canvas.toSVG(), json.objects[0].src);
+    
+    // delete json.objects[0].src;
     this.artwork.mockup = json;
   }
 
   importJsonToCanvas(): void {
     const reader: FileReader = new FileReader();
     const ref = this;
-    reader.onload = (e: ProgressEvent<FileReader>) => {
-      const imageUrl: string = e.target?.result as string;
-      this.artwork.mockup.objects[0].src = imageUrl;
-      this.canvas.loadFromJSON(
-        this.artwork.mockup,
-        () => {
-          this.canvas.renderAll();
-          this.canvasImageRef = this.canvas.getObjects()[0];
-          this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
-        },
-        (o: any, object: any) => {
-          object.set('selectable', !ref.data.viewOnly);
-        }
-      );
+
+    this.canvas.loadFromJSON(
+      this.artwork.mockup,
+      () => {
+        this.canvas.renderAll();
+        this.canvasImageRef = this.canvas.getObjects()[0];
+        this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
+      },
+      (o: any, object: any) => {
+        object.set('selectable', !ref.data.viewOnly);
+      }
+    );
+    // reader.onload = (e: ProgressEvent<FileReader>) => {
+    //   const imageUrl: string = e.target?.result as string;
+    //   this.artwork.mockup.objects[0].src = imageUrl;
+    //   this.canvas.loadFromJSON(
+    //     this.artwork.mockup,
+    //     () => {
+    //       this.canvas.renderAll();
+    //       this.canvasImageRef = this.canvas.getObjects()[0];
+    //       this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
+    //     },
+    //     (o: any, object: any) => {
+    //       object.set('selectable', !ref.data.viewOnly);
+    //     }
+    //   );
 
 
-    };
+    // };
 
     reader.readAsDataURL(this.artwork.image as Blob);
   }
