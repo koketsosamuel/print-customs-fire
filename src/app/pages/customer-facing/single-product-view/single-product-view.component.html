@@ -13,7 +13,7 @@
             <b>{{ product.name }}</b>
           </h1>
 
-          <app-color-variant-selector *ngIf="product.variations.options.length" [selectedVariantIndex]="selectedVariantIndex" (variantChanged)="selectVariant($event)" [options]="product.variations.options"></app-color-variant-selector>
+          <app-color-variant-selector *ngIf="product.variations.options.length" [selectedVariantId]="selectedVariantId" (variantChanged)="selectVariant($event)" [options]="product.variations.options"></app-color-variant-selector>
 
           <div class="bg-grey-100 mb-4">
             <quill-view

@@ -8,6 +8,7 @@ import { IVariationOption } from 'src/app/models/variation.interface';
 })
 export class VariationOptionFormComponent {
   @Input() option: IVariationOption = {
+    id: '',
     name: '',
     additionalCost: 0,
     optionColor: null,

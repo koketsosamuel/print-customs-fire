@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { IVariationOption } from 'src/app/models/variation.interface';
 
 @Component({
@@ -6,14 +6,20 @@ import { IVariationOption } from 'src/app/models/variation.interface';
   templateUrl: './color-variant-selector.component.html',
   styleUrls: ['./color-variant-selector.component.scss'],
 })
-export class ColorVariantSelectorComponent {
+export class ColorVariantSelectorComponent implements OnInit {
   @Input({ required: true }) options: IVariationOption[] = [];
-  @Input({ required: true }) selectedVariantIndex: number = -1;
+  @Input({ required: true }) selectedVariantId: string = '';
   @Input() readonly: boolean = false;
-  @Output() variantChanged = new EventEmitter<number>();
+  @Output() variantChanged = new EventEmitter<string>();
+  selectedVariant!: IVariationOption | undefined;
 
-  selectVariant(index: number) {
-    this.selectedVariantIndex = index;
-    this.variantChanged.emit(index);
+  ngOnInit() {
+    this.selectedVariant = this.options.find(o => o.id == this.selectedVariantId) as IVariationOption
+  }
+
+  selectVariant(id: string) {
+    this.selectedVariantId = id;
+    this.variantChanged.emit(id);
+    this.selectedVariant = this.options.find(v => v.id === id)
   }
 }

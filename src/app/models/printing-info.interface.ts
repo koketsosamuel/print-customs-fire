@@ -8,3 +8,9 @@ export interface IPrintingInfo {
   selectedMethod: IPrintingMethod | null;
   artwork: IArtwork | null;
 }
+
+export interface ICartItemPrintingInfo {
+  printingPosition: string;
+  selectedMethod: string;
+  artwork: IArtwork;
+}

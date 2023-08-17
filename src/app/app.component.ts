@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './services/auth/auth.service';
+import { CartService } from './services/cart/cart.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +10,13 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'print-customs';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private readonly auth: AuthService, private readonly cartService: CartService) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
       window.scrollTo(0, 0);
     });
+
+    this.auth.anonymousLogin();
   }
 }

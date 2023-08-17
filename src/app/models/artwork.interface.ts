@@ -1,4 +1,4 @@
 export interface IArtwork {
-  image: Blob | null;
+  image: Blob | null | string;
   mockup: any | null;
 }

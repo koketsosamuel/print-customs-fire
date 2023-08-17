@@ -8,6 +8,7 @@ import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 import IProduct from 'src/app/models/product.interface';
 import { IVariationOption } from 'src/app/models/variation.interface';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { CartItemService } from 'src/app/services/cart-item/cart-item.service';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -41,14 +42,15 @@ export class CustomizeProductComponent implements OnInit {
     quantity: 0,
     totalProductBaseCost: 0,
   };
-  selectedVariantIndex = -1;
+  selectedVariantId = '';
 
   constructor(
     private readonly productService: ProductService,
     private readonly route: ActivatedRoute,
     private readonly loadingSpinnerService: LoadingSpinnerService,
     private readonly alertService: AlertService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly cartItemService: CartItemService
   ) {}
 
   ngOnInit() {
@@ -59,7 +61,7 @@ export class CustomizeProductComponent implements OnInit {
         }
 
         if (qParams.variant) {
-          this.selectedVariantIndex = Number(qParams.variant);
+          this.selectedVariantId = qParams.variant;
         }
       });
 
@@ -74,7 +76,7 @@ export class CustomizeProductComponent implements OnInit {
       .then((data: any) => {
         this.product = data.value;
         this.hasSubVariations =
-          !!this.product.variations.options?.[this.selectedVariantIndex]
+          !!this.product.variations.options.find(o => o.id === this.selectedVariantId)
             ?.subVariations?.options.length;
       })
       .finally(() => {
@@ -87,15 +89,21 @@ export class CustomizeProductComponent implements OnInit {
     this.totalPriceCalculation();
   }
 
-  setPrintingInfo(printingInfoArr: IPrintingInfo[], doNotReplaceExisting = true) {
+  setPrintingInfo(
+    printingInfoArr: IPrintingInfo[],
+    doNotReplaceExisting = true
+  ) {
     if (!doNotReplaceExisting) {
-      this.printingInfo = this.printingInfo.filter(pi => 
-        printingInfoArr.map(_pi => _pi.printingPosition.id).includes(pi.printingPosition.id)
+      this.printingInfo = this.printingInfo.filter((pi) =>
+        printingInfoArr
+          .map((_pi) => _pi.printingPosition.id)
+          .includes(pi.printingPosition.id)
       );
 
       for (let i = 0; i < printingInfoArr.length; i++) {
         const foundPrintingInfo = this.printingInfo.find(
-          pi => pi.printingPosition.id === printingInfoArr[i].printingPosition.id
+          (pi) =>
+            pi.printingPosition.id === printingInfoArr[i].printingPosition.id
         );
         if (!!foundPrintingInfo) {
           printingInfoArr[i] = foundPrintingInfo;
@@ -202,5 +210,17 @@ export class CustomizeProductComponent implements OnInit {
     }
 
     return chargeableH * chargeableW;
+  }
+
+  addToCart() {
+    this.cartItemService.createCartItem(
+      this.printingInfo,
+      this.quantities,
+      this.totalQuantity,
+      this.totalPrice,
+      this.product.id as string,
+      this.costBreakdown,
+      this.selectedVariantId || undefined
+    );
   }
 }

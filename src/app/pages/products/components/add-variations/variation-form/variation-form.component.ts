@@ -16,6 +16,7 @@ export class VariationFormComponent {
   };
 
   option: IVariationOption = {
+    id: 'OPT_'+Math.ceil(Math.random() * 30000),
     name: '',
     additionalCost: 0,
     optionColor: '#ffffff',
@@ -30,6 +31,7 @@ export class VariationFormComponent {
 
   addOption() {
     this.variation.options.push(Object.assign({}, this.option));
+    this.option.id = 'OPT_'+Math.ceil(Math.random() * 30000),
     this.option.name = '';
     this.option.optionColor = '#ffffff';
     this.option.additionalCost = 0;

@@ -13,7 +13,7 @@ import { ProductService } from 'src/app/services/product/product.service';
 export class SingleProductViewComponent implements OnInit {
   product: IProduct | null = null;
   relatedProducts: IProduct[] = [];
-  selectedVariantIndex: number = -1;
+  selectedVariantId: string = '';
   quantity: number = 1;
   hasSubVariations: boolean = false;
 
@@ -37,9 +37,8 @@ export class SingleProductViewComponent implements OnInit {
       .getProduct(productId || '')
       .then((data: any) => {
         this.product = data.value;
-        console.log(this.product);
         this.hasSubVariations =
-          !!this.product?.variations.options?.[this.selectedVariantIndex]
+          !!this.product?.variations.options?.find(v => v.id === this.selectedVariantId)
             ?.subVariations?.options.length;
 
         this.getRelatedProducts();
@@ -73,14 +72,13 @@ export class SingleProductViewComponent implements OnInit {
       });
   }
 
-  selectVariant(variantIndex: number) {
-    this.selectedVariantIndex = variantIndex;
+  selectVariant(variantId: string) {
+    this.selectedVariantId = variantId;
   }
 
   customize() {
     if (
-      this.selectedVariantIndex < 0 &&
-      this.product?.variations.options.length
+      !this.selectedVariantId
     ) {
       this.alertService.error('Select a color first');
     } else {
@@ -88,8 +86,8 @@ export class SingleProductViewComponent implements OnInit {
         queryParams: {
           quantity: !this.hasSubVariations ? this.quantity : undefined,
           variant:
-            this.selectedVariantIndex >= 0
-              ? this.selectedVariantIndex
+            this.selectedVariantId
+              ? this.selectedVariantId
               : undefined,
         },
       });

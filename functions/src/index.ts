@@ -7,6 +7,7 @@ const storage = admin.storage();
 const bucketName = 'custom-prints-aae9c.appspot.com';
 import { getOriginalImagePath } from './helpers/get-original-image-path';
 import { generateImageObject } from './helpers/generate-image-object';
+import {globalConfig} from '../../config/config'
 import 'firebase-functions/logger/compat';
 
 export const addImageToCollection = functions
@@ -19,8 +20,13 @@ export const addImageToCollection = functions
       ? object.contentType.startsWith('image/')
       : false;
     const isSvg = !!object.contentType?.includes('svg');
+    const skipOptimization = !!object.name?.includes(globalConfig.words.skip);
 
-    if (isSvg || (isImage && object.metadata?.resizedImage)) {
+    if (
+      isSvg ||
+      (isImage && object.metadata?.resizedImage) ||
+      (skipOptimization && object.metadata?.resizedImage)
+    ) {
       const imageNameArr = object.name?.split('/') || [];
       const imageName = imageNameArr.pop() || '';
 

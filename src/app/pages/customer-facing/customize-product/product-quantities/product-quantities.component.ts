@@ -14,27 +14,27 @@ export class ProductQuantitiesComponent implements OnInit {
   @Input({ required: true }) product!: IProduct;
   @Input() quantityAvailable: number = 0;
   @Input() totalQuantity: number = 0;
-  @Input() chosenVariationIndex: number = -1;
+  @Input() chosenVariationId: string = '';
   @Output() quantityChanged = new EventEmitter<Record<string, any>>();
   optionQuantities: Record<string, any> = {};
   validated = false;
   hasSubVariations = false;
   subVariations: IVariationOption[] = [];
+  selectedVariation!: IVariationOption;
 
   constructor() {}
 
   ngOnInit() {
     this.hasSubVariations =
-      !!this.product.variations?.options?.[this.chosenVariationIndex]
+      !!this.product.variations?.options?.find(o => o.id == this.chosenVariationId)
         ?.subVariations?.options?.length;
 
     if (this.hasSubVariations) {
       this.subVariations =
-        this.product.variations?.options?.[this.chosenVariationIndex]
-          .subVariations?.options || [];
+        this.product.variations?.options?.find(o => o.id == this.chosenVariationId)?.subVariations?.options || [];
 
       this.subVariations.forEach((option) => {
-        this.optionQuantities[option.name] = { quantities: null, option };
+        this.optionQuantities[option.id] = { quantities: null, option };
       });
     }
   }

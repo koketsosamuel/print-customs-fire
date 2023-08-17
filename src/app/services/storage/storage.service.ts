@@ -5,12 +5,14 @@ import IProduct from 'src/app/models/product.interface';
 import { AlertService } from '../alert/alert.service';
 import { ConfirmDialogueService } from '../confirm-dialogue/confirm-dialogue.service';
 import { LoadingSpinnerService } from '../loading-spinner/loading-spinner.service';
+import { globalConfig } from 'config/config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
   BASE_IMAGE_FOLDER = 'images/';
+  BASE_ARTWORK_FOLDER = 'artwork/';
 
   constructor(
     private readonly storage: AngularFireStorage,
@@ -25,14 +27,18 @@ export class StorageService {
   async uploadImages(
     images: Blob[] | any[],
     item: { id: string; name: string },
-    collectionName: string
+    collectionName: string,
+    skipImageOptimization = false
   ) {
     this.loadingSpinner.show();
     const imagesUpload = await Promise.all(
       images.map(async (image) => {
-        const fileName = this.getFileName(item, collectionName, image);
+        const fileName = this.getFileName(item, collectionName, image, skipImageOptimization);
+        const basePath = !skipImageOptimization
+          ? this.BASE_IMAGE_FOLDER
+          : this.BASE_ARTWORK_FOLDER;
         const res = await this.uploadFile(
-          this.BASE_IMAGE_FOLDER + collectionName,
+          basePath + collectionName,
           fileName,
           image
         ).catch((error) => {
@@ -43,6 +49,7 @@ export class StorageService {
     )
       .then((res) => {
         this.alertService.success('Images have been uploaded!');
+        return res;
       })
       .catch((err) => {
         this.alertService.error(
@@ -86,12 +93,19 @@ export class StorageService {
     );
   }
 
-  private getFileName(item: any, collection: string, image: Blob) {
+  getFileName(
+    item: any,
+    collection: string,
+    image: Blob,
+    skipImageOptimization = false
+  ) {
     // productID_collectionName_productName_originalImageExt_imageName
     const itemName = item.name.replaceAll(' ', '-').replaceAll('_', '-');
     const imageExtension = image.name.split('.').pop();
     const imageName = image.name.replaceAll('_', '-');
 
-    return `${item.id}_${collection}_${itemName}_${imageExtension}_${imageName}`;
+    return `${item.id}_${collection}_${itemName}_${imageExtension}_${
+      skipImageOptimization ? globalConfig.words.skip + '-' : ''
+    }${imageName}`;
   }
 }

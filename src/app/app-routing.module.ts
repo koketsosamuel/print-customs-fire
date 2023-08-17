@@ -111,6 +111,10 @@ const routes: Routes = [
     path: 'customize/:productId',
     component: CustomizeProductComponent,
   },
+  {
+    path: 'customize/cart-item/:cartItemId',
+    component: CustomizeProductComponent,
+  },
 ];
 
 @NgModule({

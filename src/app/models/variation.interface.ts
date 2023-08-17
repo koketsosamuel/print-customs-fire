@@ -5,6 +5,7 @@ export interface IVariation {
 }
 
 export interface IVariationOption {
+  id: string;
   name: string;
   additionalCost: number;
   optionColor: string | null;

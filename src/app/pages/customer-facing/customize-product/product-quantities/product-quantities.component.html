@@ -14,7 +14,7 @@
             type="number"
             [disabled]="opt.quantityAvailable <= 0"
             [name]="'quantity-for-' + opt.name"
-            [(ngModel)]="optionQuantities[opt.name].quantities"
+            [(ngModel)]="optionQuantities[opt.id].quantities"
             [max]='opt.quantityAvailable'
             (keyup)="validate()"
           />
@@ -44,10 +44,8 @@
           <input
             matInput
             type="number"
-            [disabled]="product.variations.options[chosenVariationIndex].quantityAvailable <= 0"
             name="quantity-for-x"
             [(ngModel)]="totalQuantity"
-            [max]='product.variations.options[chosenVariationIndex].quantityAvailable'
             (keyup)="validate()"
           />
 
