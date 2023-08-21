@@ -21,7 +21,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: { printingInfo: IPrintingInfo; viewOnly: boolean }
-  ) { }
+  ) {}
   canvas!: fabric.Canvas;
   artwork: IArtwork = {
     image: null,
@@ -29,6 +29,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
   };
   canvasImageRef: any = null;
   imageQualityScore = 0;
+  scaleFactor: number = 0;
 
   ngAfterViewInit(): void {
     this.canvas = new fabric.Canvas('canvas');
@@ -53,28 +54,30 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
           const canvasHeight = this.canvas.getHeight();
           const imageAspectRatio = image.width / image.height;
           const canvasAspectRatio = canvasWidth / canvasHeight;
-          let scaleFactor;
 
           if (imageAspectRatio > canvasAspectRatio) {
             // Image is wider than the canvas
-            scaleFactor = canvasWidth / image.width;
+            this.scaleFactor = canvasWidth / image.width;
           } else {
             // Image is taller or has the same aspect ratio as the canvas
-            scaleFactor = canvasHeight / image.height;
+            this.scaleFactor = canvasHeight / image.height;
           }
 
           const scaledImage = new fabric.Image(image.getElement(), {
             left: 0,
             top: 0,
-            scaleX: scaleFactor,
-            scaleY: scaleFactor,
+            scaleX: this.scaleFactor,
+            scaleY: this.scaleFactor,
           });
 
           this.canvas.clear();
           this.canvasImageRef = scaledImage;
           this.artwork.image = file; // store original image file
-          this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
-          
+          this.computeImageQuality(
+            this.canvasImageRef,
+            this.data.printingInfo.printingPosition
+          );
+
           this.canvas.add(scaledImage);
         });
       };
@@ -85,14 +88,17 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
 
   saveCanvasView(): void {
     let json: any = this.canvas.toJSON();
-    console.log(this.canvas.toSVG(), json.objects[0].src);
-    
-    // delete json.objects[0].src;
+    // overriding scale because fabricjs exports them rounded to 2 decimal places
+    json.objects[0] = {
+      ...json.objects[0],
+      scaleX: this.scaleFactor,
+      scaleY: this.scaleFactor,
+    };
+
     this.artwork.mockup = json;
   }
 
   importJsonToCanvas(): void {
-    const reader: FileReader = new FileReader();
     const ref = this;
 
     this.canvas.loadFromJSON(
@@ -100,36 +106,25 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
       () => {
         this.canvas.renderAll();
         this.canvasImageRef = this.canvas.getObjects()[0];
-        this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
+
+        // IMPORTANT - if not set, the image will not display correctly and as expected
+        this.scaleFactor = this.canvasImageRef.scaleX;
+        
+        this.computeImageQuality(
+          this.canvasImageRef,
+          this.data.printingInfo.printingPosition
+        );
       },
       (o: any, object: any) => {
         object.set('selectable', !ref.data.viewOnly);
       }
     );
-    // reader.onload = (e: ProgressEvent<FileReader>) => {
-    //   const imageUrl: string = e.target?.result as string;
-    //   this.artwork.mockup.objects[0].src = imageUrl;
-    //   this.canvas.loadFromJSON(
-    //     this.artwork.mockup,
-    //     () => {
-    //       this.canvas.renderAll();
-    //       this.canvasImageRef = this.canvas.getObjects()[0];
-    //       this.computeImageQuality(this.canvasImageRef, this.data.printingInfo.printingPosition);
-    //     },
-    //     (o: any, object: any) => {
-    //       object.set('selectable', !ref.data.viewOnly);
-    //     }
-    //   );
-
-
-    // };
-
-    reader.readAsDataURL(this.artwork.image as Blob);
   }
 
   computeImageQuality(image: any, printingPosition: IPrintingPosition) {
     const imagePixels = image.height * image.width;
-    const bestNumberOfPixels = printingPosition.areaInSquareInches * Math.pow(printingPosition.ppi, 2);
+    const bestNumberOfPixels =
+      printingPosition.areaInSquareInches * Math.pow(printingPosition.ppi, 2);
     const qualityScore = (imagePixels / bestNumberOfPixels) * 100;
     this.imageQualityScore = Number(qualityScore.toFixed(2));
   }
