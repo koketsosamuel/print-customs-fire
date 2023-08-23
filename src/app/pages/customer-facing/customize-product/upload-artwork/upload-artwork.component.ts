@@ -24,7 +24,9 @@ export class UploadArtworkComponent {
         panelClass: 'custom-dialog-container'
       })
       .afterClosed()
-      .subscribe((artwork: null | IArtwork) => {
+      .subscribe((artwork: null | Record<string, any>) => {
+        console.log(artwork, 333);
+        
         if (artwork) {
           printingInfo.artwork = artwork;
         }

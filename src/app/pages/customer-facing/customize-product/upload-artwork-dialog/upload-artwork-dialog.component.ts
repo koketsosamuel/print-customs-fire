@@ -5,9 +5,8 @@ import {
   Inject,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { fabric } from 'fabric';
-import { IArtwork } from 'src/app/models/artwork.interface';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 
@@ -20,13 +19,11 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   constructor(
     @Inject(MAT_DIALOG_DATA)
-    public data: { printingInfo: IPrintingInfo; viewOnly: boolean }
+    public data: { printingInfo: IPrintingInfo; viewOnly: boolean },
+    private dialogRef: MatDialogRef<UploadArtworkDialogComponent>
   ) {}
   canvas!: fabric.Canvas;
-  artwork: IArtwork = {
-    image: null,
-    mockup: null,
-  };
+  artwork: Record<string, any> | null = null;
   canvasImageRef: any = null;
   imageQualityScore = 0;
   scaleFactor: number = 0;
@@ -34,7 +31,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.canvas = new fabric.Canvas('canvas');
     if (this.data.printingInfo.artwork) {
-      this.artwork = { ...(this.data.printingInfo.artwork as IArtwork) };
+      this.artwork = { ...this.data.printingInfo.artwork };
       this.importJsonToCanvas();
     }
   }
@@ -66,13 +63,12 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
           const scaledImage = new fabric.Image(image.getElement(), {
             left: 0,
             top: 0,
-            scaleX: this.scaleFactor,
-            scaleY: this.scaleFactor,
+            // scaleX: this.scaleFactor,
+            // scaleY: this.scaleFactor,
           });
 
           this.canvas.clear();
           this.canvasImageRef = scaledImage;
-          this.artwork.image = file; // store original image file
           this.computeImageQuality(
             this.canvasImageRef,
             this.data.printingInfo.printingPosition
@@ -88,21 +84,25 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
 
   saveCanvasView(): void {
     let json: any = this.canvas.toJSON();
+    this.artwork = json;
     // overriding scale because fabricjs exports them rounded to 2 decimal places
     json.objects[0] = {
       ...json.objects[0],
       scaleX: this.scaleFactor,
       scaleY: this.scaleFactor,
     };
-
-    this.artwork.mockup = json;
+    console.log(json, this.artwork);
+    
+    this.artwork = json;
+    this.dialogRef.close(json);
+    console.log(json, this.artwork);
   }
 
   importJsonToCanvas(): void {
     const ref = this;
 
     this.canvas.loadFromJSON(
-      this.artwork.mockup,
+      this.artwork,
       () => {
         this.canvas.renderAll();
         this.canvasImageRef = this.canvas.getObjects()[0];

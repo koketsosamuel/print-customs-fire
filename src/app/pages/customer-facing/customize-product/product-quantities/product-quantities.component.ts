@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import IProduct from 'src/app/models/product.interface';
 import {
-  ISubVariation,
   IVariationOption,
 } from 'src/app/models/variation.interface';
 
@@ -16,7 +15,7 @@ export class ProductQuantitiesComponent implements OnInit {
   @Input() totalQuantity: number = 0;
   @Input() chosenVariationId: string = '';
   @Output() quantityChanged = new EventEmitter<Record<string, any>>();
-  optionQuantities: Record<string, any> = {};
+  @Input({ required: true }) optionQuantities: Record<string, any> = {};
   validated = false;
   hasSubVariations = false;
   subVariations: IVariationOption[] = [];
@@ -25,18 +24,24 @@ export class ProductQuantitiesComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.hasSubVariations =
-      !!this.product.variations?.options?.find(o => o.id == this.chosenVariationId)
-        ?.subVariations?.options?.length;
+    this.hasSubVariations = !!this.product.variations?.options?.find(
+      (o) => o.id == this.chosenVariationId
+    )?.subVariations?.options?.length;
 
     if (this.hasSubVariations) {
       this.subVariations =
-        this.product.variations?.options?.find(o => o.id == this.chosenVariationId)?.subVariations?.options || [];
+        this.product.variations?.options?.find(
+          (o) => o.id == this.chosenVariationId
+        )?.subVariations?.options || [];
 
       this.subVariations.forEach((option) => {
-        this.optionQuantities[option.id] = { quantities: null, option };
+        if (this.optionQuantities[option.id] === undefined) {
+          this.optionQuantities[option.id] = { quantities: null, option };
+        }
       });
     }
+
+    this.validate();
   }
 
   validate() {

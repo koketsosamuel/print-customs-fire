@@ -4,7 +4,7 @@ import { IPrintingMethod } from 'src/app/models/printing-method.interface';
 import { DbService } from '../db/db.service';
 import { AlertService } from '../alert/alert.service';
 import { StorageService } from '../storage/storage.service';
-import { IImage } from 'src/app/models/product.interface';
+import IProduct, { IImage } from 'src/app/models/product.interface';
 import { WhereFilterOp } from '@angular/fire/firestore';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 
@@ -18,7 +18,7 @@ export class PrintingMethodsService {
     private readonly loadingSpinnerService: LoadingSpinnerService,
     private readonly db: DbService,
     private readonly alertService: AlertService,
-    private readonly storage: StorageService
+    private readonly storage: StorageService,
   ) {}
 
   async add(printingMethod: IPrintingMethod) {
@@ -107,6 +107,18 @@ export class PrintingMethodsService {
       where,
       limit,
       after
+    );
+  }
+
+  getMethodsForPositionOnProduct(product: IProduct, positionId: string) {
+    return Promise.all(
+      product.printingMethods[positionId || ''].map(
+        async (methodId) => {
+          return (
+            await this.getPrintingMethod(methodId)
+          ).value;
+        }
+      )
     );
   }
 }

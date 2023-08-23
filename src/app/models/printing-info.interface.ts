@@ -6,11 +6,11 @@ export interface IPrintingInfo {
   printingPosition: IPrintingPosition;
   methods: IPrintingMethod[];
   selectedMethod: IPrintingMethod | null;
-  artwork: IArtwork | null;
+  artwork: Record<string, any> | null;
 }
 
 export interface ICartItemPrintingInfo {
   printingPosition: string;
   selectedMethod: string;
-  artwork: IArtwork;
+  artwork: string;
 }

@@ -11,7 +11,9 @@
     </div>
     <div class="col-lg-3 col-md-4 mb-4" *ngIf="totalPrice > 0">
       <mat-card class="rounded-corners h-100">
-        <mat-card-content class="bg-teal-100 rounded-corners h-100 d-flex align-items-center">
+        <mat-card-content
+          class="bg-teal-100 rounded-corners h-100 d-flex align-items-center"
+        >
           <h2 class="fg-green-700">
             Cost so far: <b>R {{ totalPrice }}</b>
           </h2>
@@ -20,13 +22,14 @@
     </div>
   </div>
 
-  <mat-stepper #stepper [linear]="true">
+  <mat-stepper #stepper [linear]="true && !editMode" *ngIf="!!product">
     <mat-step label="Quantities">
       <app-product-quantities
         (quantityChanged)="setQuantities($event)"
         [product]="product"
         [totalQuantity]="totalQuantity"
         [chosenVariationId]="selectedVariantId"
+        [optionQuantities]="quantities"
         *ngIf="!!product"
       ></app-product-quantities>
     </mat-step>
@@ -34,6 +37,7 @@
       <app-select-customization-positions
         (positionsChanged)="setPrintingInfo($event, false)"
         [product]="product"
+        [selectedOptions]="selectedPrintingLocations"
       ></app-select-customization-positions>
     </mat-step>
     <mat-step label="Printing Methods">
@@ -54,7 +58,14 @@
     </mat-step>
     <mat-step label="Confirm">
       <app-cost-breakdown [costBreakdown]="costBreakdown"></app-cost-breakdown>
-      <button (click)="addToCart()">cart</button>
+      <button
+        mat-flat-button
+        color="primary"
+        class="mt-4"
+        (click)="addToCart()"
+      >
+        {{ editMode ? "Update" : "Add to Cart" }}
+      </button>
     </mat-step>
   </mat-stepper>
 </section>

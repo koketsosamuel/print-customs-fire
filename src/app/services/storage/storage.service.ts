@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/compat/storage';
 import { catchError } from 'rxjs';
 import IProduct from 'src/app/models/product.interface';
 import { AlertService } from '../alert/alert.service';
@@ -107,5 +107,32 @@ export class StorageService {
     return `${item.id}_${collection}_${itemName}_${imageExtension}_${
       skipImageOptimization ? globalConfig.words.skip + '-' : ''
     }${imageName}`;
+  }
+
+  async uploadArtworkJSON(data: any, cartItemId: string): Promise<string> {
+    const filename = cartItemId + '-' + Math.ceil(Math.random() * 200000) + '.json';
+    const fullPath = this.BASE_ARTWORK_FOLDER + filename;
+    let storageRef = this.storage.ref(fullPath);
+    await storageRef.putString(JSON.stringify(data));
+    return fullPath;
+  }
+
+  getArtworkJSON(path: string): Promise<Record<string, any>> {
+    const storageRef = this.storage.ref(path);
+    return new Promise((resolve, reject) => {
+      storageRef.getDownloadURL()
+        .pipe(catchError(err => {
+          reject(err);
+          return err;
+        })).subscribe(url => {
+          const data: any = this.fetchAndSaveJSON(url);
+          resolve(data);
+        })
+    })
+  }
+
+  private fetchAndSaveJSON(url: string) {
+    return fetch(url)
+      .then(response => response.json())
   }
 }

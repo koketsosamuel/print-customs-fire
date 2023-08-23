@@ -9,6 +9,7 @@ import { StorageService } from '../storage/storage.service';
 import { CartService } from '../cart/cart.service';
 import { AlertService } from '../alert/alert.service';
 import { ICostBreakdown } from 'src/app/models/cost-breakdown.interface';
+import { AngularFireUploadTask } from '@angular/fire/compat/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -53,42 +54,33 @@ export class CartItemService {
       const savedCart = await this.db.addDocument(this.collection, cartItem);
 
       // upload artwork
-      await this.uploadCartArtworks(printingInfoArr, savedCart);
+      const PI: ICartItemPrintingInfo[] = await this.uploadCartArtworks(printingInfoArr, savedCart);
 
-      // attach images (map printinginfo)
-      const cartPrintingInfoArr: ICartItemPrintingInfo[] = printingInfoArr.map(
-        (pi) => ({
-          printingPosition: pi.printingPosition.id as string,
-          selectedMethod: pi.selectedMethod?.id as string,
-          artwork: {
-            image: this.storage.getFileName(
-              { name: 'CartItem', id: savedCart.id },
-              this.collection,
-              pi.artwork?.image as Blob,
-              true
-            ),
-            mockup: pi.artwork?.mockup,
-          },
-        })
-      );
+      console.log(PI);
+      
 
       await this.db.updateById(this.collection, savedCart.id, {
-        printingInfoArr: cartPrintingInfoArr,
+        printingInfoArr: PI,
       });
       this.alertService.success('Item added to cart successfully!');
     } catch (err) {
-      console.error(err);
-      
-      this.alertService.error('Error add item to cart, please try again.');
+      console.error(err)
+      this.alertService.error('Error adding item to cart, please try again.');
     }
   }
 
   uploadCartArtworks(printingInfoArr: IPrintingInfo[], cartItem: ICartItem) {
-    return this.storage.uploadImages(
-      printingInfoArr.map((pi) => pi.artwork?.image),
-      { name: 'cart', id: cartItem?.id || '' },
-      this.collection,
-      true
-    );
+    return Promise.all(printingInfoArr.map(async pi => {
+      const res: string = await this.storage.uploadArtworkJSON(pi.artwork, cartItem.id as string)
+      return {
+        printingPosition: pi.printingPosition.id as string,
+        selectedMethod: pi.selectedMethod?.id as string,
+        artwork: res
+      }
+    }));
+  }
+
+  getCartItemById(id: string) {
+    return this.db.getDocumentById(this.collection, id);
   }
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IArtwork } from 'src/app/models/artwork.interface';
 import { ICanvasPositionInfo } from 'src/app/models/canvas-position-info.interface';
+import { ICartItem } from 'src/app/models/cart.interface';
 import { ICostBreakdown } from 'src/app/models/cost-breakdown.interface';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
@@ -10,7 +13,10 @@ import { IVariationOption } from 'src/app/models/variation.interface';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { CartItemService } from 'src/app/services/cart-item/cart-item.service';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
+import { PrintingMethodsService } from 'src/app/services/printing-methods/printing-methods.service';
+import { PrintingPositionsService } from 'src/app/services/printing-positions/printing-positions.service';
 import { ProductService } from 'src/app/services/product/product.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-customize-product',
@@ -25,11 +31,6 @@ export class CustomizeProductComponent implements OnInit {
     { quantities: number | null; option: IVariationOption }
   > = {};
   totalQuantity: number = 0;
-  printingPositionsSelected: IPrintingPosition[] = [];
-  selectedPrintingMethods: {
-    position: IPrintingPosition;
-    method: IPrintingMethod;
-  }[] = [];
   totalPrice: number = 0;
   printingInfo: IPrintingInfo[] = [];
   costBreakdown: ICostBreakdown = {
@@ -43,6 +44,9 @@ export class CustomizeProductComponent implements OnInit {
     totalProductBaseCost: 0,
   };
   selectedVariantId = '';
+  cartItem!: ICartItem;
+  selectedPrintingLocations: string[] = [];
+  editMode = false;
 
   constructor(
     private readonly productService: ProductService,
@@ -50,7 +54,10 @@ export class CustomizeProductComponent implements OnInit {
     private readonly loadingSpinnerService: LoadingSpinnerService,
     private readonly alertService: AlertService,
     private readonly router: Router,
-    private readonly cartItemService: CartItemService
+    private readonly cartItemService: CartItemService,
+    private readonly printingMethodsService: PrintingMethodsService,
+    private readonly printingPositionsService: PrintingPositionsService,
+    private readonly storage: StorageService
   ) {}
 
   ngOnInit() {
@@ -65,7 +72,12 @@ export class CustomizeProductComponent implements OnInit {
         }
       });
 
-      await this.getProduct(params.productId);
+      if (params.cartItemId) {
+        this.loadCartItem(params.cartItemId);
+        this.editMode = true;
+      } else if (params.productId) {
+        await this.getProduct(params.productId);
+      }
     });
   }
 
@@ -75,9 +87,9 @@ export class CustomizeProductComponent implements OnInit {
       .getProduct(productId || '')
       .then((data: any) => {
         this.product = data.value;
-        this.hasSubVariations =
-          !!this.product.variations.options.find(o => o.id === this.selectedVariantId)
-            ?.subVariations?.options.length;
+        this.hasSubVariations = !!this.product.variations.options.find(
+          (o) => o.id === this.selectedVariantId
+        )?.subVariations?.options.length;
       })
       .finally(() => {
         this.loadingSpinnerService.hide();
@@ -154,7 +166,7 @@ export class CustomizeProductComponent implements OnInit {
         const canvasArea = canvasInfo.w * canvasInfo.h;
 
         const chargeableArea = this.calculateChargeableAreaOfArtwork(
-          p.artwork?.mockup.objects[0],
+          (p.artwork as any)?.objects[0],
           p.printingPosition.canvasPositionInfo
         );
 
@@ -222,5 +234,71 @@ export class CustomizeProductComponent implements OnInit {
       this.costBreakdown,
       this.selectedVariantId || undefined
     );
+  }
+
+  async loadCartItem(cartItemId: string) {
+    try {
+      this.loadingSpinnerService.show();
+
+      // fetch cart item
+      this.cartItem = await this.cartItemService
+        .getCartItemById(cartItemId)
+        .then((res) => res.value);
+
+      this.selectedPrintingLocations = this.cartItem.printingInfoArr!.map(
+        (pi) => pi.printingPosition || ''
+      );
+
+      // fetch product
+      this.product = await this.productService
+        .getProduct(this.cartItem.productId)
+        .then((res) => res.value);
+
+      // set quantities
+      this.quantities = this.cartItem.quantities;
+
+      // set variant
+      this.selectedVariantId = this.cartItem.variation || '';
+
+      // set total quantity
+      this.totalQuantity = this.cartItem.totalQuantity;
+
+      // re-create printing info array
+      const printingInfoArr: IPrintingInfo[] = await Promise.all(
+        this.cartItem.printingInfoArr!.map(async (pi) => {
+          const printingPosition: IPrintingPosition =
+            await this.printingPositionsService
+              .getPrintingPosition(pi.printingPosition)
+              .then((res) => res.value);
+
+          const methods =
+            await this.printingMethodsService.getMethodsForPositionOnProduct(
+              this.product,
+              pi.printingPosition
+            );
+
+          const selectedMethod =
+            methods.find((m) => m.id === pi.selectedMethod) || null;
+
+          const artwork = await this.storage.getArtworkJSON(pi.artwork);
+
+          return {
+            printingPosition,
+            methods,
+            selectedMethod,
+            artwork,
+          };
+        })
+      );
+
+      console.log(this.selectedPrintingLocations);
+
+      this.printingInfo = printingInfoArr;
+      this.totalPriceCalculation(this.totalQuantity);
+    } catch (err) {
+      this.alertService.error('Error loading this cart item, please retry!');
+    } finally {
+      this.loadingSpinnerService.hide();
+    }
   }
 }
