@@ -78,7 +78,7 @@ export class CategoryService {
 
       if (newImages?.length) {
         if (data.images?.length) {
-          await this.storageService.removeImages(
+          await this.storageService.removeFiles(
             data.images.map((image: IImage) => image.path)
           );
         }

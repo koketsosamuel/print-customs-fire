@@ -66,7 +66,7 @@ export class ManageImagesComponent {
       () => {
         this.loadingSpinner.show();
         this.storageService
-          .removeImage(path)
+          .removeFile(path)
           .then(() => {
             this.processImagesLoading(30 * 1000);
             this.product.images = this.product.images?.filter(

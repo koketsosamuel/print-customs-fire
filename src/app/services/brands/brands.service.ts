@@ -73,8 +73,8 @@ export class BrandsService {
 
       if (newImages?.length) {
         if (data.images?.length) {
-          await this.storageService.removeImages(
-            data.images.map((image: IImage) => image.path)
+          await this.storageService.removeFiles(
+            data.images.map((image: IImage) => image.path), 'Image'
           );
         }
         data.images = [];

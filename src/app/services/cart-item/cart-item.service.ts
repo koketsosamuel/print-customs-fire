@@ -53,11 +53,7 @@ export class CartItemService {
 
       const savedCart = await this.db.addDocument(this.collection, cartItem);
 
-      // upload artwork
-      const PI: ICartItemPrintingInfo[] = await this.uploadCartArtworks(printingInfoArr, savedCart);
-
-      console.log(PI);
-      
+      const PI: ICartItemPrintingInfo[] = await this.uploadCartArtworks(printingInfoArr, savedCart.id);
 
       await this.db.updateById(this.collection, savedCart.id, {
         printingInfoArr: PI,
@@ -69,9 +65,55 @@ export class CartItemService {
     }
   }
 
-  uploadCartArtworks(printingInfoArr: IPrintingInfo[], cartItem: ICartItem) {
+  async updateCartItem(
+    cartItem: ICartItem,
+    printingInfoArr: IPrintingInfo[],
+    quantities: Record<string, any>,
+    totalQuantities: number,
+    totalPrice: number,
+    productId: string,
+    costBreakdown: ICostBreakdown,
+    printingInfoChanged: boolean = false,
+    variation: string | undefined = undefined
+  ) {
+    try {
+
+      const cartItemId = cartItem.id as string;
+
+      // create item
+      const newCartItem: ICartItem | any = {
+        totalQuantity: totalQuantities,
+        quantities: quantities,
+        totalPrice: totalPrice,
+        updatedAt: new Date(),
+        productId,
+        costBreakdown,
+        variation
+      };
+
+      if (printingInfoChanged) {
+        const printingInfo: ICartItemPrintingInfo[] = await this.uploadCartArtworks(printingInfoArr, cartItemId);
+        newCartItem.printingInfoArr = printingInfo;
+      }      
+
+      const updatedCart = await this.db.updateById(this.collection, cartItemId, newCartItem);
+
+      if (printingInfoChanged) {
+        this.alertService.success('Item updated successfully!');
+        await this.storage.removeFiles(cartItem.printingInfoArr!.map(pi => pi.artwork), 'artwork');
+        this.alertService.success('Old artwork removed!');
+      }
+      
+      
+    } catch (err) {
+      console.error(err)
+      this.alertService.error('Error updating item, please try again.');
+    }
+  }
+
+  uploadCartArtworks(printingInfoArr: IPrintingInfo[], cartItemId: string) {
     return Promise.all(printingInfoArr.map(async pi => {
-      const res: string = await this.storage.uploadArtworkJSON(pi.artwork, cartItem.id as string)
+      const res: string = await this.storage.uploadArtworkJSON(pi.artwork, cartItemId as string)
       return {
         printingPosition: pi.printingPosition.id as string,
         selectedMethod: pi.selectedMethod?.id as string,

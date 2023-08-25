@@ -224,16 +224,28 @@ export class CustomizeProductComponent implements OnInit {
     return chargeableH * chargeableW;
   }
 
-  addToCart() {
-    this.cartItemService.createCartItem(
-      this.printingInfo,
-      this.quantities,
-      this.totalQuantity,
-      this.totalPrice,
-      this.product.id as string,
-      this.costBreakdown,
-      this.selectedVariantId || undefined
-    );
+  submitCartItem() {
+    this.editMode
+      ? this.cartItemService.updateCartItem(
+          this.cartItem,
+          this.printingInfo,
+          this.quantities,
+          this.totalQuantity,
+          this.totalPrice,
+          this.product.id as string,
+          this.costBreakdown,
+          true,
+          this.selectedVariantId || undefined
+        )
+      : this.cartItemService.createCartItem(
+          this.printingInfo,
+          this.quantities,
+          this.totalQuantity,
+          this.totalPrice,
+          this.product.id as string,
+          this.costBreakdown,
+          this.selectedVariantId || undefined
+        );
   }
 
   async loadCartItem(cartItemId: string) {

@@ -69,7 +69,7 @@ export class PrintingPositionsService {
 
       if (newImages?.length) {
         if (data.images?.length) {
-          await this.storage.removeImages(
+          await this.storage.removeFiles(
             data.images.map((image: IImage) => image.path)
           );
         }

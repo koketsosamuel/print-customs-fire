@@ -62,14 +62,14 @@ export class StorageService {
     return imagesUpload;
   }
 
-  removeImage(path: string) {
+  removeFile(path: string, fileType: string = 'image') {
     const promise = new Promise((resolve, reject) => {
       this.storage
         .ref(path)
         .delete()
         .pipe(
           catchError((err) => {
-            this.alertService.error('Error removing image');
+            this.alertService.error(`Error removing ${fileType}`);
             reject(err);
             throw new Error(err);
           })
@@ -80,15 +80,15 @@ export class StorageService {
     });
 
     return promise.then((deleted) => {
-      this.alertService.success(`Image removed: ${path}`);
+      this.alertService.success(`${fileType} removed: ${path}`);
       return deleted;
     });
   }
 
-  removeImages(paths: string[]) {
+  removeFiles(paths: string[], fileType: string = 'Image') {
     return Promise.all(
       paths.map(async (path) => {
-        return this.removeImage(path);
+        return this.removeFile(path, fileType);
       })
     );
   }

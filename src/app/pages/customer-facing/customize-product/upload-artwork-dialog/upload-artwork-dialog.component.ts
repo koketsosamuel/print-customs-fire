@@ -63,8 +63,8 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
           const scaledImage = new fabric.Image(image.getElement(), {
             left: 0,
             top: 0,
-            // scaleX: this.scaleFactor,
-            // scaleY: this.scaleFactor,
+            scaleX: this.scaleFactor,
+            scaleY: this.scaleFactor,
           });
 
           this.canvas.clear();
