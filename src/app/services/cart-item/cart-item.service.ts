@@ -125,4 +125,8 @@ export class CartItemService {
   getCartItemById(id: string) {
     return this.db.getDocumentById(this.collection, id);
   }
+
+  getCartItemsForCart(cartId: string) {
+    return this.db.getDocumentsOrderedByWhere(this.collection, 'createdAt', true, [['cartId', '==', cartId]])
+  }
 }

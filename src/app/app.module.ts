@@ -83,6 +83,8 @@ import { CostBreakdownComponent } from './pages/customer-facing/customize-produc
 import { ProductDetailsSummaryComponent } from './pages/customer-facing/customize-product/product-details-summary/product-details-summary.component';
 import { ColorVariantSelectorComponent } from './components/color-variant-selector/color-variant-selector.component';
 import { ImageQualityMeterComponent } from './components/image-quality-meter/image-quality-meter.component';
+import { ShoppingCartComponent } from './pages/customer-facing/shopping-cart/shopping-cart.component';
+import { ItemsListComponent } from './pages/customer-facing/shopping-cart/items-list/items-list.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +139,8 @@ import { ImageQualityMeterComponent } from './components/image-quality-meter/ima
     ProductDetailsSummaryComponent,
     ColorVariantSelectorComponent,
     ImageQualityMeterComponent,
+    ShoppingCartComponent,
+    ItemsListComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

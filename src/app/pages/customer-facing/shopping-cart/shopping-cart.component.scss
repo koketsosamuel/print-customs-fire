@@ -1,0 +1,10 @@
+.cart-item-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    img {
+        height: 60px;
+        display: block;
+    }
+}

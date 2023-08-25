@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { first } from 'rxjs';
+import { Injectable, Injector } from '@angular/core';
 import { DbService } from '../db/db.service';
-import { ICart } from 'src/app/models/cart.interface';
-import { IPrintingInfo } from 'src/app/models/printing-info.interface';
+import { ICart, ICartItem } from 'src/app/models/cart.interface';
 import { StorageService } from '../storage/storage.service';
 import { AuthService } from '../auth/auth.service';
+import { CartItemService } from '../cart-item/cart-item.service';
+import { AlertService } from '../alert/alert.service';
+import { ProductService } from '../product/product.service';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +17,12 @@ export class CartService {
   constructor(
     private readonly auth: AuthService,
     private readonly db: DbService,
-    private readonly storage: StorageService
+    private readonly injector: Injector,
+    private readonly productService: ProductService
   ) {}
 
   async getCart() {
-    const user = this.auth.user;
+    const user: any = await this.auth.getUserId();
     let cart: ICart | null = null;
     cart = await this._getCart(user.uid);
 
@@ -50,9 +51,28 @@ export class CartService {
   }
 
   private async _getCart(userId: string) {
-    const cart = await this.db
-      .getDocumentWhereFieldEquals(this.collection, ['userId', userId]);
+    const cart = await this.db.getDocumentWhereFieldEquals(this.collection, [
+      'userId',
+      userId,
+    ]);
     this.cart = cart;
+    return cart;
+  }
+
+  async getUserCart() {
+    const cartService = this.injector.get(CartItemService);
+    const user: any = await this.auth.getUserId();
+    const cart: ICart = await this._getCart(user.uid);
+    cart.cartItems = await cartService.getCartItemsForCart(
+      cart.id as string
+    );
+    cart.cartItems = await Promise.all((cart.cartItems as ICartItem[]).map(async (ci) => {
+      const product = await this.productService.getProduct(ci.productId);
+      return {
+        ...ci,
+        product: product.value
+      }
+    }))
     return cart;
   }
 }

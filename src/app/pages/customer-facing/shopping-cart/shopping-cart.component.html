@@ -1,0 +1,22 @@
+<div class="container">
+    <h1 class="mt-4">Shopping Cart</h1>
+    <section class="row">
+        <main class="col-lg-8 col-md-12">
+            <div *ngFor="let item of items" class="cart-item-card bg-teal-100 p-4 d-flex align-items-center gap-20">
+                <img [src]="item.product?.images?.[0]?.link" alt="">
+                <div>
+                    <h2 class="my-0 fg-grey-900"><b>{{item.product?.name}}</b></h2>
+                    <h4 class="my-0">Total Quantity: {{item.totalQuantity}}</h4>
+                </div>
+                <div class="d-flex align-items-center">
+                    <h1 class="my-0 fg-green-800 bg-white p-3"><b>R {{item.totalPrice}}</b></h1>
+                </div>
+                <div class="d-flex align-items-center">
+                    <button mat-mini-fab color="primary"><mat-icon>edit</mat-icon></button>&nbsp;
+                    <button mat-mini-fab color="primary"><mat-icon>visibility</mat-icon></button>&nbsp;
+                    <button mat-mini-fab color="warn"><mat-icon>delete</mat-icon></button>
+                </div>
+            </div>
+        </main>
+    </section>
+</div>

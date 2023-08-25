@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { catchError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,18 @@ export class AuthService {
       }
       console.log(user);
     });
+  }
+
+  getUserId() {
+    return new Promise((resolve, reject) => {
+      this.auth.user.pipe(catchError(err => {
+        reject(err);
+        return err;
+      })).subscribe(user => {
+        this.user = user || null;
+        resolve(user);
+      });
+    })
   }
 
 }

@@ -17,6 +17,7 @@ import { BrandsViewComponent } from './pages/brands/brands-view/brands-view.comp
 import { ProductsViewComponent } from './pages/products/products-view/products-view.component';
 import { ProductCatalogueComponent } from './pages/customer-facing/catalog/product-catalogue/product-catalogue.component';
 import { CustomizeProductComponent } from './pages/customer-facing/customize-product/customize-product.component';
+import { ShoppingCartComponent } from './pages/customer-facing/shopping-cart/shopping-cart.component';
 
 const routes: Routes = [
   {
@@ -115,6 +116,10 @@ const routes: Routes = [
     path: 'customize/cart-item/:cartItemId',
     component: CustomizeProductComponent,
   },
+  {
+    path: 'shopping-cart',
+    component: ShoppingCartComponent
+  }
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 import { ICostBreakdown } from "./cost-breakdown.interface";
 import { ICartItemPrintingInfo } from "./printing-info.interface";
-import { IImage } from "./product.interface";
+import IProduct, { IImage } from "./product.interface";
 
 export interface ICart {
     id?: string;
@@ -9,6 +9,7 @@ export interface ICart {
     updatedAt: null | Date;
     isTemp: boolean;
     status: 'Active' | 'Completed' | 'Expired';
+    cartItems?: ICartItem[];
 }
 
 export interface ICartItem {
@@ -18,6 +19,7 @@ export interface ICartItem {
     images?: IImage[];
     totalQuantity: number;
     productId: string;
+    product?: IProduct;
     quantities?: any;
     totalPrice: number;
     createdAt: Date;
