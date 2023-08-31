@@ -224,9 +224,11 @@ export class CustomizeProductComponent implements OnInit {
     return chargeableH * chargeableW;
   }
 
-  submitCartItem() {
-    this.editMode
-      ? this.cartItemService.updateCartItem(
+  async submitCartItem() {
+    try {
+      this.loadingSpinnerService.show();
+      this.editMode
+      ? await this.cartItemService.updateCartItem(
           this.cartItem,
           this.printingInfo,
           this.quantities,
@@ -237,7 +239,7 @@ export class CustomizeProductComponent implements OnInit {
           true,
           this.selectedVariantId || undefined
         )
-      : this.cartItemService.createCartItem(
+      : await this.cartItemService.createCartItem(
           this.printingInfo,
           this.quantities,
           this.totalQuantity,
@@ -246,6 +248,12 @@ export class CustomizeProductComponent implements OnInit {
           this.costBreakdown,
           this.selectedVariantId || undefined
         );
+      this.router.navigate(['/shopping-cart']);
+    } catch (err) {
+
+    } finally {
+      this.loadingSpinnerService.hide();
+    }
   }
 
   async loadCartItem(cartItemId: string) {

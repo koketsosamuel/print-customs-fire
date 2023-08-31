@@ -70,7 +70,7 @@ export class PrintingPositionsFormComponent implements OnInit {
             this.newImages
           )
           .then(() => {
-            this.router.navigate(['/admin/admin/printing-positions/view']);
+            this.router.navigate(['/admin/printing-positions/view']);
           });
   }
 
