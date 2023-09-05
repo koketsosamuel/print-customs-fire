@@ -2,7 +2,7 @@
     <h1 class="mt-4">Shopping Cart</h1>
     <section class="row">
         <main class="col-lg-8 col-md-12">
-            <div *ngFor="let item of items" class="cart-item-card bg-teal-100 p-4 d-flex align-items-center gap-20">
+            <div *ngFor="let item of items" class="cart-item-card bg-teal-100 p-4 d-flex align-items-center gap-20 mb-2">
                 <img [src]="item.product?.images?.[0]?.link" alt="">
                 <div>
                     <h2 class="my-0 fg-grey-900"><b>{{item.product?.name}}</b></h2>

@@ -86,12 +86,17 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
     let json: any = this.canvas.toJSON();
     this.artwork = json;
     // overriding scale because fabricjs exports them rounded to 2 decimal places
+
+    const obj = this.canvas.getObjects()[0];
+    const scaleX = obj.scaleX;
+    const scaleY = obj.scaleY;
+
     json.objects[0] = {
       ...json.objects[0],
-      scaleX: this.scaleFactor,
-      scaleY: this.scaleFactor,
+      scaleX,
+      scaleY,
     };
-    console.log(json, this.artwork);
+    
     
     this.artwork = json;
     this.dialogRef.close(json);
