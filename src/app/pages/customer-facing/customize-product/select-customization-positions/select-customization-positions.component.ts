@@ -14,8 +14,7 @@ import { PrintingPositionsService } from 'src/app/services/printing-positions/pr
 })
 export class SelectCustomizationPositionsComponent implements OnInit {
   options: IImageCardOption[] = [];
-  @Input() selectedOptions: any[] = [];
-  @Input() printingInfo: IPrintingInfo[] = [];
+  @Input({ required: true }) selectedOptions: any[] = [];
   @Output() positionsChanged = new EventEmitter<IPrintingInfo[]>();
   @Input({ required: true }) product!: IProduct;
 
@@ -23,10 +22,19 @@ export class SelectCustomizationPositionsComponent implements OnInit {
     private readonly printingPositionsService: PrintingPositionsService,
     private readonly loadingSpinnerService: LoadingSpinnerService,
     private readonly printingMethodsService: PrintingMethodsService
-  ) { }
+  ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadingSpinnerService.show();
+    const selectedOptions = [...this.selectedOptions];
+
+    this.selectedOptions = await Promise.all(
+      selectedOptions.map(async (s) => {
+        const res = await this.printingPositionsService.getPrintingPosition(s);
+        return res.value;
+      })
+    );
+
     const promises = Promise.all(
       this.product.printingPositions.map(async (printingLocationId) => {
         const printingLocation = (
@@ -40,7 +48,7 @@ export class SelectCustomizationPositionsComponent implements OnInit {
           value: 'printingLocation',
           object: { ...printingLocation, printingLocation },
           imgSrc: printingLocation.images[0].link,
-          selected: !!this.selectedOptions.includes(printingLocation.id),
+          selected: !!selectedOptions.includes(printingLocation.id),
         };
       })
     );
@@ -59,10 +67,9 @@ export class SelectCustomizationPositionsComponent implements OnInit {
   }
 
   goToNextPage() {
-    this.updatePrintingInfo(this.selectedOptions)
-      .then(info => {
-        this.positionsChanged.emit(info);
-      });
+    this.updatePrintingInfo(this.selectedOptions).then((info) => {
+      this.positionsChanged.emit(info);
+    });
   }
 
   async updatePrintingInfo(printingPositions: IPrintingPosition[]) {
@@ -70,7 +77,6 @@ export class SelectCustomizationPositionsComponent implements OnInit {
 
     return await Promise.all(
       printingPositions.map(async (printingPosition) => {
-
         const methods = await Promise.all(
           this.product.printingMethods[printingPosition.id || ''].map(
             async (methodId) => {
@@ -91,6 +97,5 @@ export class SelectCustomizationPositionsComponent implements OnInit {
     ).finally(() => {
       this.loadingSpinnerService.hide();
     });
-
   }
 }
