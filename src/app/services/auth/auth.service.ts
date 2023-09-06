@@ -24,7 +24,6 @@ export class AuthService {
       if (!user) {
         this.auth.signInAnonymously();
       }
-      console.log(user);
     });
   }
 

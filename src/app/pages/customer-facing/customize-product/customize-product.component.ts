@@ -87,13 +87,17 @@ export class CustomizeProductComponent implements OnInit {
       .getProduct(productId || '')
       .then((data: any) => {
         this.product = data.value;
-        this.hasSubVariations = !!this.product.variations.options.find(
-          (o) => o.id === this.selectedVariantId
-        )?.subVariations?.options.length;
+        this.hasSubVariationsCheck();
       })
       .finally(() => {
         this.loadingSpinnerService.hide();
       });
+  }
+
+  hasSubVariationsCheck() {
+    this.hasSubVariations = !!this.product.variations.options.find(
+      (o) => o.id === this.selectedVariantId
+    )?.subVariations?.options.length;
   }
 
   setQuantities(event: any) {
@@ -127,14 +131,12 @@ export class CustomizeProductComponent implements OnInit {
 
   setPrintingInfoArtwork(printingInfoArr: IPrintingInfo[]) {
     this.printingInfo = printingInfoArr;
-    this.totalPriceCalculation(this.totalQuantity);
+    this.totalPriceCalculation();
   }
 
-  totalPriceCalculation(totalQuantity = 0) {
+  totalPriceCalculation() {
     const productBasePrice = this.product.price;
     let sum = 0;
-
-    this.totalQuantity = totalQuantity;
 
     const _costBreakDown: ICostBreakdown = {
       productCostPerUnit: 0,
@@ -228,29 +230,28 @@ export class CustomizeProductComponent implements OnInit {
     try {
       this.loadingSpinnerService.show();
       this.editMode
-      ? await this.cartItemService.updateCartItem(
-          this.cartItem,
-          this.printingInfo,
-          this.quantities,
-          this.totalQuantity,
-          this.totalPrice,
-          this.product.id as string,
-          this.costBreakdown,
-          true,
-          this.selectedVariantId || undefined
-        )
-      : await this.cartItemService.createCartItem(
-          this.printingInfo,
-          this.quantities,
-          this.totalQuantity,
-          this.totalPrice,
-          this.product.id as string,
-          this.costBreakdown,
-          this.selectedVariantId || undefined
-        );
+        ? await this.cartItemService.updateCartItem(
+            this.cartItem,
+            this.printingInfo,
+            this.quantities,
+            this.totalQuantity,
+            this.totalPrice,
+            this.product.id as string,
+            this.costBreakdown,
+            true,
+            this.selectedVariantId || undefined
+          )
+        : await this.cartItemService.createCartItem(
+            this.printingInfo,
+            this.quantities,
+            this.totalQuantity,
+            this.totalPrice,
+            this.product.id as string,
+            this.costBreakdown,
+            this.selectedVariantId || undefined
+          );
       this.router.navigate(['/shopping-cart']);
     } catch (err) {
-
     } finally {
       this.loadingSpinnerService.hide();
     }
@@ -283,6 +284,8 @@ export class CustomizeProductComponent implements OnInit {
       // set total quantity
       this.totalQuantity = this.cartItem.totalQuantity;
 
+      this.hasSubVariationsCheck();
+
       // re-create printing info array
       const printingInfoArr: IPrintingInfo[] = await Promise.all(
         this.cartItem.printingInfoArr!.map(async (pi) => {
@@ -311,10 +314,8 @@ export class CustomizeProductComponent implements OnInit {
         })
       );
 
-      console.log(this.selectedPrintingLocations);
-
       this.printingInfo = printingInfoArr;
-      this.totalPriceCalculation(this.totalQuantity);
+      this.totalPriceCalculation();
     } catch (err) {
       this.alertService.error('Error loading this cart item, please retry!');
     } finally {
