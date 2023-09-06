@@ -19,11 +19,8 @@
             (keyup)="validate()"
           />
           <mat-hint
-            >additional cost:
-            <b class='fg-teal-300'>
-              {{ opt.additionalCost ? "R " + opt.additionalCost : "None" }}
-            </b>
-            - available:
+            >
+            available:
             <b class="fg-teal-300">{{ opt.quantityAvailable }}</b></mat-hint
           >
         </mat-form-field>
@@ -34,7 +31,7 @@
   </form>
 
   <!-- Quantity for: no sub variations, but we have variations -->
-  <form *ngIf="!subVariations && product.variations.options.length">
+  <form *ngIf="!hasSubVariations && product.variations.options.length">
     <div class="row">
       <div class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">
@@ -55,7 +52,7 @@
   </form>
 
   <!-- Quantity for: no sub variations and variations -->
-  <form *ngIf="!subVariations && !product.variations.options.length">
+  <form *ngIf="!hasSubVariations && !product.variations.options.length">
     <div class="row">
       <div class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">

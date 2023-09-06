@@ -22,8 +22,8 @@
     </div>
   </div>
 
-  <mat-stepper #stepper [linear]="true && !editMode" *ngIf="!!product">
-    <mat-step label="Quantities">
+  <mat-stepper #stepper [linear]="!editMode" *ngIf="!!product">
+    <mat-step label="Quantities" [completed]="false">
       <app-product-quantities
         (quantityChanged)="setQuantities($event)"
         [product]="product"

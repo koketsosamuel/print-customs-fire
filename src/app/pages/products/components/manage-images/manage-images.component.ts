@@ -49,8 +49,6 @@ export class ManageImagesComponent {
     this.productService
       .uploadProductImages(this.product, this.imageFiles)
       .then((res) => {
-        console.log(res);
-        
         this.imageFiles = [];
         this.processImagesLoading(refreshTime);
       });
