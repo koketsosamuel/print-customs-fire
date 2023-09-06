@@ -64,9 +64,10 @@ export class SingleProductViewComponent implements OnInit {
         this.relatedProducts = res.filter(
           (p: IProduct) => p.name != this.product?.name
         );
-        console.log(res);
       })
-      .catch(console.log)
+      .catch(err => {
+        this.alertService.error('Error showing product. Please reload page')
+      })
       .finally(() => {
         this.loadingSpinnerService.hide();
       });
@@ -78,7 +79,7 @@ export class SingleProductViewComponent implements OnInit {
 
   customize() {
     if (
-      !this.selectedVariantId
+      !this.selectedVariantId && this.product?.variations.options.length
     ) {
       this.alertService.error('Select a color first');
     } else {

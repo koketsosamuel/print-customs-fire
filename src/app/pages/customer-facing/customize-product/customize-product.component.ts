@@ -101,7 +101,8 @@ export class CustomizeProductComponent implements OnInit {
   }
 
   setQuantities(event: any) {
-    this.quantities = event;
+    this.quantities = event.optionQuantities;
+    this.totalQuantity = event.totalQuantity;
     this.totalPriceCalculation();
   }
 
@@ -148,15 +149,6 @@ export class CustomizeProductComponent implements OnInit {
       quantity: 0,
       totalProductBaseCost: 0,
     };
-
-    if (this.hasSubVariations) {
-      this.totalQuantity = 0;
-
-      Object.values(this.quantities).forEach((q) => {
-        this.totalQuantity += q.quantities ? q.quantities : 0;
-        sum += q.quantities ? q.quantities * q.option.additionalCost : 0;
-      });
-    }
 
     sum += this.totalQuantity * productBasePrice;
     _costBreakDown.totalProductBaseCost = this.totalQuantity * productBasePrice;

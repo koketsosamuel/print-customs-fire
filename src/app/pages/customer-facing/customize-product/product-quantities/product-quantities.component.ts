@@ -52,6 +52,13 @@ export class ProductQuantitiesComponent implements OnInit {
   }
 
   saveQuantities() {
-    this.quantityChanged.emit(this.optionQuantities);
+    if (this.hasSubVariations) {
+      this.totalQuantity = 0;
+
+      Object.values(this.optionQuantities).forEach((q) => {
+        this.totalQuantity += q.quantities ? q.quantities : 0;
+      });
+    }
+    this.quantityChanged.emit({ totalQuantity: this.totalQuantity, optionQuantities: this.optionQuantities });
   }
 }
