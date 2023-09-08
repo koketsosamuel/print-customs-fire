@@ -22,8 +22,8 @@
     </div>
   </div>
 
-  <mat-stepper #stepper [linear]="!editMode" *ngIf="!!product">
-    <mat-step label="Quantities" [completed]="false">
+  <mat-stepper #stepper [linear]="!editMode" *ngIf="!!product" [selectedIndex]="0">
+    <mat-step label="Quantities" [completed]="stepsCompleted.quantities">
       <app-product-quantities
         (quantityChanged)="setQuantities($event)"
         [product]="product"
@@ -33,30 +33,30 @@
         *ngIf="!!product"
       ></app-product-quantities>
     </mat-step>
-    <mat-step label="Printing Locations" *ngIf="product?.name">
+    <mat-step label="Printing Locations" *ngIf="product?.name" [completed]="stepsCompleted.locations">
       <app-select-customization-positions
-        (positionsChanged)="setPrintingInfo($event, false)"
+        (positionsChanged)="setPrintingInfoForLocations($event)"
         [product]="product"
         [selectedOptions]="selectedPrintingLocations"
       ></app-select-customization-positions>
     </mat-step>
-    <mat-step label="Printing Methods">
+    <mat-step label="Printing Methods" [completed]="stepsCompleted.methods">
       <app-select-custom-printing-methods
         *ngIf="printingInfo.length > 0"
         [product]="product"
         [printingInfo]="printingInfo"
-        (change)="setPrintingInfo($event)"
+        (change)="setPrintingInfoForMethods($event)"
       ></app-select-custom-printing-methods>
     </mat-step>
 
-    <mat-step label="Upload Artwork">
+    <mat-step label="Upload Artwork" [completed]="stepsCompleted.artwork">
       <app-upload-artwork
         *ngIf="printingInfo.length > 0"
         [printingInfo]="printingInfo"
         (change)="setPrintingInfoArtwork($event)"
       ></app-upload-artwork>
     </mat-step>
-    <mat-step label="Confirm">
+    <mat-step label="Summary" [completed]="stepsCompleted.summary">
       <app-cost-breakdown [costBreakdown]="costBreakdown"></app-cost-breakdown>
       <button
         mat-flat-button

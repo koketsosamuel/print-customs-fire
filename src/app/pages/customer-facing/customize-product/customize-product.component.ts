@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IArtwork } from 'src/app/models/artwork.interface';
 import { ICanvasPositionInfo } from 'src/app/models/canvas-position-info.interface';
@@ -24,6 +25,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
   styleUrls: ['./customize-product.component.scss'],
 })
 export class CustomizeProductComponent implements OnInit {
+  @ViewChild('stepper') stepper!: MatStepper;
   hasSubVariations = false;
   product!: IProduct;
   quantities: Record<
@@ -47,6 +49,13 @@ export class CustomizeProductComponent implements OnInit {
   cartItem!: ICartItem;
   selectedPrintingLocations: string[] = [];
   editMode = false;
+  stepsCompleted: any = {
+    quantities: false,
+    locations: false,
+    methods: false,
+    artwork: false,
+    summary: false
+  }
 
   constructor(
     private readonly productService: ProductService,
@@ -57,7 +66,7 @@ export class CustomizeProductComponent implements OnInit {
     private readonly cartItemService: CartItemService,
     private readonly printingMethodsService: PrintingMethodsService,
     private readonly printingPositionsService: PrintingPositionsService,
-    private readonly storage: StorageService
+    private readonly storage: StorageService,
   ) {}
 
   ngOnInit() {
@@ -101,9 +110,12 @@ export class CustomizeProductComponent implements OnInit {
   }
 
   setQuantities(event: any) {
+    
     this.quantities = event.optionQuantities;
     this.totalQuantity = event.totalQuantity;
+    this.completeStep('quantities');
     this.totalPriceCalculation();
+   
   }
 
   setPrintingInfo(
@@ -132,7 +144,25 @@ export class CustomizeProductComponent implements OnInit {
 
   setPrintingInfoArtwork(printingInfoArr: IPrintingInfo[]) {
     this.printingInfo = printingInfoArr;
+    this.completeStep('artwork')
     this.totalPriceCalculation();
+  }
+
+  setPrintingInfoForLocations(printingInfoArr: IPrintingInfo[]) {
+    this.setPrintingInfo(printingInfoArr, false);
+    this.completeStep('locations');
+  }
+
+  setPrintingInfoForMethods(printingInfoArr: IPrintingInfo[]) {
+    this.setPrintingInfo(printingInfoArr);
+    this.completeStep('methods');
+  }
+
+  completeStep(propertyName: string) {
+    this.stepsCompleted[propertyName] = true;
+    setTimeout(() => {
+      this.stepper.next();
+    })
   }
 
   totalPriceCalculation() {

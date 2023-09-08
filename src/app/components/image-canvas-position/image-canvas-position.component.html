@@ -1,4 +1,4 @@
-<div class='p-4 bg-grey-100'>
+<div class='bg-grey-100'>
 
   <div class='px-2' *ngIf="!displayMode">
     <mat-checkbox [(ngModel)]="allowDrag">drag</mat-checkbox>
@@ -20,7 +20,7 @@
     <div class='canvas-container' [ngStyle]="{
       backgroundImage: imgSrc
     }">
-      <div cdkDrag #canvasContainer [cdkDragDisabled]="!allowDrag" (cdkDragEnded)="getCanvasPosition()" (click)="getCanvasPosition()"
+      <div cdkDrag #canvasContainer [cdkDragDisabled]="!allowDrag || displayMode" (cdkDragEnded)="getCanvasPosition()" (click)="getCanvasPosition()"
         class='text-center d-flex align-items-center justify-content-center'>
         <canvas id="canvas" *ngIf="displayMode" [height]='canvasPositionInfo.h' [width]='canvasPositionInfo.w'></canvas>
         <span *ngIf="!displayMode">Printing position</span>
