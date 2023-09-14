@@ -1,8 +1,18 @@
 <mat-toolbar>
-  <mat-toolbar-row>
-    <div class="container">
-      <span class="fg-teal cursor" routerLink="/">Kustom Kreations</span>
-    </div>
-  </mat-toolbar-row>
+  <div class="container">
+    <mat-toolbar-row class="px-0 mx-0">
+      <!-- <div class="container"> -->
+        <span class="fg-teal cursor" routerLink="/">Kustom Kreations</span>
+        <span class="example-spacer"></span>
+        
+        <div class="d-flex align-items-center gap-20">
+          <button mat-flat-button color="primary" routerLink="/catalogue">Our Catalogue</button>
+          <button mat-flat-button color="primary" routerLink="/contact">Contact Us</button>
+        <button mat-flat-button color="primary" routerLink="/about-us">About Us</button>
+        <button mat-icon-button color="primary" aria-label="Example icon-button with heart icon" routerLink="/shopping-cart"><mat-icon>shopping_cart</mat-icon></button>
+        </div>
+      <!-- </div> -->
+    </mat-toolbar-row>
+  </div>
 </mat-toolbar>
 <router-outlet></router-outlet>

@@ -80,6 +80,7 @@ export class ProductCatalogueComponent {
   }
 
   async getProducts(filterAndSort: IFilterComponentOutput) {
+    this.loadingSpinner.show()
     this.filterAndSort = filterAndSort;
     this.products = await this.productsService.getProducts(
       this.filterAndSort.sort?.value.field || '',
@@ -87,7 +88,9 @@ export class ProductCatalogueComponent {
       [['active', '==', true], ...this.filterAndSort.where],
       this.perpage,
       this.afterDoc || null
-    );
+    ).finally(() => {
+      this.loadingSpinner.hide();
+    });
 
     this.after = this.products.length
       ? this.products[this.products.length - 1]?.id || null
