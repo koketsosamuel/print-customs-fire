@@ -15,8 +15,7 @@ export class ImagesFullscreenService {
         images,
         index,
       },
-      maxWidth: '1000px',
-      height: '95vh',
+      maxWidth: '90vw',
     });
   }
 }
