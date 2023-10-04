@@ -9,9 +9,9 @@
           ></app-single-product-view-images>
         </div>
         <div class="col-md-6">
-          <h1 class="fg-grey-900">
+          <h2 class="fg-grey-900">
             <b>{{ product.name }}</b>
-          </h1>
+          </h2>
 
           <app-color-variant-selector *ngIf="product.variations.options.length" [selectedVariantId]="selectedVariantId" (variantChanged)="selectVariant($event)" [options]="product.variations.options"></app-color-variant-selector>
 
@@ -29,10 +29,9 @@
 
           <div class="d-flex align-items-center gap-20">
             <button mat-flat-button color="primary" (click)='customize()'>Customize</button>
-            <button mat-flat-button color="accent">Add to cart</button>
-            <h2 class="d-inline my-0 fg-teal d-flex align-items-center">
+            <h3 class="d-inline my-0 fg-teal d-flex align-items-center">
               <small>from</small>&nbsp;<b>R {{ product.price }}</b>
-            </h2>
+            </h3>
           </div>
 
           <app-printing-methods-chips
