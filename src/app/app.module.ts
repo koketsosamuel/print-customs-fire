@@ -31,6 +31,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatSidenavModule} from '@angular/material/sidenav';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
@@ -182,6 +183,7 @@ import { ItemsListComponent } from './pages/customer-facing/shopping-cart/items-
     MatProgressBarModule,
     MatTooltipModule,
     MatSliderModule,
+    MatSidenavModule
   ],
   providers: [],
   bootstrap: [AppComponent],

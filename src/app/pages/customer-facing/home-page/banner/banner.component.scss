@@ -2,8 +2,12 @@
   gap: 12px;
 }
 
+header {
+  box-sizing: border-box;
+}
+
 .cat-box {
-  width: 6em;
+  width: 4.5em;
   aspect-ratio: 1/1;
   display: flex;
   justify-content: center;
