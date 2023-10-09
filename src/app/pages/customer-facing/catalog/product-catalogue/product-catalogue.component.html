@@ -1,7 +1,19 @@
 <div class="container mt-4">
   <h1>Our Products</h1>
+  <header class="mb-2 d-lg-none bg-teal-300 rounded-corners p-4 mb-4">
+    <button mat-flat-button color="accent">
+      <mat-icon>tune</mat-icon>
+      Filter And Sort
+    </button>
+
+    <mat-chip-listbox class="mt-2">
+      <mat-chip>Clothes</mat-chip>
+      <mat-chip>T-Shirts</mat-chip>
+      <mat-chip>Cheapest</mat-chip>
+    </mat-chip-listbox>
+  </header>
   <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 d-none d-lg-block">
       <app-filter (change)="getProducts($event)"></app-filter>
     </div>
     <div class="col-lg-8">
@@ -20,8 +32,8 @@
           (click)="goPrev()"
           [disabled]="!params.after || hasNextLoading"
         >
-          Prev</button
-        >
+          Prev
+        </button>
         <button
           mat-flat-button
           color="primary"

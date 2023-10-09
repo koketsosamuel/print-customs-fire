@@ -2,9 +2,8 @@
   <mat-drawer #drawer mode="over"> ff </mat-drawer>
   <mat-drawer-content>
     <mat-toolbar>
-      <div class="">
+      <div class="container">
         <mat-toolbar-row class="px-0 mx-0">
-          <!-- <div class="container"> -->
           <button
             mat-icon-button
             (click)="drawer.toggle()"
@@ -16,7 +15,7 @@
           <span class="fg-teal cursor" routerLink="/">Kustom Kreations</span>
           <span class="example-spacer"></span>
 
-          <div class="align-items-center gap-20">
+          <div class="align-items-center d-flex gap-20">
             <button mat-flat-button color="primary" routerLink="/catalogue" class="d-none  d-md-inline d-lg-inline">
               Our Catalogue
             </button>
@@ -35,7 +34,6 @@
               <mat-icon>shopping_cart</mat-icon>
             </button>
           </div>
-          <!-- </div> -->
         </mat-toolbar-row>
       </div>
     </mat-toolbar>

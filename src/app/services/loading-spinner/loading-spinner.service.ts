@@ -17,7 +17,7 @@ export class LoadingSpinnerService {
       this.dialogRef = this.dialog.open(LoadingSpinnerComponent, {
         maxHeight: '70vh',
         maxWidth: '70vw',
-        // disableClose: true,
+        disableClose: true,
       });
     }
   }

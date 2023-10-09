@@ -4,12 +4,16 @@
       <header class="p-3 d-flex align-items-center">
         <div>
           <h4 class="m-0 fg-teal-800 d-flex align-items-center">
-            <mat-icon>tune</mat-icon>&nbsp;<span>Filters</span>&nbsp;|&nbsp;Sort
+            <mat-icon>tune</mat-icon>&nbsp;<span>Filter and Sort</span>
+          </h4>
+          <h4 class="m-0 pb-0">
+            Sort
             By:&nbsp;<button
-              mat-stroked-button
-              color="primary"
+              mat-flat-button
+              color="accent"
               [matMenuTriggerFor]="sortMenu"
             >
+              <mat-icon>expand_more</mat-icon>
               {{ filter.sort?.name || "No Sort" }}
             </button>
           </h4>

@@ -1,5 +1,5 @@
 <mat-card
-  class="rounded-corners cursor product-card"
+  class="rounded-corners cursor product-card h-100"
   [routerLink]="'/products/' + product.name + '/' + product.id"
 >
   <mat-card-content class="rounded-corners">
@@ -11,21 +11,13 @@
 
     />
    </div>
-    <h2 class="fg-teal-300 pt-2 pb-0 mb-2">{{ product.name }}</h2>
+    <h3 class="fg-grey-800 pt-2 pb-0 mb-2">{{ product.name }}</h3>
     <div class="colors-block d-flex" *ngIf="product.variations.options.length">
-      <h4 class="m-0 p-0 fg-teal">Colors:</h4>
-      <div
-        class="color-circle"
-        *ngFor="let c of product.variations.options"
-        [matTooltip]="c.name"
-        [ngStyle]="{ backgroundColor: c.optionColor }"
-      ></div>
+      <span><i class="fg-grey-600">*available in multiple colors</i></span>
     </div>
     <div class="d-flex">
-      <h3
-        class="fg-white p-2 mb-0 bg-teal mt-2 d-inline-block rounded-corners"
-      >
-        From R {{ product.price }}
+      <h3 class="d-inline my-0 fg-teal d-flex align-items-center mt-2">
+        <small>from</small>&nbsp;<b>R {{ product.price }}</b>
       </h3>
     </div>
   </mat-card-content>
