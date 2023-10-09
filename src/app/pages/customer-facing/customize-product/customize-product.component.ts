@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -54,8 +54,9 @@ export class CustomizeProductComponent implements OnInit {
     locations: false,
     methods: false,
     artwork: false,
-    summary: false
-  }
+    summary: false,
+  };
+  vertical = false;
 
   constructor(
     private readonly productService: ProductService,
@@ -66,7 +67,7 @@ export class CustomizeProductComponent implements OnInit {
     private readonly cartItemService: CartItemService,
     private readonly printingMethodsService: PrintingMethodsService,
     private readonly printingPositionsService: PrintingPositionsService,
-    private readonly storage: StorageService,
+    private readonly storage: StorageService
   ) {}
 
   ngOnInit() {
@@ -88,6 +89,7 @@ export class CustomizeProductComponent implements OnInit {
         await this.getProduct(params.productId);
       }
     });
+    this.checkWindowSize();
   }
 
   getProduct(productId: string) {
@@ -110,12 +112,10 @@ export class CustomizeProductComponent implements OnInit {
   }
 
   setQuantities(event: any) {
-    
     this.quantities = event.optionQuantities;
     this.totalQuantity = event.totalQuantity;
     this.completeStep('quantities');
     this.totalPriceCalculation();
-   
   }
 
   setPrintingInfo(
@@ -144,7 +144,7 @@ export class CustomizeProductComponent implements OnInit {
 
   setPrintingInfoArtwork(printingInfoArr: IPrintingInfo[]) {
     this.printingInfo = printingInfoArr;
-    this.completeStep('artwork')
+    this.completeStep('artwork');
     this.totalPriceCalculation();
   }
 
@@ -162,7 +162,7 @@ export class CustomizeProductComponent implements OnInit {
     this.stepsCompleted[propertyName] = true;
     setTimeout(() => {
       this.stepper.next();
-    })
+    });
   }
 
   totalPriceCalculation() {
@@ -342,6 +342,21 @@ export class CustomizeProductComponent implements OnInit {
       this.alertService.error('Error loading this cart item, please retry!');
     } finally {
       this.loadingSpinnerService.hide();
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    // This function will be called whenever the window is resized
+    this.checkWindowSize();
+  }
+
+  checkWindowSize() {
+    const width = window.innerWidth;
+    if (width > 992) {
+      this.vertical = false;
+    } else {
+      this.vertical = true;
     }
   }
 }

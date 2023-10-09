@@ -1,4 +1,4 @@
-<div class='mb-0 pb-0 container p-4'>
+<div class="mb-0 pb-0 container p-2">
   <div class="fullscreen-container d-flex justify-content-center">
     <app-single-product-view-images
       [fullscreenMode]="true"
@@ -6,9 +6,8 @@
       [index]="data.index"
     ></app-single-product-view-images>
   </div>
-
+  <button mat-icon-button color="warn" class="close-btn" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+  </button>
 </div>
-<div mat-dialog-actions>
-     <button mat-dialog-close mat-flat-button color="warn">Close</button>
-
-</div>
+  
