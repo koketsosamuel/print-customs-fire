@@ -24,26 +24,12 @@ export class CartService {
   async getCart() {
     const user: any = await this.auth.getUserId();
     let cart: ICart | null = null;
-    cart = await this._getCart(user.uid);
 
-    if (!cart) {
-      throw new Error('Cart not found.');
-    }
+    cart = await this._getCart(user.uid);
 
     if (user && user?.uid) {
       if (!cart) {
-        cart = {
-          isTemp: !!user?.isAnonymous,
-          userId: user!.uid,
-          createdAt: new Date(),
-          updatedAt: null,
-          status: 'Active',
-        };
-
-        cart = await this.db.addDocument(this.collection, cart).then((cart) => {
-          this.cart = cart;
-          return cart;
-        });
+        cart = await this.createCart(user)
       }
       this.cart = cart as ICart;
     }
@@ -75,4 +61,21 @@ export class CartService {
     }))
     return cart;
   }
+
+  async createCart(user: any) {
+    const cart = {
+      isTemp: !!user?.isAnonymous,
+      userId: user!.uid,
+      createdAt: new Date(),
+      updatedAt: null,
+      status: 'Active',
+    };
+
+    return await this.db.addDocument(this.collection, cart).then((cart) => {
+      this.cart = cart;
+      return cart;
+    });
+  }
+
+
 }

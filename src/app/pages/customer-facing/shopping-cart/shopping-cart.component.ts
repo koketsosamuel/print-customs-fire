@@ -10,7 +10,10 @@ import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-
 })
 export class ShoppingCartComponent implements OnInit {
 
-  items: ICartItem[] = []
+  items: ICartItem[] = [];
+  total: number = 0;
+  vat: number = 0;
+  subTotal: number = 0;
 
   constructor(private readonly cartService: CartService, private readonly loadingSpinnerService: LoadingSpinnerService) {
 
@@ -20,8 +23,17 @@ export class ShoppingCartComponent implements OnInit {
     this.loadingSpinnerService.show();
     this.cartService.getUserCart().then(cart => {
       this.items = cart.cartItems as ICartItem[];
+      this.setOrderSummary()
     }).finally(() => {
       this.loadingSpinnerService.hide();
     })
+  }
+
+  setOrderSummary() {
+    let sum = 0;
+    this.items.forEach(i => sum+=i.totalPrice);
+    this.total = sum;
+    this.vat = Number((this.total * 0.15).toFixed(2))
+    this.subTotal = this.total - this.vat;
   }
 }
