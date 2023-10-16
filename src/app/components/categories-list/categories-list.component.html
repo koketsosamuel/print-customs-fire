@@ -10,5 +10,12 @@
     >
       <h4 class="m-0">{{ category.name }}</h4>
     </div>
+    <div class="loading-placeholder" *ngIf="categories.length == 0">
+      <div
+      class="loading-block sentence mb-4"
+      *ngFor="let i of [1,2,3,4,5]"
+    >
+    </div>
+    </div>
   </div>
 </aside>

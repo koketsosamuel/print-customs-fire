@@ -22,10 +22,7 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.loadingSpinnerService.show();
-    this.categories = await this.categoryService.getCategories().finally(() => {
-      this.loadingSpinnerService.hide();
-    });
+    this.categories = await this.categoryService.getCategories()
     this.newestProducts = await this.productsService.getProducts(
       'createdAt',
       false,

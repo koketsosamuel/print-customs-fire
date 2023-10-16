@@ -1,9 +1,14 @@
 <section>
   <h2 class='fg-grey-800' *ngIf="heading">{{heading}}</h2>
   <div class="row">
-    <div [ngClass]="{'col-xl-3': large}" class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4 h-100" *ngFor="let product of products">
+    <div [ngClass]="{'col-xl-3': large}" class="col-lg-3 col-md-4 col-sm-6 col-6 mb-4 h-100" *ngFor="let product of products">
       <app-product-card [product]="product" ></app-product-card>
     </div>
+  </div>
 
+  <div class="row" *ngIf="products.length == 0">
+    <div [ngClass]="{'col-xl-3': large}" class="col-lg-4 col-md-4 col-sm-6 col-6 mb-4 h-100" *ngFor="let i of [1,2,3,4]">
+      <div class="h-100 w-100 loading-box rounded-corners loading-block portrait"></div>
+    </div>
   </div>
 </section>

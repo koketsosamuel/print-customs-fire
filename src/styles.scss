@@ -3,16 +3,33 @@
   --mint-green: #99edc3;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-.danger{background-color:#f44336 !important; color: white}
-.success{background-color:#4caf50 !important; color: white}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.danger {
+  background-color: #f44336 !important;
+  color: white;
+}
+.success {
+  background-color: #4caf50 !important;
+  color: white;
+}
 .cursor {
   cursor: pointer;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Comfortaa', cursive !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Comfortaa", cursive !important;
   font-weight: 500;
 }
 
@@ -63,4 +80,37 @@ h1, h2, h3, h4, h5, h6 {
 
 .container {
   box-sizing: border-box;
+}
+
+.loading-block { 
+  background-color: #ccc;
+  animation: pulse 2s infinite;
+  border-radius: 10px;
+
+  &.portrait {
+    aspect-ratio: 2/3;
+  }
+
+  &.square {
+    aspect-ratio: 1/1;
+  }
+
+  &.sentence {
+    aspect-ratio: 4/1;
+  }
+  
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      background-color: #ccc;
+    }
+    50% {
+      background-color: #999;
+    }
+    100% {
+      transform: scale(1);
+      background-color: #ccc;
+    }
+  }
 }
