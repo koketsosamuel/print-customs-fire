@@ -7,7 +7,7 @@ import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/load
 })
 export class LoadingSpinnerService {
   dialogRef: any = null;
-  open = 0;
+  open = 0;                 
 
   constructor(private readonly dialog: MatDialog) {}
 
@@ -18,6 +18,8 @@ export class LoadingSpinnerService {
         maxHeight: '70vh',
         maxWidth: '70vw',
         disableClose: true,
+        minHeight: '250px',
+        minWidth: '250px',
       });
     }
   }

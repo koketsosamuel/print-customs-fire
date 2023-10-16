@@ -8,7 +8,6 @@ import { IFilterComponentOutput } from 'src/app/models/filter-component-output.i
 import { IFilter } from 'src/app/models/filter.interface';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
 import { ISort } from 'src/app/models/sort.interface';
-import ISubCategory from 'src/app/models/sub-category.interface';
 import { BrandsService } from 'src/app/services/brands/brands.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
@@ -23,6 +22,9 @@ import { UtilService } from 'src/app/services/util/util.service';
   styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent implements OnInit {
+  @Output() onFilterAndSort = new EventEmitter<any>();
+  @Input() dialogMode = false;
+
   categories: ICategory[] = [];
   sortOptions: ISort[] = [
     { name: 'Cheapest', value: { field: 'price', ascending: true } },
@@ -137,6 +139,7 @@ export class FilterComponent implements OnInit {
         sort: this.filter.sort?.name || null,
       },
     });
+    this.onFilterAndSort.emit();
   }
 
   setSort(sort: ISort) {

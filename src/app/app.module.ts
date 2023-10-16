@@ -86,6 +86,7 @@ import { ColorVariantSelectorComponent } from './components/color-variant-select
 import { ImageQualityMeterComponent } from './components/image-quality-meter/image-quality-meter.component';
 import { ShoppingCartComponent } from './pages/customer-facing/shopping-cart/shopping-cart.component';
 import { ItemsListComponent } from './pages/customer-facing/shopping-cart/items-list/items-list.component';
+import { FilterAndSortDialogueComponent } from './components/filter-and-sort-dialogue/filter-and-sort-dialogue.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { ItemsListComponent } from './pages/customer-facing/shopping-cart/items-
     ImageQualityMeterComponent,
     ShoppingCartComponent,
     ItemsListComponent,
+    FilterAndSortDialogueComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

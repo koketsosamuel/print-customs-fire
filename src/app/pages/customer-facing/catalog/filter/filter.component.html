@@ -171,6 +171,14 @@
       (click)="applyFilters()"
     >
       Apply Filters & Sort
+    </button>&nbsp;
+    <button
+      mat-flat-button
+      class="mx-2"
+      mat-dialog-close
+      *ngIf="dialogMode"
+    >
+      Close
     </button>
   </mat-card-content>
 </mat-card>

@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FilterAndSortDialogueComponent } from 'src/app/components/filter-and-sort-dialogue/filter-and-sort-dialogue.component';
 import ICategory from 'src/app/models/category.interface';
 import { IFilterComponentOutput } from 'src/app/models/filter-component-output.interface';
 import IProduct from 'src/app/models/product.interface';
@@ -35,7 +37,8 @@ export class ProductCatalogueComponent {
     private readonly productsService: ProductService,
     private readonly route: ActivatedRoute,
     private readonly loadingSpinner: LoadingSpinnerService,
-    private readonly categoriesService: CategoryService
+    private readonly categoriesService: CategoryService,
+    private readonly dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -116,5 +119,12 @@ export class ProductCatalogueComponent {
       },
     });
     this.hasNext = false;
+  }
+
+  filterAndSortDialogOpen() {
+    this.dialog.open(FilterAndSortDialogueComponent, {
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+    })
   }
 }

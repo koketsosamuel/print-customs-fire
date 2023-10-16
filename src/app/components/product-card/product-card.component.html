@@ -1,24 +1,60 @@
-<mat-card
-  class="rounded-corners cursor product-card h-100"
-  [routerLink]="'/products/' + product.name + '/' + product.id"
->
-  <mat-card-content class="rounded-corners">
-   <div class="d-flex justify-content-center align-items-center image-container">
-     <img
+<div class="card h-100" [routerLink]="'/products/' + product.name + '/' + product.id">
+  <div class="card__img">
+    <img
       class="rounded-corners"
       [src]="product.images?.[0]?.link"
-      alt=""
-
     />
-   </div>
-    <h3 class="fg-grey-800 pt-2 pb-0 mb-2">{{ product.name }}</h3>
-    <div class="colors-block d-flex" *ngIf="product.variations.options.length">
-      <span><i class="fg-grey-600">*available in multiple colors</i></span>
+  </div>
+  <div class="card__subtitle">{{ product.name }}</div>
+  <p class="my-0 py-0">multiple colors</p>
+  <div class="card__wrapper">
+    <div class="card__title fg-teal-400">R {{ product.price }}</div>
+    <div class="card__icon">
+      <svg
+        style="
+          user-select: none;
+          width: 100%;
+          height: 100%;
+          display: inline-block;
+          fill: rgb(224, 223, 220);
+          flex-shrink: 0;
+          cursor: auto;
+        "
+        viewBox="0 0 256 256"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g color="rgb(224, 223, 220)">
+          <circle opacity="0.2" r="96" cy="128" cx="128"></circle>
+          <circle
+            stroke-width="16"
+            stroke-miterlimit="10"
+            stroke="rgb(224, 223, 220)"
+            fill="none"
+            r="96"
+            cy="128"
+            cx="128"
+          ></circle>
+          <polyline
+            stroke-width="16"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke="rgb(224, 223, 220)"
+            fill="none"
+            points="134.1 161.9 168 128 134.1 94.1"
+          ></polyline>
+          <line
+            stroke-width="16"
+            stroke-linejoin="round"
+            stroke-linecap="round"
+            stroke="rgb(224, 223, 220)"
+            fill="none"
+            y2="128"
+            x2="168"
+            y1="128"
+            x1="88"
+          ></line>
+        </g>
+      </svg>
     </div>
-    <div class="d-flex">
-      <h3 class="d-inline my-0 fg-teal d-flex align-items-center mt-2">
-        <small>from</small>&nbsp;<b>R {{ product.price }}</b>
-      </h3>
-    </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</div>

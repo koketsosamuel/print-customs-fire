@@ -4,21 +4,22 @@
     <main class="col-lg-8 col-md-12">
       <div
         *ngFor="let item of items"
-        class="cart-item-card bg-teal-100 p-4 d-flex align-items-center gap-20 mb-4 rounded-corners"
+        class="cart-item-card bg-teal-100 p-4 d-flex align-items-center gap-10 mb-4 rounded-corners"
       >
-        <img [src]="item.product?.images?.[0]?.link" alt="" />
+        <img [src]="item.product?.images?.[0]?.link" class="rounded-corners" />
         <div>
-          <h2 class="my-0 fg-grey-900">
+          <h4 class="my-0 fg-grey-900">
             <b>{{ item.product?.name }}</b>
-          </h2>
+          </h4>
           <h4 class="my-0">Total Quantity: {{ item.totalQuantity }}</h4>
         </div>
         <div class="d-flex align-items-center">
-          <h1 class="my-0 fg-green-800 bg-white p-3">
-            <b>R {{ item.totalPrice }}</b>
-          </h1>
+          <h4 class="my-0 fg-green-800 bg-white p-2">
+            <b>R&nbsp;{{ item.totalPrice }}</b>
+          </h4>
         </div>
-        <div class="d-flex align-items-center">
+
+        <div class="d-md-flex align-items-center d-none">
           <button
             mat-mini-fab
             color="primary"
@@ -35,24 +36,39 @@
           >&nbsp;
           <button mat-mini-fab color="warn"><mat-icon>delete</mat-icon></button>
         </div>
+
+        <div class="d-flex align-items-center d-flex d-md-none">
+          <button
+            mat-mini-fab
+            color="primary"
+            [matMenuTriggerFor]="menu"
+          >
+            <mat-icon>more_vert</mat-icon></button
+          >
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item [routerLink]="['/customize/cart-item/', item.id]">Edit</button>
+            <button mat-menu-item [routerLink]="['/customize/cart-item/', item.id]">View</button>
+            <button mat-menu-item>Remove</button>
+          </mat-menu>
+        </div>
       </div>
     </main>
     <aside class="col-lg-4">
-      <div class="p-4 bg-grey-300 rounded-corners">
+      <div class="p-4 bg-grey-400 rounded-corners">
         <h1 class="mt-0 pt-0">Order Summary</h1>
         <table>
             <tbody>
                 <tr>
                     <td>Sub-Total</td>
-                    <td>R {{subTotal}}</td>
+                    <td><mat-chip color="primary">R {{subTotal}}</mat-chip></td>
                 </tr>
                 <tr>
-                    <td>Vat</td>
-                    <td>R {{vat}}</td>
+                    <td>VAT</td>
+                    <td><mat-chip>R {{vat}}</mat-chip></td>
                 </tr>
                 <tr>
                     <td>Total</td>
-                    <td>R {{total}}</td>
+                    <td><mat-chip>R {{total}}</mat-chip></td>
                 </tr>
             </tbody>
         </table>
