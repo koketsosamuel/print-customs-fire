@@ -3,42 +3,62 @@
     <div class="col-lg-8 col-md-12">
       <app-fancy-card>
         <div class="row" *ngIf="product">
-        <div class="col-md-6">
-          <app-single-product-view-images
-            [images]="product.images || []"
-          ></app-single-product-view-images>
-        </div>
-        <div class="col-md-6">
-          <h2 class="fg-grey-900">
-            <b>{{ product.name }}</b>
-          </h2>
-
-          <app-color-variant-selector *ngIf="product.variations.options.length" [selectedVariantId]="selectedVariantId" (variantChanged)="selectVariant($event)" [options]="product.variations.options"></app-color-variant-selector>
-
-          <div class="bg-grey-100 mb-4">
-            <quill-view
-              [content]="product.description"
-              name="description"
-            ></quill-view>
+          <div class="col-md-6">
+            <app-single-product-view-images
+              [images]="product.images || []"
+            ></app-single-product-view-images>
           </div>
+          <div class="col-md-6">
+            <h2 class="fg-grey-900">
+              <b>{{ product.name }}</b>
+            </h2>
 
-          <mat-form-field class='w-100' *ngIf="!hasSubVariations">
-            <mat-label>Quantity</mat-label>
-            <input matInput type="number" name="product_quantity" [(ngModel)]='quantity'>
-          </mat-form-field>
+            <app-color-variant-selector
+              *ngIf="product.variations.options.length"
+              [selectedVariantId]="selectedVariantId"
+              (variantChanged)="selectVariant($event)"
+              [options]="product.variations.options"
+            ></app-color-variant-selector>
 
-          <div class="d-flex align-items-center gap-20">
-            <button mat-flat-button color="primary" (click)='customize()'>Customize</button>
-            <h3 class="d-inline my-0 fg-teal d-flex align-items-center">
-              <small>from</small>&nbsp;<b>R {{ product.price }}</b>
-            </h3>
+            <div class="bg-grey-100 mb-4">
+              <quill-view
+                [content]="product.description"
+                name="description"
+              ></quill-view>
+            </div>
+
+            <mat-form-field class="w-100" *ngIf="!hasSubVariations">
+              <mat-label>Quantity</mat-label>
+              <input
+                matInput
+                type="number"
+                name="product_quantity"
+                [(ngModel)]="quantity"
+              />
+            </mat-form-field>
+
+            <div class="d-flex align-items-center gap-20">
+              <button mat-flat-button color="primary" (click)="customize()">
+                Customize
+              </button>
+              <h3 class="d-inline my-0 fg-teal d-flex align-items-center">
+                <small>from</small>&nbsp;<b>R {{ product.price }}</b>
+              </h3>
+            </div>
+
+            <app-printing-methods-chips
+              [printingMethodIds]="product.printingMethodsSearchableArr"
+            ></app-printing-methods-chips>
           </div>
-
-          <app-printing-methods-chips
-            [printingMethodIds]="product.printingMethodsSearchableArr"
-          ></app-printing-methods-chips>
         </div>
-      </div>
+        <div class="row" *ngIf="!product">
+          <div class="col-md-6"><div class="loading-block square"></div></div>
+          <div class="col-md-6">
+            <div class="loading-block sentence mb-4"></div>
+            <div class="loading-block sentence mb-4"></div>
+            <div class="loading-block sentence"></div>
+          </div>
+        </div>
       </app-fancy-card>
     </div>
   </div>
@@ -48,6 +68,7 @@
       heading="You may also be interested in:"
       [products]="relatedProducts"
       [large]="true"
+      [loading]="loadingRelated"
     ></app-horizontal-cards>
   </section>
 </div>

@@ -10,4 +10,5 @@ export class HorizontalCardsComponent {
   @Input() products: IProduct[] = [];
   @Input() heading: string = '';
   @Input() large = false;
+  @Input() loading = false;
 }

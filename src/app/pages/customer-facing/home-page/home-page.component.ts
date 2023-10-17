@@ -14,6 +14,7 @@ export class HomePageComponent implements OnInit {
   categories: ICategory[] = [];
   newestProducts: IProduct[] = [];
   bestSellingProducts: IProduct[] = [];
+  loading = false;
 
   constructor(
     private readonly categoryService: CategoryService,
@@ -21,6 +22,7 @@ export class HomePageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.loading = true;
     [this.categories, this.newestProducts, this.bestSellingProducts] = await Promise.all([this.categoryService.getCategories(), this.productsService.getProducts(
       'createdAt',
       false,
@@ -31,7 +33,9 @@ export class HomePageComponent implements OnInit {
       false,
       [['active', '==', true]],
       6
-    )])
+    )]).finally(() => {
+      this.loading = false;
+    })
     
 
     this.categories = this.categories.filter(

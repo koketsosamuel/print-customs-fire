@@ -16,6 +16,8 @@ export class SingleProductViewComponent implements OnInit {
   selectedVariantId: string = '';
   quantity: number = 1;
   hasSubVariations: boolean = false;
+  loadingProduct: boolean = false;
+  loadingRelated: boolean = false;
 
   constructor(
     private readonly productService: ProductService,
@@ -32,7 +34,8 @@ export class SingleProductViewComponent implements OnInit {
   }
 
   getProduct(productId: string) {
-    this.loadingSpinnerService.show();
+    this.loadingProduct = true;
+    this.loadingRelated = true;
     return this.productService
       .getProduct(productId || '')
       .then((data: any) => {
@@ -41,16 +44,14 @@ export class SingleProductViewComponent implements OnInit {
           !!this.product?.variations.options?.find(v => v.id === this.selectedVariantId)
             ?.subVariations?.options.length;
 
-        this.getRelatedProducts();
-      })
-      .finally(() => {
-        this.loadingSpinnerService.hide();
-      });
+        this.getRelatedProducts().finally(() => {
+          this.loadingRelated = false;
+        });
+      }).finally(() => this.loadingProduct = false)
   }
 
   getRelatedProducts() {
-    this.loadingSpinnerService.show();
-    this.productService
+    return this.productService
       .getProducts(
         'unitsSold',
         false,
