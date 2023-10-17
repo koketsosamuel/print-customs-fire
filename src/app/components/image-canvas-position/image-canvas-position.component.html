@@ -17,8 +17,10 @@
     </mat-card>
   </div>
   <div class="d-flex justify-content-center pt-4">
-    <div class='canvas-container'>
-      <img [src]="imgSrc" alt="image" class="bg-image">
+    <div class='canvas-container' [ngStyle]="{
+      background: imgSrc,
+      backgroundSize: 'contain'
+    }">
       <div cdkDrag #canvasContainer [cdkDragDisabled]="!allowDrag || displayMode" (cdkDragEnded)="getCanvasPosition()" (click)="getCanvasPosition()"
         class='text-center d-flex align-items-center justify-content-center'>
         <canvas id="canvas" *ngIf="displayMode" [height]='canvasPositionInfo.h' [width]='canvasPositionInfo.w'></canvas>
