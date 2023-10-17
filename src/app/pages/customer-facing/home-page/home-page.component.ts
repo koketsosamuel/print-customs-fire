@@ -17,25 +17,22 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private readonly categoryService: CategoryService,
-    private readonly loadingSpinnerService: LoadingSpinnerService,
     private readonly productsService: ProductService
   ) {}
 
   async ngOnInit() {
-    this.categories = await this.categoryService.getCategories()
-    this.newestProducts = await this.productsService.getProducts(
+    [this.categories, this.newestProducts, this.bestSellingProducts] = await Promise.all([this.categoryService.getCategories(), this.productsService.getProducts(
       'createdAt',
       false,
       [['active', '==', true]],
       6
-    );
-    this.bestSellingProducts = await this.productsService.getProducts(
+    ), this.productsService.getProducts(
       'unitsSold',
       false,
       [['active', '==', true]],
       6
-    );
-    console.log(this.newestProducts, this.bestSellingProducts);
+    )])
+    
 
     this.categories = this.categories.filter(
       (category) => category?.images?.[0]?.link
