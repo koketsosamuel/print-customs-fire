@@ -93,7 +93,6 @@ export class CustomizeProductComponent implements OnInit {
   }
 
   getProduct(productId: string) {
-    this.loadingSpinnerService.show();
     return this.productService
       .getProduct(productId || '')
       .then((data: any) => {
@@ -101,7 +100,6 @@ export class CustomizeProductComponent implements OnInit {
         this.hasSubVariationsCheck();
       })
       .finally(() => {
-        this.loadingSpinnerService.hide();
       });
   }
 

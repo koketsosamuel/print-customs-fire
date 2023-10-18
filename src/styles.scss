@@ -98,6 +98,10 @@ h6 {
   &.sentence {
     aspect-ratio: 4/1;
   }
+
+  &.ultra-wide {
+    aspect-ratio: 32/9;
+  }
   
 
   @keyframes pulse {

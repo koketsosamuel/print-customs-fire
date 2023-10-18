@@ -2,6 +2,9 @@
   <div class="row">
     <div class="col-lg-8 col-md-12">
       <app-fancy-card>
+        <h2 class="fg-grey-900 d-md-none py-0 my-0">
+          <b>{{ product?.name }}</b>
+        </h2>
         <div class="row" *ngIf="product">
           <div class="col-md-6">
             <app-single-product-view-images
@@ -9,7 +12,7 @@
             ></app-single-product-view-images>
           </div>
           <div class="col-md-6">
-            <h2 class="fg-grey-900">
+            <h2 class="fg-grey-900 d-md-block py-0 mt-1 mb-2 d-none">
               <b>{{ product.name }}</b>
             </h2>
 
@@ -52,7 +55,7 @@
           </div>
         </div>
         <div class="row" *ngIf="!product">
-          <div class="col-md-6"><div class="loading-block square"></div></div>
+          <div class="col-md-6 mb-4"><div class="loading-block square"></div></div>
           <div class="col-md-6">
             <div class="loading-block sentence mb-4"></div>
             <div class="loading-block sentence mb-4"></div>
