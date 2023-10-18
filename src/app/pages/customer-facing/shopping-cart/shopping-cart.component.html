@@ -6,7 +6,7 @@
         *ngFor="let item of items"
         class="cart-item-card bg-teal-100 p-4 d-flex align-items-center gap-10 mb-4 rounded-corners"
       >
-        <img [src]="item.product?.images?.[0]?.link" class="rounded-corners" />
+        <img [src]="item.product?.images?.[0]?.link" class="rounded-corners cursor" [routerLink]="'/products/' + item.product?.name + '/' + item.product?.id" />
         <div>
           <h4 class="my-0 fg-grey-900">
             <b>{{ item.product?.name }}</b>
@@ -54,7 +54,7 @@
       </div>
     </main>
     <aside class="col-lg-4">
-      <div class="p-4 bg-grey-400 rounded-corners">
+      <div class="p-4 bg-white rounded-corners">
         <h1 class="mt-0 pt-0">Order Summary</h1>
         <table>
             <tbody>
@@ -72,7 +72,7 @@
                 </tr>
             </tbody>
         </table>
-        <button mat-flat-button color="primary" class="mt-4">Checkout</button>
+        <button mat-flat-button color="primary" class="mt-4">Secure Checkout</button>
       </div>
     </aside>
   </section>
