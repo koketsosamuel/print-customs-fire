@@ -48,8 +48,11 @@ export class CartItemService {
         updatedAt: null,
         productId,
         costBreakdown,
-        variation
       };
+
+      if (variation) {
+        cartItem.variation = variation;
+      }
 
       const savedCart = await this.db.addDocument(this.collection, cartItem);
 
