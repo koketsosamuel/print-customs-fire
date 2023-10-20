@@ -6,7 +6,7 @@
     />
   </div>
   <div class="card__subtitle">{{ product.name }}</div>
-  <p class="my-0 py-0">multiple colors</p>
+  <p class="my-0 py-0" *ngIf="product.variations.options.length > 0">multiple colors</p>
   <div class="card__wrapper">
     <div class="card__title fg-teal-400">R {{ product.price }}</div>
     <div class="card__icon">
