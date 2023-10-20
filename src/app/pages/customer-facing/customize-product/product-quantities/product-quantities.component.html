@@ -68,6 +68,11 @@
             [max]='product.quantity'
             (keyup)="validate()"
           />
+          <mat-hint
+            >
+            available:
+            <b class="fg-teal-300">{{ product.quantity }}</b></mat-hint
+          >
 
         </mat-form-field>
       </div>
