@@ -64,7 +64,7 @@ export class PrintingMethodsSelectComponent implements OnInit {
     } catch (error) {
       this.alertService.error('Error loading printing methods, please reload page.')
     } finally {
-      this.loadingSpinnerService.show();
+      this.loadingSpinnerService.hide();
     }
   }
 
