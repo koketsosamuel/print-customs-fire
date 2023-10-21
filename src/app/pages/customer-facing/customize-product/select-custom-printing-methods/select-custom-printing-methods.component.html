@@ -26,6 +26,7 @@
       mat-flat-button
       color="primary"
       (click)="savePrintingInfo()"
+      [disabled]="!validated"
     >
       Save and continue
     </button>

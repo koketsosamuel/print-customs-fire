@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { UploadArtworkDialogComponent } from '../upload-artwork-dialog/upload-artwork-dialog.component';
@@ -9,11 +9,16 @@ import { IArtwork } from 'src/app/models/artwork.interface';
   templateUrl: './upload-artwork.component.html',
   styleUrls: ['./upload-artwork.component.scss'],
 })
-export class UploadArtworkComponent {
+export class UploadArtworkComponent implements OnInit {
   @Input() printingInfo: IPrintingInfo[] = [];
   @Output() change = new EventEmitter<IPrintingInfo[]>();
+  validated: boolean = false;
 
   constructor(private readonly dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    this.validate();
+  }
 
   uploadArt(printingInfo: IPrintingInfo, viewOnly = false) {
     this.dialog
@@ -21,19 +26,22 @@ export class UploadArtworkComponent {
         data: { printingInfo, viewOnly },
         maxWidth: '100vw',
         maxHeight: '100vh',
-        panelClass: 'custom-dialog-container'
+        panelClass: 'custom-dialog-container',
       })
       .afterClosed()
       .subscribe((artwork: null | Record<string, any>) => {
-        console.log(artwork, 333);
-        
         if (artwork) {
           printingInfo.artwork = artwork;
+          this.validate();
         }
       });
   }
 
   saveArtWork() {
     this.change.emit(this.printingInfo);
+  }
+
+  validate() {
+    this.validated = !!!this.printingInfo.find((pi) => !pi.artwork);
   }
 }

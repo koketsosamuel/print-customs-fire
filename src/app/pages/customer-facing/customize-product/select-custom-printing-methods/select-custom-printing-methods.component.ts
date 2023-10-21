@@ -13,14 +13,14 @@ import { IPrintingInfo } from 'src/app/models/printing-info.interface';
   templateUrl: './select-custom-printing-methods.component.html',
   styleUrls: ['./select-custom-printing-methods.component.scss'],
 })
-export class SelectCustomPrintingMethodsComponent {
-  @Input({required: true}) product!: IProduct;
-  @Input({required: true}) printingInfo: IPrintingInfo[] = [];
+export class SelectCustomPrintingMethodsComponent implements OnInit {
+  @Input({ required: true }) product!: IProduct;
+  @Input({ required: true }) printingInfo: IPrintingInfo[] = [];
   @Output() change = new EventEmitter<IPrintingInfo[]>();
 
-  constructor(
-    private readonly dialog: MatDialog,
-  ) {}
+  validated: boolean = false;
+
+  constructor(private readonly dialog: MatDialog) {}
 
   chooseMethod(printingInfo: any) {
     this.dialog
@@ -32,10 +32,19 @@ export class SelectCustomPrintingMethodsComponent {
       .subscribe((data) => {
         printingInfo.selectedMethod =
           data?.length > 0 ? data[0] : printingInfo.selectedMethod;
+        this.validate();
       });
   }
 
   savePrintingInfo() {
     this.change.emit(this.printingInfo);
+  }
+
+  validate() {
+    this.validated = !!!this.printingInfo.find((pi) => !pi.selectedMethod);
+  }
+
+  ngOnInit() {
+    this.validate();
   }
 }

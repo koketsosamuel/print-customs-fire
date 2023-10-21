@@ -30,7 +30,7 @@
   </div>
 
   <footer class="gap-20 d-flex mt-4">
-    <button mat-flat-button color="primary" (click)="saveArtWork()">
+    <button mat-flat-button color="primary" (click)="saveArtWork()" [disabled]="!validated">
       Save and continue
     </button>
     <button mat-flat-button color="accent" matStepperPrevious>Back</button>

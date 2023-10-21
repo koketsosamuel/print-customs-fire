@@ -1,8 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import IProduct from 'src/app/models/product.interface';
-import {
-  IVariationOption,
-} from 'src/app/models/variation.interface';
+import { IVariationOption } from 'src/app/models/variation.interface';
 
 @Component({
   selector: 'app-product-quantities',
@@ -11,7 +9,6 @@ import {
 })
 export class ProductQuantitiesComponent implements OnInit {
   @Input({ required: true }) product!: IProduct;
-  @Input() quantityAvailable: number = 0;
   @Input() totalQuantity: number = 0;
   @Input() chosenVariationId: string = '';
   @Output() quantityChanged = new EventEmitter<Record<string, any>>();
@@ -45,10 +42,42 @@ export class ProductQuantitiesComponent implements OnInit {
   }
 
   validate() {
-    this.validated =
+    const minQuantitiesValid =
       Object.values(this.optionQuantities).filter(
         (opt) => opt.quantities && opt.quantities > 0
-      ).length > 0 || this.totalQuantity > 0;
+      ).length > 0;
+
+    let maxQuantitiesValidated = true;
+    if (this.hasSubVariations) {
+      const selectedOptions = this.product.variations.options.find(
+        (o) => o.id == this.chosenVariationId
+      )?.subVariations;
+
+      if (selectedOptions) {
+        maxQuantitiesValidated = !!!selectedOptions.options.find((o) => {
+          return o.quantityAvailable < this.optionQuantities[o.id].quantities;
+        });
+      }
+    } else if (this.product.variations.options.length > 0) {
+      maxQuantitiesValidated = !!!this.product.variations.options.find(
+        (o) =>
+          o.id == this.chosenVariationId &&
+          o.quantityAvailable < this.optionQuantities[o.id].quantities
+      );
+    } else {
+      maxQuantitiesValidated = this.product.quantity > this.totalQuantity;
+    }
+
+    // if atleast one variation exists then we need not to check is total quantity might be greater than available quantities
+    if (this.product.variations.options.length > 0) {
+      this.validated =
+        (minQuantitiesValid && maxQuantitiesValidated) ||
+        this.totalQuantity > 0;
+    } else {
+      this.validated =
+        (minQuantitiesValid && maxQuantitiesValidated) ||
+        (this.totalQuantity > 0 && this.totalQuantity < this.product.quantity);
+    }
   }
 
   saveQuantities() {
@@ -59,6 +88,9 @@ export class ProductQuantitiesComponent implements OnInit {
         this.totalQuantity += q.quantities ? q.quantities : 0;
       });
     }
-    this.quantityChanged.emit({ totalQuantity: this.totalQuantity, optionQuantities: this.optionQuantities });
+    this.quantityChanged.emit({
+      totalQuantity: this.totalQuantity,
+      optionQuantities: this.optionQuantities,
+    });
   }
 }

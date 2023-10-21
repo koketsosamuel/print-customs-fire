@@ -14,7 +14,6 @@ export class SingleProductViewComponent implements OnInit {
   product: IProduct | null = null;
   relatedProducts: IProduct[] = [];
   selectedVariantId: string = '';
-  quantity: number = 1;
   hasSubVariations: boolean = false;
   loadingProduct: boolean = false;
   loadingRelated: boolean = false;
@@ -86,7 +85,6 @@ export class SingleProductViewComponent implements OnInit {
     } else {
       this.router.navigate(['/customize/' + this.product?.id], {
         queryParams: {
-          quantity: !this.hasSubVariations ? this.quantity : undefined,
           variant:
             this.selectedVariantId
               ? this.selectedVariantId

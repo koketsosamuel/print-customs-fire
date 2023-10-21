@@ -1,9 +1,8 @@
 <section class="container mt-4">
   <h1>Customize: {{ product?.name }}</h1>
   <div class="row">
-    <div class="col-md-6 col-lg-3 col-sm-8">
+    <div class="col-md-6 col-lg-3 col-sm-8" *ngIf="product?.variations?.options?.length">
       <app-color-variant-selector
-        *ngIf="product?.variations?.options?.length"
         [options]="product.variations.options"
         [selectedVariantId]="selectedVariantId"
         [readonly]="true"
