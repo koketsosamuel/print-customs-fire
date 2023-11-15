@@ -1,6 +1,6 @@
 ::ng-deep .custom-dialog-container mat-dialog-container {
-    width: 90vw;
-    height: 90vh;
+    max-width: 90vw;
+    max-height: 90vh;
 
     mat-dialog-content {
         max-height: initial;

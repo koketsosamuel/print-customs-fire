@@ -1,20 +1,62 @@
-<h1 mat-dialog-title class="mb-0">Upload artwork</h1>
+<h1 mat-dialog-title class="mb-0">
+  {{ imageQualityScore > 0 ? "Change" : "Upload" }} artwork
+</h1>
 <mat-dialog-content class="full-screen-dialog-content">
-  <div class='d-flex gap-20' >
-    <button mat-flat-button color="primary" class='mb-4' (click)="fileInput.click()" *ngIf="!data.viewOnly">Upload</button>
-    <button mat-flat-button color="primary" class='mb-4' (click)="saveCanvasView()" *ngIf="!data.viewOnly" [disabled]="imageQualityScore < 75">Save</button>
-    <button mat-flat-button color="warn" class='mb-4' mat-dialog-close>{{data.viewOnly ? 'Close' : 'Cancel'}}</button>
-    <input type="file" (change)="handleFileInput($event)" class='d-none' #fileInput >
+  <div class="d-flex justify-content-space-between">
+    <div>
+      <button
+        mat-flat-button
+        color="primary"
+        class="mb-4"
+        (click)="fileInput.click()"
+        *ngIf="!data.viewOnly"
+      >
+        {{ imageQualityScore > 0 ? "Change" : "Upload" }} Image</button
+      >&nbsp;
+      <button
+        mat-flat-button
+        color="primary"
+        class="mb-4"
+        (click)="saveCanvasView()"
+        *ngIf="!data.viewOnly"
+        [disabled]="imageQualityScore < 80"
+      >
+        Save
+      </button>
+    </div>
+    <button mat-flat-button color="warn" class="mb-4" mat-dialog-close>
+      {{ data.viewOnly ? "Close" : "Cancel" }}
+    </button>
+    <input
+      type="file"
+      (change)="handleFileInput($event)"
+      class="d-none"
+      #fileInput
+      accept="image/*"
+    />
   </div>
-  <app-image-quality-meter [score]="imageQualityScore"></app-image-quality-meter>
+  <app-image-quality-meter
+    [score]="imageQualityScore"
+  ></app-image-quality-meter>
+
+  <div class="bg-teal-600 p-2 d-flex justify-content-space-between">
+    <button mat-flat-button color="accent" (click)="centerVertically()">
+      <mat-icon> vertical_align_center </mat-icon> Center
+    </button>
+    <button mat-flat-button color="accent" (click)="centerHorizontal()">
+      <mat-icon class="rotate-90"> vertical_align_center </mat-icon> Center
+    </button>
+    <button mat-flat-button color="accent"><mat-icon>add</mat-icon> Scale</button>
+    <button mat-flat-button color="accent"><mat-icon>remove</mat-icon> Scale</button>
+  </div>
 
   <div class="canvas-container-scrollable">
     <app-image-canvas-position
-    [imgSrc]="data.printingInfo.printingPosition.images?.[0]?.link"
-    [canvasPositionInfo]="data.printingInfo.printingPosition.canvasPositionInfo"
-    [displayMode]="true"
-  ></app-image-canvas-position>
+      [imgSrc]="data.printingInfo.printingPosition.images?.[0]?.link"
+      [canvasPositionInfo]="
+        data.printingInfo.printingPosition.canvasPositionInfo
+      "
+      [displayMode]="true"
+    ></app-image-canvas-position>
   </div>
 </mat-dialog-content>
-
-

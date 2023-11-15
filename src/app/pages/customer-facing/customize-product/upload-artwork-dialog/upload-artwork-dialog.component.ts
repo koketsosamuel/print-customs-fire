@@ -133,4 +133,17 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
     const qualityScore = (imagePixels / bestNumberOfPixels) * 100;
     this.imageQualityScore = Number(qualityScore.toFixed(2));
   }
+
+  centerHorizontal() {
+    if (this.canvasImageRef) {
+      this.canvasImageRef.centerH();
+    }
+  }
+
+  centerVertically() {
+    if (this.canvasImageRef) {
+      this.canvasImageRef.centerV();
+    }
+  }
+
 }

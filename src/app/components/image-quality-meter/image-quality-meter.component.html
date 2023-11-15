@@ -1,2 +1,16 @@
-<p>Image Quality: <b [class]="getScoreRating().color">{{getScoreRating().text}}</b></p>
-<p class="fg-grey-600">{{getScoreRating().hint}}</p>
+<p class="mt-0 py-0" *ngIf="score > 0">
+  <span class="p-2 rounded-corners bg-grey-200">Image Quality</span>&nbsp;<span
+    [class]="getScoreRating().color + ' p-2 rounded-corners'"
+    
+    >{{ score }} %</span
+  >
+</p>
+<p
+  *ngIf="getScoreRating().hint"
+  [class]="
+    getScoreRating().color.replaceAll('bg', 'fg') +
+    ' d-flex align-items-center p-0'
+  "
+>
+  <mat-icon>warning</mat-icon> {{ getScoreRating().hint }}
+</p>
