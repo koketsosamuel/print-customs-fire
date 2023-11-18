@@ -11,6 +11,7 @@
         (click)="fileInput.click()"
         *ngIf="!data.viewOnly"
       >
+        <mat-icon>upload</mat-icon>
         {{ imageQualityScore > 0 ? "Change" : "Upload" }} Image</button
       >&nbsp;
       <button
@@ -21,11 +22,12 @@
         *ngIf="!data.viewOnly"
         [disabled]="imageQualityScore < 80"
       >
+        <mat-icon>save</mat-icon>
         Save
       </button>
     </div>
-    <button mat-flat-button color="warn" class="mb-4" mat-dialog-close>
-      {{ data.viewOnly ? "Close" : "Cancel" }}
+    <button mat-mini-fab color="warn" class="mb-4" mat-dialog-close>
+      <mat-icon>close</mat-icon>
     </button>
     <input
       type="file"
@@ -39,15 +41,24 @@
     [score]="imageQualityScore"
   ></app-image-quality-meter>
 
+  <p class="d-flex align-items-center text-tiny">
+    <mat-icon>info</mat-icon> <i>Click on image to resize, move and rotate.</i>
+  </p>
+
+  <p class="d-flex align-items-center text-tiny d-md-none fg-yellow-900">
+    <mat-icon>tablet_android</mat-icon>
+    <i>Get the best experience on a larger screen</i>
+  </p>
+
   <div class="bg-teal-600 p-2 d-flex justify-content-space-between">
     <button mat-flat-button color="accent" (click)="centerVertically()">
       <mat-icon> vertical_align_center </mat-icon> Center
+      <span class="d-none d-sm-inline">Vertically</span>
     </button>
     <button mat-flat-button color="accent" (click)="centerHorizontal()">
       <mat-icon class="rotate-90"> vertical_align_center </mat-icon> Center
+      <span class="d-none d-sm-inline">Horizontally</span>
     </button>
-    <button mat-flat-button color="accent"><mat-icon>add</mat-icon> Scale</button>
-    <button mat-flat-button color="accent"><mat-icon>remove</mat-icon> Scale</button>
   </div>
 
   <div class="canvas-container-scrollable">
@@ -58,5 +69,41 @@
       "
       [displayMode]="true"
     ></app-image-canvas-position>
+  </div>
+
+  <div class="d-flex justify-content-space-between d-sm-none mt-3">
+    <div>
+      <button
+        mat-flat-button
+        color="primary"
+        class="mb-4"
+        (click)="fileInput.click()"
+        *ngIf="!data.viewOnly"
+      >
+        <mat-icon>upload</mat-icon>
+        {{ imageQualityScore > 0 ? "Change" : "Upload" }} Image</button
+      >&nbsp;
+      <button
+        mat-flat-button
+        color="primary"
+        class="mb-4"
+        (click)="saveCanvasView()"
+        *ngIf="!data.viewOnly"
+        [disabled]="imageQualityScore < 80"
+      >
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+    </div>
+    <button mat-mini-fab color="warn" class="mb-4" mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
+    <input
+      type="file"
+      (change)="handleFileInput($event)"
+      class="d-none"
+      #fileInput
+      accept="image/*"
+    />
   </div>
 </mat-dialog-content>
