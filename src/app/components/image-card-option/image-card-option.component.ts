@@ -42,7 +42,7 @@ export class ImageCardOptionComponent {
   }
 
   getPosPercentage(value: number, total: number) {
-    return Math.ceil((value / total) * 100) + '%';
+    return Math.ceil((value / total) * 100).toFixed(2) + '%';
   }
 
   toggleSelection() {
