@@ -29,9 +29,10 @@ export class UploadArtworkComponent implements OnInit {
         panelClass: 'custom-dialog-container',
       })
       .afterClosed()
-      .subscribe((artwork: null | Record<string, any>) => {
+      .subscribe((artwork: null | {json: Record<string, any>, viewExport: string}) => {
         if (artwork) {
-          printingInfo.artwork = artwork;
+          printingInfo.artwork = artwork['json'];
+          printingInfo.exportView = artwork.viewExport;
           this.validate();
         }
       });

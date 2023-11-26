@@ -99,8 +99,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
     
     
     this.artwork = json;
-    this.dialogRef.close(json);
-    console.log(json, this.artwork);
+    this.dialogRef.close({json, viewExport: this.canvas.toDataURL()});
   }
 
   importJsonToCanvas(): void {

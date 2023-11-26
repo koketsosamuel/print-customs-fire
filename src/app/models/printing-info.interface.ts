@@ -7,10 +7,12 @@ export interface IPrintingInfo {
   methods: IPrintingMethod[];
   selectedMethod: IPrintingMethod | null;
   artwork: Record<string, any> | null;
+  exportView?: string;
 }
 
 export interface ICartItemPrintingInfo {
   printingPosition: string;
   selectedMethod: string;
   artwork: string;
+  exportView: string;
 }

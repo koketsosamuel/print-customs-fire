@@ -1,0 +1,24 @@
+<section class="mb-3">
+    <div class="bg-teal-100 rounded-corners p-2">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-6" *ngFor="let p of printingInfoArr">
+                <mat-card>
+                    <mat-card-content>
+                        <app-canvas-with-square-image [printingInfo]="p"></app-canvas-with-square-image>
+                        <div class="d-flex justify-content-center flex-wrap mt-1">
+                            <div>
+                                <mat-chip>{{p.printingPosition.name}}</mat-chip>
+                            </div>
+                            <div>
+                                <mat-chip>{{p.selectedMethod?.name}}</mat-chip>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</section>
+    <div class="teal-100-border rounded-corners py-2 px-3">
+        <app-cost-breakdown [costBreakdown]="costBreakDown"></app-cost-breakdown>
+    </div>

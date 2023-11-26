@@ -87,6 +87,10 @@ import { ImageQualityMeterComponent } from './components/image-quality-meter/ima
 import { ShoppingCartComponent } from './pages/customer-facing/shopping-cart/shopping-cart.component';
 import { ItemsListComponent } from './pages/customer-facing/shopping-cart/items-list/items-list.component';
 import { FilterAndSortDialogueComponent } from './components/filter-and-sort-dialogue/filter-and-sort-dialogue.component';
+import { CanvasWithSquareImageComponent } from './components/canvas-with-square-image/canvas-with-square-image.component';
+import { SummaryViewComponent } from './pages/customer-facing/customize-product/summary-view/summary-view.component';
+import { CartItemDialogSummaryComponent } from './components/cart-item-dialog-summary/cart-item-dialog-summary.component';
+import { QuantitySummaryComponent } from './components/quantity-summary/quantity-summary.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +148,10 @@ import { FilterAndSortDialogueComponent } from './components/filter-and-sort-dia
     ShoppingCartComponent,
     ItemsListComponent,
     FilterAndSortDialogueComponent,
+    CanvasWithSquareImageComponent,
+    SummaryViewComponent,
+    CartItemDialogSummaryComponent,
+    QuantitySummaryComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

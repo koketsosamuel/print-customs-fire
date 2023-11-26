@@ -56,7 +56,10 @@
       ></app-upload-artwork>
     </mat-step>
     <mat-step label="Summary" [completed]="stepsCompleted.summary">
-      <app-cost-breakdown [costBreakdown]="costBreakdown"></app-cost-breakdown>
+      <h1 class="d-flex align-items-center fg-grey-900">
+        <mat-icon>widgets</mat-icon>&nbsp; Summary
+      </h1>
+      <app-summary-view [costBreakDown]="costBreakdown" [printingInfoArr]="printingInfo"></app-summary-view>
       <button
         mat-flat-button
         color="primary"

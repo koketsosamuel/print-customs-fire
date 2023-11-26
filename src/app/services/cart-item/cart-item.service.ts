@@ -91,9 +91,12 @@ export class CartItemService {
         updatedAt: new Date(),
         productId,
         costBreakdown,
-        variation
       };
 
+      if (variation) {
+        newCartItem.variation = variation;
+      }
+      
       if (printingInfoChanged) {
         const printingInfo: ICartItemPrintingInfo[] = await this.uploadCartArtworks(printingInfoArr, cartItemId);
         newCartItem.printingInfoArr = printingInfo;
@@ -114,13 +117,14 @@ export class CartItemService {
     }
   }
 
-  uploadCartArtworks(printingInfoArr: IPrintingInfo[], cartItemId: string) {
+  uploadCartArtworks(printingInfoArr: IPrintingInfo[], cartItemId: string): Promise<any[]> {
     return Promise.all(printingInfoArr.map(async pi => {
       const res: string = await this.storage.uploadArtworkJSON(pi.artwork, cartItemId as string)
       return {
         printingPosition: pi.printingPosition.id as string,
         selectedMethod: pi.selectedMethod?.id as string,
-        artwork: res
+        artwork: res,
+        exportView: pi.exportView
       }
     }));
   }

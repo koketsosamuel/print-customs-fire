@@ -330,6 +330,7 @@ export class CustomizeProductComponent implements OnInit {
             methods,
             selectedMethod,
             artwork,
+            exportView: pi.exportView
           };
         })
       );
