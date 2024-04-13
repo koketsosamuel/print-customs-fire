@@ -1,1 +1,7 @@
 storage rules with data types
+tell the user how much they saved
+squares on home look clickable
+welcome pack groups
+    welcome pack 1
+    welcome pack 2
+    welcome pack 3

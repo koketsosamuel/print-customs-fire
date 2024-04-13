@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -32,6 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule} from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs'
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AddCategoryComponent } from './pages/categories/add-category/add-category.component';
@@ -91,6 +93,14 @@ import { CanvasWithSquareImageComponent } from './components/canvas-with-square-
 import { SummaryViewComponent } from './pages/customer-facing/customize-product/summary-view/summary-view.component';
 import { CartItemDialogSummaryComponent } from './components/cart-item-dialog-summary/cart-item-dialog-summary.component';
 import { QuantitySummaryComponent } from './components/quantity-summary/quantity-summary.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { LoginOrSignupComponent } from './components/login-or-signup/login-or-signup.component';
+import { SignInWithGoogleButtonComponent } from './components/sign-in-with-google-button/sign-in-with-google-button.component';
+import { DeliveryAddressComponent } from './components/delivery-address/delivery-address.component';
+import { RegisterNewUserComponent } from './components/register-new-user/register-new-user.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
+import { BusinessInfoComponent } from './components/business-info/business-info.component';
 
 @NgModule({
   declarations: [
@@ -152,6 +162,14 @@ import { QuantitySummaryComponent } from './components/quantity-summary/quantity
     SummaryViewComponent,
     CartItemDialogSummaryComponent,
     QuantitySummaryComponent,
+    CheckoutComponent,
+    LoginOrSignupComponent,
+    SignInWithGoogleButtonComponent,
+    DeliveryAddressComponent,
+    RegisterNewUserComponent,
+    ResetPasswordComponent,
+    PersonalInfoComponent,
+    BusinessInfoComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({
@@ -193,7 +211,9 @@ import { QuantitySummaryComponent } from './components/quantity-summary/quantity
     MatProgressBarModule,
     MatTooltipModule,
     MatSliderModule,
-    MatSidenavModule
+    MatSidenavModule,
+    ReactiveFormsModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

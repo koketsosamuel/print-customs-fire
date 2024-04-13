@@ -1,0 +1,52 @@
+<form autocomplete="off" [formGroup]="loginForm" (submit)="onLogin()" *ngIf="isLogin && !resetPassword">
+    <div class="row">
+        <div class="col-lg-6 col-md-8">
+            <h4>{{ isLogin ? 'Login to your account' : 'Register a new account' }}</h4>
+
+            <mat-form-field class="d-block">
+                <mat-label>Email</mat-label>
+                <input name="login_email" type="email" matInput placeholder="mike@cooltech.co.za"
+                    formControlName="email" />
+
+                <mat-error
+                    *ngIf="loginForm.controls['email'].hasError('email') && !loginForm.controls['email'].hasError('required')">Invalid
+                    email address</mat-error>
+                <mat-error *ngIf="loginForm.controls['email'].hasError('required')">Required</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="d-block">
+                <mat-label>Password</mat-label>
+                <input name="login_password" type="password" matInput placeholder="Ex. T-Shirt A4 Large Front"
+                    formControlName="password" />
+                <mat-error
+                    *ngIf="loginForm.controls['password'].hasError('minlength') && !loginForm.controls['password'].hasError('required')">Must
+                    have atleast 8 characters</mat-error>
+                <mat-error *ngIf="loginForm.controls['password'].hasError('required')">Required</mat-error>
+            </mat-form-field>
+
+            <div class="d-flex align-items-center mb-2">
+                <button mat-flat-button color="primary" [disabled]="!loginForm.valid" type="submit">
+                    Login
+                </button>
+                <div class="vertical-divider"></div>
+                <button mat-flat-button type="button" (click)="resetPassword = true">
+                    Reset password
+                </button>
+            </div>
+
+            <h5 class="py-0 mb-0 cursor" (click)="isLogin = false"><u>I dont have an account</u></h5>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <div class="d-flex justify-content-center">
+                <img src="../../../assets/sheild-dynamic-color.png" class="side-icon" alt="">
+            </div>
+        </div>
+    </div>
+</form>
+<div *ngIf="!isLogin">
+    <app-register-new-user (alreadyHaveAccountEvent)="isLogin = true"
+        (loginEvent)="emitUser($event)"></app-register-new-user>
+</div>
+<div *ngIf="resetPassword">
+    <app-reset-password (backToLoginScreen)="resetPassword = false"></app-reset-password>
+</div>

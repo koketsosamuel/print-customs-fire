@@ -77,5 +77,9 @@ export class CartService {
     });
   }
 
+  async swapCartOwnership(newUserUid: string, cartId: string) {
+    this.db.updateById(this.collection, cartId, { userId: newUserUid });
+  }
+
 
 }

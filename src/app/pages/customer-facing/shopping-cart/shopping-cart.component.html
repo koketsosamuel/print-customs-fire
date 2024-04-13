@@ -11,7 +11,10 @@
           <h4 class="my-0 fg-grey-900">
             <b>{{ item.product?.name }}</b>
           </h4>
-          <h4 class="my-0">Total Quantity: {{ item.totalQuantity }}</h4>
+          <mat-basic-chip-row>
+            <mat-chip>{{ item.totalQuantity }} units</mat-chip>
+            <mat-chip>Branding R{{ item.costBreakdown.brandingCosts.totalCost.toFixed(2) }}</mat-chip>
+          </mat-basic-chip-row>
         </div>
         <div class="d-flex align-items-center">
           <h4 class="my-0 fg-green-800 bg-white p-2">
@@ -72,7 +75,7 @@
                 </tr>
             </tbody>
         </table>
-        <button mat-flat-button color="primary" class="mt-4">Secure Checkout</button>
+        <button mat-flat-button color="primary" class="mt-4" routerLink="/secure-checkout">Secure Checkout</button>
       </div>
     </aside>
   </section>

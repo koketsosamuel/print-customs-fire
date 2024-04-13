@@ -18,6 +18,7 @@ import { ProductsViewComponent } from './pages/products/products-view/products-v
 import { ProductCatalogueComponent } from './pages/customer-facing/catalog/product-catalogue/product-catalogue.component';
 import { CustomizeProductComponent } from './pages/customer-facing/customize-product/customize-product.component';
 import { ShoppingCartComponent } from './pages/customer-facing/shopping-cart/shopping-cart.component';
+import { CheckoutComponent } from './pages/checkout/checkout.component';
 
 const routes: Routes = [
   {
@@ -119,6 +120,10 @@ const routes: Routes = [
   {
     path: 'shopping-cart',
     component: ShoppingCartComponent
+  },
+  {
+    path: 'secure-checkout',
+    component: CheckoutComponent
   }
 ];
 

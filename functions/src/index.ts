@@ -7,7 +7,7 @@ const storage = admin.storage();
 const bucketName = 'custom-prints-aae9c.appspot.com';
 import { getOriginalImagePath } from './helpers/get-original-image-path';
 import { generateImageObject } from './helpers/generate-image-object';
-import {globalConfig} from '../../config/config'
+import { globalConfig } from '../../config/config';
 import 'firebase-functions/logger/compat';
 
 export const addImageToCollection = functions
@@ -86,4 +86,46 @@ export const removeDeletedImageFromCollectionRow = functions.storage
     }
 
     return false;
+  });
+
+export const cleanCartOnDelete = functions.firestore.document('Cart/{documentId}').onDelete(async (snap, context) => {
+  const cartItemCollectionRef = db.collection('CartItem');
+
+  const snapshot = await cartItemCollectionRef
+    .where('cartId', '==', snap.id)
+    .get();
+
+  snapshot.forEach(async (doc) => {
+    await doc.ref.delete();
+  });
+})
+
+export const promoteCartToOrder = functions.firestore
+  .document('Order/{documentId}')
+  .onCreate(async (snap, context) => {
+    const order = snap.data();
+    const db = firestore();
+
+    // collection refs
+    const orderItemCollectionRef = db.collection('OrderItem');
+    const cartItemCollectionRef = db.collection('CartItem');
+
+    const snapshot = await cartItemCollectionRef
+      .where('cartId', '==', order.id)
+      .get();
+
+    await db.doc('Cart/' + order.id).delete();
+
+    const promises: Promise<any>[] = [];
+    snapshot.forEach((doc) => {
+      let orderItem: Record<string, any> = {
+        ...doc.data(),
+        orderId: context.params.documentId,
+      };
+      delete orderItem.cartId;
+      promises.push(
+        orderItemCollectionRef.add(orderItem)
+      );
+    });
+    await Promise.all(promises);
   });
