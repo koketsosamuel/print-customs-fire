@@ -18,8 +18,8 @@ export class LoadingSpinnerService {
         maxHeight: '70vh',
         maxWidth: '70vw',
         disableClose: true,
-        minHeight: '250px',
-        minWidth: '250px',
+        minHeight: '350px',
+        minWidth: '350px',
       });
     }
   }
