@@ -3,12 +3,12 @@
 
   <div class="list-box scroll-bar-custom">
     <div
-      class="cursor rounded-corners bg-mint-green fg grey-800 p-4 mb-4 category"
+      class="cursor rounded-corners bg-mint-green fg grey-800 py-3 px-4 mb-2 category"
       *ngFor="let category of categories"
       [routerLink]="['/catalogue']"
       [queryParams]="{ category: category.id }"
     >
-      <h4 class="m-0">{{ category.name }}</h4>
+      <h3 class="m-0">{{ category.name }}</h3>
     </div>
     <div class="loading-placeholder" *ngIf="categories.length == 0">
       <div

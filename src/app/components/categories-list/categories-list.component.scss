@@ -1,6 +1,9 @@
-.category:hover {
-  color: #fff;
+.category:hover h3 {
+  color: #fff !important;
+  transition: all 0.1s;
+  font-weight: 600;
 }
+
 .category img {
   max-height: 30px;
   max-width: 30px;
