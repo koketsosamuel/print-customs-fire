@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice {{invoiceNumber}}</title>
+
+    <style>
+      img {
+        max-width: 220px;
+        max-height: 50px;
+      }
+
+	  ul li, p, td, th {
+		font-size: 11px;
+	  }
+      
+    </style>
+
+	<link
+        href="bootstrap.min.css"
+        rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <section id="invoice">
+      <div>
+        <div>
+          	<div class="row">
+            <div class="col">
+				<div class="mb-2">
+					<img src="logo.png" alt="" />
+				</div>
+              <ul class="list-unstyled m-0">
+                <li><a href="mailto:{{ companySalesEmail }}?subject=Query on INVOICE {{invoiceNumber}}">{{ companySalesEmail }}</a></li>
+                <li><a href="tel:{{ companyPhoneNumber }}">{{ companyPhoneNumber }}</a></li>
+                <li>{{ companyAddress }}</li>
+                <li>VAT #: {{ companyVATRegistrationNumber }}</li>
+                <li>REG #: {{ companyRegistrationNumber }}</li>
+              </ul>
+            </div>
+            <div class="col">
+            <div class="card h-100 border-secondary mb-3">
+                <div class="card-header">Invoice To</div>
+                <div class="card-body">
+                <ul class="list-unstyled m-0">
+                    {{#if businessName}}
+                    <li><b>{{ businessName }}</b></li>
+                    <li>VAT #:&nbsp;<b>{{ taxNumber }}</b></li>
+                    {{else}}
+                    <li>{{ customerName }}</li>
+                    {{/if}}
+                    <li><b>{{ customerEmail }}</b></li>
+                    <li><b>{{ customerBillingAddress }}</b></li>
+                </ul>
+                </div>
+            </div>
+			
+            </div>
+            <div class="col">
+				<div class="card border-secondary mb-3 h-100">
+					<div class="card-header">Payment Information</div>
+					<div class="card-body">
+					  <ul class="list-unstyled m-0">
+						<li>Account No: <b>{{ companyAccountNumber }}</b></li>
+						<li>Account Name: <b>{{ companyAccountName }}</b></li>
+						<li>Reference: <b>{{ invoiceNumber }}</b></li>
+						<li>Branch Name: <b>{{ companyAccountBranch }}</b></li>
+						<li>Branch Code: <b>{{ companyAccountBranchCode }}</b></li>
+					</ul>
+					</div>
+				  </div>
+				
+            </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="d-flex justify-content-between align-items-center mt-4 mb-3 alert alert-success text-white"
+        >
+          <h3 class="m-0 display-5">Tax Invoice</h3>
+          <div>
+            <p class="m-0">
+              <span class="fw-medium">Invoice No:</span> {{invoiceNumber}}
+            </p>
+            <p class="m-0">
+              <span class="fw-medium">Invoice Date:</span> {{orderDate}}
+            </p>
+            <p class="m-0">
+              <span class="fw-medium">Due Date:</span> {{orderDueDate}}
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <table class="table table-sm table-stripped border mb-4">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Description</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Amount excl. VAT</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each items}}
+              <tr>
+                <th scope="row">{{itemNumber}}</th>
+                <td>{{description}}</td>
+                <td>R {{price}}</td>
+                <td>{{quantity}}</td>
+                <td>R {{total}}</td>
+              </tr>
+              {{/each}}
+              <tr>
+                <td colspan="3"></td>
+                <td class="">Sub-Total</td>
+                <td>R {{subTotal}}</td>
+              </tr>
+              <tr>
+                <td colspan="3"></td>
+                <td class="">Delivery fee</td>
+                <td>R {{deliveryFee}}</td>
+              </tr>
+              <tr>
+                <td colspan="3"></td>
+                <td class="">VAT 15%</td>
+                <td>R {{vat}}</td>
+              </tr>
+              <tr>
+                <td colspan="3"></td>
+                <td class="fs-5 fw-bold">Grand-Total</td>
+                <td class="fs-5 fw-bold">R {{total}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-2">
+		  {{#if paid}}
+		  <p>
+			Please note that this is your finalized invoice for the order placed with Perfek Print. All details have been confirmed, and no further changes will be made to this invoice.
+		  </p>
+
+		  <p>Missing items must be reported within 24 hours of collection, and 72 hours in the event of a courier collection. Orders cancelled once placed in writing
+			will attract a 15% cancellation fee.</p>
+		  {{else}}
+		  <p>
+			Please note that this is a Sales Order document and not a final invoice. It reflects the order you have placed with Perfek Print.
+			This Sales Order may change due to various factors. Once finalized, a tax invoice will be emailed to you, referencing
+			the final tax invoice number.
+		  </p>
+
+		  <p class="text-muted">
+            <span class="fw-semibold">NOTICE: </span> If the payment due date has passed without payment being made, this invoice will be invalidated.
+          </p>
+		  {{/if}}
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

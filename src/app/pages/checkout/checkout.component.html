@@ -3,29 +3,6 @@
 
   <div class="row">
     <div class="col-lg-8 my-3">
-      <!-- <mat-stepper [linear]="true" orientation="vertical" class="bg-teal-50 rounded-corners">
-                <mat-step label="Contact & personal information">
-                    <h3>Contact & Personal info</h3>
-                    <app-personal-info
-                        [contacDetailsAndPersonalDetails]="contactInfoAndPersonalInfoForm"></app-personal-info>
-                </mat-step>
-                <mat-step label="Business information">
-                    <h3>Business Info</h3>
-                    <app-business-info [businessInfoForm]="businessInfoForm"></app-business-info>
-                </mat-step>
-                <mat-step label="Delivery address">
-                    <h3>Delivery Address</h3>
-                    <app-delivery-address [addressForm]="deliveryAddressForm"></app-delivery-address>
-                </mat-step>
-                <mat-step label="Billing address">
-                    <h3>Billing Address</h3>
-                    <div class="p-2 bg-white rounded-corners d-inline-block mb-3">
-                        <mat-checkbox [(ngModel)]="billingAddressSameAsDelivery">Same as delivery</mat-checkbox>
-                    </div>
-                    <app-delivery-address [addressForm]="billingAddressForm"
-                        *ngIf="!billingAddressSameAsDelivery"></app-delivery-address>
-                </mat-step>
-            </mat-stepper> -->
 
       <app-fancy-card [small]="true">
         <h3>Contact & Personal info</h3>
@@ -76,9 +53,9 @@
         class="cart-item-card bg-teal-100 p-4 mb-4 rounded-corners"
       >
         <h4 class="mt-0 mb-3 fg-grey-900">
-          <b>{{ item.product?.name }}</b>
+          {{ item.product?.name }}
         </h4>
-        <mat-basic-chip-row class="my-3">
+        <div class="d-flex gap-10 flex-wrap">
           <mat-chip>{{ item.totalQuantity }} units</mat-chip>
           <mat-chip
             >Branding R{{
@@ -90,17 +67,25 @@
               item.costBreakdown.totalProductBaseCost.toFixed(2)
             }}</mat-chip
           >
-        </mat-basic-chip-row>
+        </div>
         <div class="d-flex align-items-center mt-3">
           <h4 class="my-0">
             Total:
-            <b class="fg-green-800 bg-white p-2"
-              >R&nbsp;{{ item.totalPrice.toFixed(2) }}</b
-            >
-          </h4>
+            <span class="fg-green-800 bg-white p-2">
+              R&nbsp;{{ item.totalPrice.toFixed(2) }}
+            </span>
+        </h4>
         </div>
       </div>
-      <div class="p-4 bg-white rounded-corners">
+
+      <div *ngIf="initialLoad">
+        <div class="loading-block sentence sentence mb-3"></div>
+        <div class="loading-block sentence sentence mb-3"></div>
+      </div>
+
+      <div class="loading-block ultra-wide" *ngIf="initialLoad"></div>
+
+      <div class="p-4 bg-white rounded-corners" *ngIf="!initialLoad">
         <table>
           <tbody>
             <tr>
@@ -122,9 +107,9 @@
               </td>
             </tr>
             <tr>
-              <td>Total</td>
+              <td><h1 class="my-0 py-0">Total</h1></td>
               <td>
-                <mat-chip>R {{ total }}</mat-chip>
+                <h1 class="my-0 py-0">R&nbsp;{{ total }}</h1>
               </td>
             </tr>
           </tbody>
@@ -134,7 +119,7 @@
         class="rounded-corners cursor px-4 py-2 mt-4 text-center bg-teal"
         (click)="checkout()"
       >
-        <h2 class="fg-white"><b>Secure Checkout</b></h2>
+        <h2 class="fg-white">Secure Checkout</h2>
       </div>
     </div>
   </div>

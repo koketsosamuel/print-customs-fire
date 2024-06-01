@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { ICartItem } from 'src/app/models/cart.interface';
+import { AlertService } from 'src/app/services/alert/alert.service';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { CustomizationPreviewDialogService } from 'src/app/services/customization-preview-dialog/customization-preview-dialog.service';
+import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
 import { OrderService } from 'src/app/services/order/order.service';
 
 @Component({
@@ -20,7 +24,7 @@ export class CheckoutComponent implements OnInit {
   billingAddressSameAsDelivery = true;
   saveMyDetailsForNextPurchase = false;
   notRegisteredBusiness = false;
-  loading = false;
+  initialLoad = false;
   items: ICartItem[] = [];
   total: string = '';
   vat: string = '';
@@ -30,11 +34,15 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly cartService: CartService,
-    private readonly orderService: OrderService
+    private readonly orderService: OrderService,
+    private readonly customizationPreviewServ: CustomizationPreviewDialogService,
+    private readonly loadingSpinner: LoadingSpinnerService,
+    private readonly alertService: AlertService,
+    private readonly router: Router
   ) {
 
     this.deliveryAddressForm = formBuilder.group({
-      streetAddress: ['', Validators.required],
+      streetAddress: ['', [Validators.required]],
       suburb: [''],
       city: ['', Validators.required],
       province: ['', Validators.required],
@@ -50,14 +58,15 @@ export class CheckoutComponent implements OnInit {
       province: ['', Validators.required],
       buildingName: [''],
       postalCode: ['', Validators.required],
-      deliveryNotes: [''],
     });
+
+    const southAfricanPhoneNumberPattern = /^(?:\+27|0)(?:\d{9}|\(\d{2}\)\s?\d{3}\s?\d{4})$/;
 
     this.contactInfoAndPersonalInfoForm = formBuilder.group({
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
-      alternativePhoneNumber: [''],
+      phoneNumber: ['', [Validators.required, Validators.pattern(southAfricanPhoneNumberPattern)]],
+      alternativePhoneNumber: ['', Validators.pattern(southAfricanPhoneNumberPattern)],
     })
 
     this.businessInfoForm = formBuilder.group({
@@ -66,7 +75,7 @@ export class CheckoutComponent implements OnInit {
     }),
 
     this.checkoutForm = formBuilder.group({
-      id: ['', Validators.required],
+      cartId: ['', Validators.required],
       userId: ['', Validators.required],
       deliveryAddress: this.deliveryAddressForm,
       billingAddress: this.billingAddressForm,
@@ -74,31 +83,30 @@ export class CheckoutComponent implements OnInit {
       contactInfoAndPersonalInfo: this.contactInfoAndPersonalInfoForm,
       createdAt: [new Date(), Validators.required],
       status: ['Pending Payment', Validators.required],
-      items: [[], Validators.required],
       subTotal: [0, Validators.required],
       delivery: [0, Validators.required],
       vat: [0, Validators.required],
       total: [0, Validators.required],
+      numberOfItems: [0, Validators.required],
     })
   }
 
   ngOnInit() {
-    this.loading =true;
+    this.initialLoad = true;
     this.cartService
       .getUserCart()
       .then((cart) => {
         this.checkoutForm.patchValue({
-          id: cart.id,
+          cartId: cart.id,
           userId: cart.userId
         });
         
         this.items = cart.cartItems as ICartItem[];
-        this.checkoutForm.patchValue({items: this.items})
-        
+        this.checkoutForm.patchValue({ numberOfItems: this.items.length });
         this.setOrderSummary();
       })
       .finally(() => {
-        this.loading = false;
+        this.initialLoad = false;
       });
       this.deliveryAddressForm.valueChanges.pipe(debounceTime(300)).subscribe(data => {
         if (this.billingAddressSameAsDelivery) {
@@ -131,8 +139,18 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkout() {
-    this.sameAddressAsDelivery({checked: this.sameAddressAsDelivery});
-    this.orderService.createOrder(this.checkoutForm.value);
+    if (this.checkoutForm.valid) {
+      this.loadingSpinner.show()
+
+      this.orderService.createOrder(this.checkoutForm.value).then(res => {
+        this.router.navigate(['/order-completed', res.id], { replaceUrl: true });
+      }).finally(() => {
+        this.loadingSpinner.hide();
+      });
+    } else {
+      this.checkoutForm.markAllAsTouched();
+      this.alertService.error('Please enter valid information on all fields')
+    }
   }
 
   sameAddressAsDelivery(event: any) {
@@ -147,4 +165,7 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  previewItem(item: any) {
+    this.customizationPreviewServ.preview(item);
+  }
 }

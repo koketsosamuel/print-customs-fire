@@ -1,0 +1,10 @@
+<div class="p-4">
+    <h1>{{data.item.product.name}}</h1>
+  <app-summary-view
+    [costBreakDown]="data.item.costBreakdown"
+    [printingInfoArr]="data.item.printingInfoArr"
+    [quantities]="data.item.quantities"
+    [totalQuantity]="data.item.totalQuantity"
+  ></app-summary-view>
+  <button mat-flat-button class="mt-4" mat-dialog-close>Close</button>
+</div>

@@ -1,13 +1,13 @@
 <h1 mat-dialog-title>Confirm Action</h1>
 <div mat-dialog-content>
   <p>{{data.message}}</p>
-  <p>Enter code: {{code}}</p>
-  <mat-form-field appearance="fill">
+  <p *ngIf="!softConfirm">Enter code: {{code}}</p>
+  <mat-form-field appearance="fill" *ngIf="!softConfirm">
     <input matInput [(ngModel)]="confirmCode" placeholder="Enter code">
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <button mat-flat-button color='basic' [mat-dialog-close]="false">Cancel</button>
-  <button mat-flat-button [disabled]="confirmCode != code" color="primary" [mat-dialog-close]="true"
+  <button mat-flat-button [disabled]="confirmCode != code && !softConfirm" color="primary" [mat-dialog-close]="true"
     cdkFocusInitial>Confirm</button>
 </div>

@@ -15,6 +15,26 @@ export class CanvasWithSquareImageComponent {
   }
 
   getCanvasPos() {
+    console.log({
+      width: this.getPosPercentage(
+        this.printingInfo.printingPosition.canvasPositionInfo.w,
+        this.printingInfo.printingPosition.canvasPositionInfo.maxW
+      ),
+      height: this.getPosPercentage(
+        this.printingInfo.printingPosition.canvasPositionInfo.h,
+        this.printingInfo.printingPosition.canvasPositionInfo.maxH
+      ),
+
+      left: this.getPosPercentage(
+        this.printingInfo.printingPosition.canvasPositionInfo.x,
+        this.printingInfo.printingPosition.canvasPositionInfo.maxW
+      ),
+      top: this.getPosPercentage(
+        this.printingInfo.printingPosition.canvasPositionInfo.y,
+        this.printingInfo.printingPosition.canvasPositionInfo.maxH
+      ),
+    }, this.printingInfo.printingPosition.canvasPositionInfo);
+    
     return {
       width: this.getPosPercentage(
         this.printingInfo.printingPosition.canvasPositionInfo.w,
@@ -37,6 +57,8 @@ export class CanvasWithSquareImageComponent {
   }
 
   getPosPercentage(value: number, total: number) {
-    return Math.ceil((value / total) * 100).toFixed(2) + '%';
+    console.log(((value / total) * 100));
+    
+    return ((value / total) * 100 * 1).toFixed(2) + '%';
   }
 }

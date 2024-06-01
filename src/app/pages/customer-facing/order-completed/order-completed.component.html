@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <section class="col-lg-4 col-md-6 my-4 bg-teal-100 p-5 rounded-corners">
+            <h1 class="fg-teal font-weight-bold mt-0"><b>Order Completed</b></h1>
+            <h2>Your order is complete! 🎉 <u>Payment details and invoice sent to your email, please make payment within 7 working days</u>. Any questions? Reach out anytime.</h2>
+            <h1><u>Thank you</u> for choosing us!</h1>
+            <button mat-flat-button color="primary" [disabled]="!orderId" [routerLink]="['/track-order', orderId]">Track/View Order</button>
+        </section>
+        <section class="col-lg-8 col-md-6 p-5">
+            <h2>What happens next?</h2>
+            <ol>
+                <li>You will receive an email with an invoice and payment details, in a few minutes or seconds</li>
+                <li>You will have to make the payment within 7 working days</li>
+                <li>Your order will then move into production</li>
+                <li>After the completetion of production, your ordered items will be delivered!</li>
+            </ol>
+        </section>
+    </div>
+</div>

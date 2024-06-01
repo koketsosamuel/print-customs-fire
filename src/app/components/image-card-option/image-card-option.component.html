@@ -1,6 +1,6 @@
 <mat-card class='cursor'>
   <div class='image-cont ' [ngStyle]="{backgroundImage: getImageCss(imageSelectOption.imgSrc)}" (click)="toggleSelection()">
-    <div *ngIf="this.imageSelectOption.object['canvasPositionInfo']" class="canvas d-flex justify-content-center align-items-center text-center" [ngStyle]="getCanvasPos()"><span>Print here</span></div>
+    <div *ngIf="this.imageSelectOption.object['canvasPositionInfo']" class="canvas d-flex justify-content-center align-items-center fg-white text-center" [ngStyle]="getCanvasPos()"><span>Print here</span></div>
   </div>
   <div class='p-2'>
     <mat-checkbox [checked]="imageSelectOption.selected"

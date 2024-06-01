@@ -30,6 +30,7 @@
                             formControlName="phoneNumber" />
                             
                         <mat-error *ngIf="contacDetailsAndPersonalDetails.controls['phoneNumber'].hasError('required')">Required</mat-error>
+                        <mat-error *ngIf="contacDetailsAndPersonalDetails.controls['phoneNumber'].hasError('pattern')">Enter valid number</mat-error>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -37,7 +38,7 @@
                         <mat-label>Alternate phone number</mat-label>
                         <input name="customer_alt_phone" type="tel" matInput
                             formControlName="alternativePhoneNumber" />
-                        <mat-error *ngIf="contacDetailsAndPersonalDetails.controls['alternativePhoneNumber'].hasError('required')">Required</mat-error>
+                        <mat-error *ngIf="contacDetailsAndPersonalDetails.controls['alternativePhoneNumber'].hasError('pattern')">Enter valid number</mat-error>
                     </mat-form-field>
                 </div>
             </div>

@@ -10,6 +10,9 @@ import { CartService } from '../cart/cart.service';
 import { AlertService } from '../alert/alert.service';
 import { ICostBreakdown } from 'src/app/models/cost-breakdown.interface';
 import { AngularFireUploadTask } from '@angular/fire/compat/storage';
+import { ProductService } from '../product/product.service';
+import { PrintingPositionsService } from '../printing-positions/printing-positions.service';
+import { PrintingMethodsService } from '../printing-methods/printing-methods.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +25,10 @@ export class CartItemService {
     private readonly db: DbService,
     private readonly storage: StorageService,
     private readonly cartService: CartService,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly productService: ProductService,
+    private readonly printingPositionService: PrintingPositionsService,
+    private readonly printingMethodService: PrintingMethodsService
   ) {}
 
   async createCartItem(
@@ -133,7 +139,24 @@ export class CartItemService {
     return this.db.getDocumentById(this.collection, id);
   }
 
-  getCartItemsForCart(cartId: string) {
-    return this.db.getDocumentsOrderedByWhere(this.collection, 'createdAt', true, [['cartId', '==', cartId]])
+  async getCartItemsForCart(cartId: string) {
+    const rawItems = await this.db.getDocumentsOrderedByWhere(this.collection, 'createdAt', true, [['cartId', '==', cartId]]);
+    const items: any[] = await Promise.all(rawItems.map(async (item: ICartItem) => {
+      const product = await this.productService.getProduct(item.productId);
+      const printingInfoArr = await Promise.all(item.printingInfoArr!.map(async (pi) => {
+        const printingPosition = await this.printingPositionService.getPrintingPosition(pi.printingPosition)
+        const selectedMethod = await this.printingMethodService.getPrintingMethod(pi.selectedMethod);
+        return { ...pi, printingPosition: printingPosition.value, selectedMethod: selectedMethod.value }
+      }));
+      return { ...item, product: product.value, printingInfoArr }
+    }));
+    return items;
+  }
+
+  removeCartItem(cartItemId: string) {
+    return this.db.deleteDocument(this.collection, cartItemId).then((value => {
+      this.alertService.success('Item removed from cart');
+      return value;
+    }));
   }
 }

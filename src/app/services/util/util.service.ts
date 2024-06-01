@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { ICartItem } from 'src/app/models/cart.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,5 +19,9 @@ export class UtilService {
       }
     }
     return obj;
+  }
+
+  generateQuantities(itemQuantities: Record<string, any>) {
+    return Object.values(itemQuantities).map((v: any) => ({name: v.option.name, value: v.quantities}))
   }
 }

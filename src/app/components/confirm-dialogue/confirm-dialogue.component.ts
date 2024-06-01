@@ -9,9 +9,11 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class ConfirmDialogueComponent implements OnInit {
   code = 'ABCD';
   confirmCode = '';
+  softConfirm = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
   ngOnInit(): void {
     this.code = String(Math.ceil(Math.random() * 8999) + 1000);
+    this.softConfirm = !!this.data.softConfirm;
   }
 }

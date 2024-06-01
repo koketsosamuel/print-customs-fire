@@ -19,6 +19,8 @@ import { ProductCatalogueComponent } from './pages/customer-facing/catalog/produ
 import { CustomizeProductComponent } from './pages/customer-facing/customize-product/customize-product.component';
 import { ShoppingCartComponent } from './pages/customer-facing/shopping-cart/shopping-cart.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
+import { TrackOrderComponent } from './pages/customer-facing/track-order/track-order.component';
+import { OrderCompletedComponent } from './pages/customer-facing/order-completed/order-completed.component';
 
 const routes: Routes = [
   {
@@ -124,6 +126,14 @@ const routes: Routes = [
   {
     path: 'secure-checkout',
     component: CheckoutComponent
+  },
+  {
+    path: 'track-order/:orderId',
+    component: TrackOrderComponent
+  },
+  {
+    path: 'order-completed/:orderId',
+    component: OrderCompletedComponent
   }
 ];
 

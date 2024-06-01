@@ -8,10 +8,11 @@ import { ConfirmDialogueComponent } from 'src/app/components/confirm-dialogue/co
 export class ConfirmDialogueService {
   constructor(private readonly dialog: MatDialog) {}
 
-  openDialogue(message: string, action: any) {
+  openDialogue(message: string, action: any, softConfirm: boolean = false) {
     let dialogRef = this.dialog.open(ConfirmDialogueComponent, {
       data: {
         message,
+        softConfirm
       },
     });
 

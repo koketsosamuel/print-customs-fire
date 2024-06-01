@@ -1,6 +1,6 @@
 <div class="container">
   <h1 class="mt-4">Shopping Cart</h1>
-  <section class="row" *ngIf="!loading">
+  <section class="row" *ngIf="!loading && items.length > 0">
     <main class="col-lg-8 col-md-12">
       <div
         *ngFor="let item of items"
@@ -33,11 +33,11 @@
           <button
             mat-mini-fab
             color="primary"
-            [routerLink]="['/customize/cart-item/', item.id]"
+            (click)="previewItem(item)"
           >
             <mat-icon>visibility</mat-icon></button
           >&nbsp;
-          <button mat-mini-fab color="warn"><mat-icon>delete</mat-icon></button>
+          <button mat-mini-fab color="warn" (click)="removeItem(item)"><mat-icon>delete</mat-icon></button>
         </div>
 
         <div class="d-flex align-items-center d-flex d-md-none">
@@ -50,8 +50,8 @@
           >
           <mat-menu #menu="matMenu">
             <button mat-menu-item [routerLink]="['/customize/cart-item/', item.id]">Edit</button>
-            <button mat-menu-item [routerLink]="['/customize/cart-item/', item.id]">View</button>
-            <button mat-menu-item>Remove</button>
+            <button mat-menu-item (click)="previewItem(item)">View</button>
+            <button mat-menu-item (click)="removeItem(item)">Remove</button>
           </mat-menu>
         </div>
       </div>
@@ -94,7 +94,5 @@
     </div>
   </section>
 
-  <div class="col-lg-6 mx-auto">
-    <img src="../../../../assets/bear.png" class="w-100">
-  </div>
+  <app-empty-cart *ngIf="items.length === 0 && !loading"></app-empty-cart>
 </div>

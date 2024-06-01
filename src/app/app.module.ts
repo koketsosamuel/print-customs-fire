@@ -101,6 +101,10 @@ import { RegisterNewUserComponent } from './components/register-new-user/registe
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { BusinessInfoComponent } from './components/business-info/business-info.component';
+import { TrackOrderComponent } from './pages/customer-facing/track-order/track-order.component';
+import { CustomizationPreviewDialogComponent } from './components/customization-preview-dialog/customization-preview-dialog.component';
+import { OrderCompletedComponent } from './pages/customer-facing/order-completed/order-completed.component';
+import { EmptyCartComponent } from './components/empty-cart/empty-cart.component';
 
 @NgModule({
   declarations: [
@@ -170,6 +174,10 @@ import { BusinessInfoComponent } from './components/business-info/business-info.
     ResetPasswordComponent,
     PersonalInfoComponent,
     BusinessInfoComponent,
+    TrackOrderComponent,
+    CustomizationPreviewDialogComponent,
+    OrderCompletedComponent,
+    EmptyCartComponent,
   ],
   imports: [
     AngularFireModule.initializeApp({

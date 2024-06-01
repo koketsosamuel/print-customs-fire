@@ -205,7 +205,7 @@ export class CustomizeProductComponent implements OnInit {
 
         // break down logic
         _costBreakDown.brandingCosts.locationCosts.push({
-          location: p.printingPosition.shortName,
+          location: p.printingPosition.name,
           costPerUnit: printingCostPerUnit,
           total: costOfPrintingForLocation,
         });

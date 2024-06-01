@@ -1,0 +1,18 @@
+<div class="empty">
+    <div class="row">
+        <div class="col-md-4 col-lg-4 py-3">
+            <div class="d-flex justify-content-center align-items-center bg-teal-100 rounded-corners">
+                <img src="../../../assets/empty-cart.png" alt="">
+            </div>
+        </div>
+        <div class="col-md-8 col-lg-8 py-3">
+            <div class="d-flex justify-content-center align-items-center h-100">
+                <h1 class="px-4">Your shopping cart is empty. Browse for some <a routerLink="/catalogue" class="fg-teal">items</a>!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="suggested-products mt-4">
+    <h1>Find Something, maybe?</h1>
+    <app-horizontal-cards [loading]="loading" [products]="bestSellingProducts"></app-horizontal-cards>
+</div>

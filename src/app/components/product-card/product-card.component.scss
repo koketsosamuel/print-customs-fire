@@ -34,7 +34,6 @@ img {
   --bg-color: rgb(244, 244, 244);
   --accent-color: #BC8D66;
   position: relative;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   width: 100%;
   padding: 25px;
   border-radius: 25px;
@@ -46,6 +45,7 @@ img {
   cursor: pointer;
   box-shadow: 0px 0px 5px -1.5px #000;
   box-sizing: border-box;
+  height: 100%;
 }
 
 .card::before {
