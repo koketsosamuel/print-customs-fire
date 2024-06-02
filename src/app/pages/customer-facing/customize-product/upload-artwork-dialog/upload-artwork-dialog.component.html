@@ -7,7 +7,6 @@
       <button
         mat-flat-button
         color="primary"
-        class="mb-4"
         (click)="fileInput.click()"
         *ngIf="!data.viewOnly"
       >
@@ -17,16 +16,15 @@
       <button
         mat-flat-button
         color="primary"
-        class="mb-4"
         (click)="saveCanvasView()"
         *ngIf="!data.viewOnly"
-        [disabled]="imageQualityScore < 80"
+        [disabled]="!canvasImageRef"
       >
         <mat-icon>save</mat-icon>
         Save
       </button>
     </div>
-    <button mat-mini-fab color="warn" class="mb-4" mat-dialog-close>
+    <button mat-mini-fab color="warn" class="close-btn" mat-dialog-close>
       <mat-icon>close</mat-icon>
     </button>
     <input
@@ -34,14 +32,21 @@
       (change)="handleFileInput($event)"
       #fileInput
       accept="image/*"
+      hidden
     />
   </div>
-  <app-image-quality-meter
-    [score]="imageQualityScore"
-  ></app-image-quality-meter>
 
-  <p class="d-flex align-items-center text-tiny">
+  <p class="d-flex align-items-center text-tiny fg-red-400" *ngIf="imageQualityScore < 90 && canvasImageRef">
+    <mat-icon>info</mat-icon> <i>The uploaded image is low quality, may not result on the best quality print</i>
+  </p>
+
+  <p class="d-flex align-items-center text-tiny" *ngIf="!data.viewOnly">
     <mat-icon>info</mat-icon> <i>Click on image to resize, move and rotate.</i>
+  </p>
+
+  <p class="d-flex align-items-center text-tiny d-md-none" *ngIf="!data.viewOnly">
+    <mat-icon>info</mat-icon>
+    <i>swipe left and right to fully view your canvas</i>
   </p>
 
   <p class="d-flex align-items-center text-tiny d-md-none fg-yellow-900">
@@ -49,14 +54,102 @@
     <i>Get the best experience on a larger screen</i>
   </p>
 
-  <div class="bg-teal-600 p-2 d-flex justify-content-space-between">
-    <button mat-flat-button color="accent" (click)="centerVertically()">
-      <mat-icon> vertical_align_center </mat-icon> Center
-      <span class="d-none d-sm-inline">Vertically</span>
-    </button>
-    <button mat-flat-button color="accent" (click)="centerHorizontal()">
-      <mat-icon class="rotate-90"> vertical_align_center </mat-icon> Center
-      <span class="d-none d-sm-inline">Horizontally</span>
+  <div class="mb-2 d-flex justify-content-space-between" *ngIf="!data.viewOnly">
+    <div>
+      <button
+        mat-mini-fab
+        (click)="centerVertically()"
+        matTooltip="Center vertically"
+        color="basic"
+      >
+        <mat-icon>vertical_align_center</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="centerHorizontal()"
+        matTooltip="Center horizontally"
+      >
+        <mat-icon class="rotate-90">vertical_align_center</mat-icon>
+      </button>
+    </div>
+    <div class="size">
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="enlargeImage()"
+        matTooltip="Enlarge image"
+      >
+        <mat-icon>add</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="decreaseImage()"
+        matTooltip="Shrink image"
+      >
+        <mat-icon>remove</mat-icon>
+      </button>
+    </div>
+    <div class="movement">
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="moveImage('up')"
+        matTooltip="Move up"
+      >
+        <mat-icon>arrow_upward</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="moveImage('down')"
+        matTooltip="Move down"
+      >
+        <mat-icon>arrow_downward</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="moveImage('left')"
+        matTooltip="Move left"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="moveImage('right')"
+        matTooltip="Move right"
+      >
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+    <div class="rotation">
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="rotateImage('left')"
+        matTooltip="Rotate left"
+      >
+        <mat-icon>rotate_left</mat-icon>
+      </button>
+      <button
+        mat-mini-fab
+        color="basic"
+        (click)="rotateImage('right')"
+        matTooltip="Rotate right"
+      >
+        <mat-icon>rotate_right</mat-icon>
+      </button>
+    </div>
+    <button
+      mat-mini-fab
+      color="accent"
+      (click)="resetEdits()"
+      matTooltip="Reset edits"
+    >
+      <mat-icon>restart_alt</mat-icon>
     </button>
   </div>
 
@@ -94,9 +187,6 @@
         Save
       </button>
     </div>
-    <button mat-mini-fab color="warn" class="mb-4" mat-dialog-close>
-      <mat-icon>close</mat-icon>
-    </button>
     <input
       type="file"
       (change)="handleFileInput($event)"

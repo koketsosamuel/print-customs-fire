@@ -1,7 +1,7 @@
 <section class="container mt-4">
-  <h1>Customize: {{ product?.name }}</h1>
+  <h1 *ngIf="product">Customize: {{ product.name }}</h1>
   <div class="row">
-    <div class="col-lg-4 col-md-6 mb-3" *ngIf="totalPrice > 0">
+    <div class="col-lg-4 col-md-6 mb-3" *ngIf="product">
           <h2 class="fg-teal-400 mt-0 p-4 rounded-corners bg-white">
             Cost so far:&nbsp;<b>R&nbsp;{{ totalPrice.toFixed(2) }}</b>
           </h2>

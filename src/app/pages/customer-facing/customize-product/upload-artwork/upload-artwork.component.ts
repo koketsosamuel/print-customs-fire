@@ -27,6 +27,7 @@ export class UploadArtworkComponent implements OnInit {
         maxWidth: '100vw',
         maxHeight: '100vh',
         panelClass: 'custom-dialog-container',
+        disableClose: !viewOnly
       })
       .afterClosed()
       .subscribe((artwork: null | {json: Record<string, any>, viewExport: string}) => {

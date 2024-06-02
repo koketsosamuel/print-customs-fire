@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { fabric } from 'fabric';
+import { ICanvasPositionInfo } from 'src/app/models/canvas-position-info.interface';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
 
@@ -82,7 +83,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
     }
   }
 
-  saveCanvasView(): void {
+  async saveCanvasView() {
     let json: any = this.canvas.toJSON();
     this.artwork = json;
     // overriding scale because fabricjs exports them rounded to 2 decimal places
@@ -96,10 +97,13 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
       scaleX,
       scaleY,
     };
-    
-    
+
     this.artwork = json;
-    this.dialogRef.close({json, viewExport: this.canvas.toDataURL()});
+    this.dialogRef.close({ json, viewExport: await this.canvasToBase64(
+      this.data.printingInfo.printingPosition.images?.[0]?.link as string,
+      this.canvas.toDataURL(),
+      this.data.printingInfo.printingPosition.canvasPositionInfo
+    ) });
   }
 
   importJsonToCanvas(): void {
@@ -113,7 +117,7 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
 
         // IMPORTANT - if not set, the image will not display correctly and as expected
         this.scaleFactor = this.canvasImageRef.scaleX;
-        
+
         this.computeImageQuality(
           this.canvasImageRef,
           this.data.printingInfo.printingPosition
@@ -123,6 +127,35 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
         object.set('selectable', !ref.data.viewOnly);
       }
     );
+  }
+
+  canvasToBase64(imageUrl: string, overlayUrl: string, canvasPositionInfo: ICanvasPositionInfo) {
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvasPositionInfo.maxW / 2;
+      canvas.height = canvasPositionInfo.maxH / 2;
+      const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+
+
+      const background = new Image();
+      background.crossOrigin = 'Anonymous'; // Enable CORS for the background image
+      background.onload = function () {
+        // Draw the background image
+        context.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+        // Create a new image element for the overlay
+        const overlay = new Image();
+        const overlayImage = new Image();
+        overlayImage.src = overlayUrl;
+        overlayImage.onload = function () {
+          context.drawImage(overlayImage, (canvasPositionInfo.x + 2) / 2, (canvasPositionInfo.y + 2) / 2, overlayImage.width / 2, overlayImage.height / 2);
+          resolve(canvas.toDataURL());
+        };
+
+        overlay.src = overlayUrl;
+      };
+      background.src = imageUrl;
+    });
   }
 
   computeImageQuality(image: any, printingPosition: IPrintingPosition) {
@@ -145,4 +178,69 @@ export class UploadArtworkDialogComponent implements AfterViewInit {
     }
   }
 
+  resetEdits() {
+    if (this.canvasImageRef) {
+      this.canvasImageRef.set({
+        left: 0,
+        top: 0,
+        scaleX: this.scaleFactor,
+        scaleY: this.scaleFactor,
+      });
+      this.canvas.renderAll();
+    }
+  }
+
+  enlargeImage(factor = 1.1) {
+    if (this.canvasImageRef) {
+      // Increase the scale by the factor
+      this.canvasImageRef.scaleX *= factor;
+      this.canvasImageRef.scaleY *= factor;
+      this.canvas.renderAll();
+    } else {
+      console.log('canvasImageRef is not defined');
+    }
+  }
+
+  decreaseImage(factor = 0.9) {
+    if (this.canvasImageRef) {
+      // Decrease the scale by the factor
+      this.canvasImageRef.scaleX *= factor;
+      this.canvasImageRef.scaleY *= factor;
+      this.canvas.renderAll();
+    } else {
+      console.log('canvasImageRef is not defined');
+    }
+  }
+
+  moveImage(direction: 'up' | 'down' | 'left' | 'right', step = 10) {
+    if (this.canvasImageRef) {
+      switch (direction) {
+        case 'up':
+          this.canvasImageRef.top -= step;
+          break;
+        case 'down':
+          this.canvasImageRef.top += step;
+          break;
+        case 'left':
+          this.canvasImageRef.left -= step;
+          break;
+        case 'right':
+          this.canvasImageRef.left += step;
+          break;
+        default:
+          return;
+      }
+      this.canvas.renderAll();
+    }
+  }
+
+  rotateImage(direction: 'left' | 'right') {
+    if (this.canvasImageRef) {
+      const angle = direction === 'left' ? -90 : 90;
+      this.canvasImageRef.rotate((this.canvasImageRef.angle + angle) % 360);
+      this.canvas.renderAll();
+    } else {
+      console.log('canvasImageRef is not defined');
+    }
+  }
 }
