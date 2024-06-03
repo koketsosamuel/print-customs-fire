@@ -11,10 +11,12 @@
   background-size: contain;
   background-position: center;
   div {
-    border: #09f dashed 2px;
-    resize: both;
     cursor: pointer;
     overflow: hidden;
+
+    &:not(.display) {
+      resize: both;
+    }
 
     canvas {
       display: block;

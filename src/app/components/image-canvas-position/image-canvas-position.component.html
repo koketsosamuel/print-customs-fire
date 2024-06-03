@@ -21,10 +21,17 @@
       background: imgSrc,
       backgroundSize: 'contain'
     }">
-      <div cdkDrag #canvasContainer [cdkDragDisabled]="!allowDrag || displayMode" (cdkDragEnded)="getCanvasPosition()" (click)="getCanvasPosition()"
-        class='text-center d-flex align-items-center justify-content-center'>
+      <div
+        cdkDrag 
+        #canvasContainer 
+        [cdkDragDisabled]="!allowDrag || displayMode"
+        (cdkDragEnded)="getCanvasPosition()"
+        (click)="getCanvasPosition()"
+        class='text-center d-flex align-items-center justify-content-center canvas-outline'
+        [ngClass]="{display: displayMode}"
+      >
         <canvas id="canvas" *ngIf="displayMode" [height]='canvasPositionInfo.h' [width]='canvasPositionInfo.w'></canvas>
-        <span *ngIf="!displayMode">Printing position</span>
+        <h3 *ngIf="!displayMode">Print Here!</h3>
       </div>
     </div>
   </div>

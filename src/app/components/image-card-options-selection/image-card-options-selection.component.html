@@ -1,14 +1,4 @@
 <div class="row">
-  <section *ngIf="selected.length > 0" class='mb-3'>
-      <mat-chip-listbox>
-        <mat-chip *ngFor="let s of selected" (removed)="removeOpt(s)"
-          >{{ s.name }}
-          <button matChipRemove aria-label="remove opt">
-            <mat-icon>cancel</mat-icon>
-          </button></mat-chip
-        >
-      </mat-chip-listbox>
-  </section>
   <div
     class="col-xs-6 col-sm-4 col-6 col-md-3 col-lg-2 py-2"
     *ngFor="let opt of options"

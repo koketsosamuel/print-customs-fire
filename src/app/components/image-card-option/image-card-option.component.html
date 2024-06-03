@@ -1,9 +1,22 @@
-<mat-card class='cursor'>
-  <div class='image-cont ' [ngStyle]="{backgroundImage: getImageCss(imageSelectOption.imgSrc)}" (click)="toggleSelection()">
-    <div *ngIf="this.imageSelectOption.object['canvasPositionInfo']" class="canvas d-flex justify-content-center align-items-center fg-white text-center" [ngStyle]="getCanvasPos()"><span>Print here</span></div>
+<mat-card class="cursor">
+  <div
+    class="image-cont"
+    [ngStyle]="{ backgroundImage: getImageCss(imageSelectOption.imgSrc) }"
+    (click)="toggleSelection()"
+  >
+    <div
+      *ngIf="this.imageSelectOption.object['canvasPositionInfo']"
+      class="canvas canvas-outline d-flex justify-content-center align-items-center fg-white text-center"
+      [ngStyle]="getCanvasPos()"
+    >
+    <h3>Print Here!</h3>
+    </div>
   </div>
-  <div class='p-2'>
-    <mat-checkbox [checked]="imageSelectOption.selected"
-      (change)="toggleSelection()">{{imageSelectOption.name}}</mat-checkbox>
+  <div class="p-2">
+    <mat-checkbox
+      [checked]="imageSelectOption.selected"
+      (change)="toggleSelection()"
+      >{{ imageSelectOption.name }}</mat-checkbox
+    >
   </div>
 </mat-card>
