@@ -1,3 +1,12 @@
+<section>
+  <h3 class="mb-2 mt-2 py-0 fg-teal-300">Customizations</h3>
+  <div class="d-flex gap-20">
+    <div *ngFor="let pi of printingInfoArr" class="bg-teal-100 p-2">
+      <img [src]="pi.exportView" [alt]="pi.printingPosition?.name">
+      <h4 class="my-1 py-0">{{pi.printingPosition.name}}</h4>
+    </div>
+  </div>
+</section>
 <h3 class="mb-2 mt-2 py-0 fg-teal-300">Quantity</h3>
     <div
       class=""
@@ -6,7 +15,7 @@
         <tbody>
             <tr *ngFor="let q of quantitesArr">
                 <td class="pr-2">{{q.name}}</td>
-                <td> - {{q.value}} units</td>
+                <td> - {{q.value}} unit(s)</td>
             </tr>
         </tbody>
       </table>
