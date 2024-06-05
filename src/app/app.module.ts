@@ -105,6 +105,8 @@ import { TrackOrderComponent } from './pages/customer-facing/track-order/track-o
 import { CustomizationPreviewDialogComponent } from './components/customization-preview-dialog/customization-preview-dialog.component';
 import { OrderCompletedComponent } from './pages/customer-facing/order-completed/order-completed.component';
 import { EmptyCartComponent } from './components/empty-cart/empty-cart.component';
+import { InfoTextComponent } from './components/info-text/info-text.component';
+import { Four04Component } from './pages/customer-facing/four04/four04.component';
 
 @NgModule({
   declarations: [
@@ -178,6 +180,8 @@ import { EmptyCartComponent } from './components/empty-cart/empty-cart.component
     CustomizationPreviewDialogComponent,
     OrderCompletedComponent,
     EmptyCartComponent,
+    InfoTextComponent,
+    Four04Component
   ],
   imports: [
     AngularFireModule.initializeApp({

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, SimpleChanges, OnChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IPrintingInfo } from 'src/app/models/printing-info.interface';
 import { UploadArtworkDialogComponent } from '../upload-artwork-dialog/upload-artwork-dialog.component';
@@ -9,7 +9,7 @@ import { IArtwork } from 'src/app/models/artwork.interface';
   templateUrl: './upload-artwork.component.html',
   styleUrls: ['./upload-artwork.component.scss'],
 })
-export class UploadArtworkComponent implements OnInit {
+export class UploadArtworkComponent implements OnInit, OnChanges {
   @Input() printingInfo: IPrintingInfo[] = [];
   @Output() change = new EventEmitter<IPrintingInfo[]>();
   validated: boolean = false;
@@ -45,5 +45,11 @@ export class UploadArtworkComponent implements OnInit {
 
   validate() {
     this.validated = !!!this.printingInfo.find((pi) => !pi.artwork);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      this.validate();
+    }
   }
 }

@@ -19,7 +19,14 @@
     </div>
   </div>
 
-  <footer class="gap-20 d-flex mt-4">
+  <footer class="mt-4">
+    <div class="mb-2">
+      <app-info-text
+        type="warning"
+        text="Please select printing methods with which you would like to print."
+        *ngIf="!validated"
+      ></app-info-text>
+    </div>
     <button
       mat-flat-button
       color="primary"
@@ -28,6 +35,5 @@
     >
       Save and continue
     </button>
-    <button mat-flat-button color="accent" matStepperPrevious>Back</button>
   </footer>
 </section>

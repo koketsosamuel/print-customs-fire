@@ -5,19 +5,25 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   providedIn: 'root',
 })
 export class AlertService {
-  constructor(private readonly snackbar: MatSnackBar) {}
+  constructor(private readonly snackbar: MatSnackBar) { }
 
   success(message: string) {
     this.snackbar.open(message, 'close', {
-      duration: 3000,
-      panelClass: ['success'],
+      duration: 5000,
+      panelClass: ['success', 'toast'],
+      politeness: 'assertive',
+      horizontalPosition: 'end',
+      verticalPosition: 'top'
     });
   }
 
   error(message: string) {
     this.snackbar.open(message, 'close', {
-      duration: 3000,
-      panelClass: ['danger'],
+      duration: 5000,
+      panelClass: ['error', 'toast'],
+      politeness: 'assertive',
+      horizontalPosition: 'end',
+      verticalPosition: 'top'
     });
   }
 }

@@ -137,10 +137,6 @@ h6 {
   transform: rotate(90deg);
 }
 
-.text-tiny {
-  font-size: 11px;
-}
-
 .teal-100-border {
   border: 2px solid #b2dfdb;
 }
@@ -166,5 +162,21 @@ h6 {
     font-weight: 500;
     padding: 3px;
     background-color: #ffffff;
+  }
+}
+
+
+
+.mat-mdc-snack-bar-container {
+  &.toast.success {
+    --mdc-snackbar-container-color: #388e3c;
+    --mat-snack-bar-button-color: #e1e1e1 !important;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+
+  &.toast.error {
+    --mdc-snackbar-container-color: #ef5350;
+    --mat-snack-bar-button-color: #e1e1e1 !important;
+    --mdc-snackbar-supporting-text-color: #fff;
   }
 }

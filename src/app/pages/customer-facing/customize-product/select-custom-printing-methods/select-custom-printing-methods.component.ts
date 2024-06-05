@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { IPrintingMethod } from 'src/app/models/printing-method.interface';
 import { IPrintingPosition } from 'src/app/models/printing-position.interface';
@@ -13,7 +13,7 @@ import { IPrintingInfo } from 'src/app/models/printing-info.interface';
   templateUrl: './select-custom-printing-methods.component.html',
   styleUrls: ['./select-custom-printing-methods.component.scss'],
 })
-export class SelectCustomPrintingMethodsComponent implements OnInit {
+export class SelectCustomPrintingMethodsComponent implements OnInit, OnChanges {
   @Input({ required: true }) product!: IProduct;
   @Input({ required: true }) printingInfo: IPrintingInfo[] = [];
   @Output() change = new EventEmitter<IPrintingInfo[]>();
@@ -46,5 +46,11 @@ export class SelectCustomPrintingMethodsComponent implements OnInit {
 
   ngOnInit() {
     this.validate();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes) {
+      this.validate();
+    }
   }
 }

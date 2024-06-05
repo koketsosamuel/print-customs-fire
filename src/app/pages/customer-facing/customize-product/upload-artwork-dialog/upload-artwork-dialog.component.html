@@ -36,23 +36,26 @@
     />
   </div>
 
-  <p class="d-flex align-items-center text-tiny fg-red-400" *ngIf="imageQualityScore < 90 && canvasImageRef">
-    <mat-icon>info</mat-icon> <i>The uploaded image is low quality, may not result on the best quality print</i>
-  </p>
-
-  <p class="d-flex align-items-center text-tiny" *ngIf="!data.viewOnly">
-    <mat-icon>info</mat-icon> <i>Click on image to resize, move and rotate.</i>
-  </p>
-
-  <p class="d-flex align-items-center text-tiny d-md-none" *ngIf="!data.viewOnly">
-    <mat-icon>info</mat-icon>
-    <i>swipe left and right to fully view your canvas</i>
-  </p>
-
-  <p class="d-flex align-items-center text-tiny d-md-none fg-yellow-900">
-    <mat-icon>tablet_android</mat-icon>
-    <i>Get the best experience on a larger screen</i>
-  </p>
+  <div class="my-2">
+    <app-info-text
+      type="error"
+      text="The uploaded image is low quality, may not result on the best quality print."
+      *ngIf="imageQualityScore < 90 && canvasImageRef"
+    ></app-info-text>
+    <app-info-text
+      text="Click on image to resize, move and rotate."
+      *ngIf="!data.viewOnly"
+    ></app-info-text>
+    <app-info-text
+      text="Swipe left and right to fully view your canvas."
+      class="d-md-none"
+      *ngIf="!data.viewOnly"
+    ></app-info-text>
+    <app-info-text
+      text="Get the best experience on a larger screen."
+      class="d-md-none"
+    ></app-info-text>
+  </div>
 
   <div class="mb-2 d-flex justify-content-space-between" *ngIf="!data.viewOnly">
     <div>

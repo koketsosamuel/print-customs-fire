@@ -1,4 +1,4 @@
-<section >
+<section>
   <h1 class="d-flex align-items-center fg-grey-900">
     <mat-icon>widgets</mat-icon>&nbsp;Quantities
   </h1>
@@ -15,19 +15,16 @@
             [disabled]="opt.quantityAvailable <= 0"
             [name]="'quantity-for-' + opt.name"
             [(ngModel)]="optionQuantities[opt.id].quantities"
-            [max]='opt.quantityAvailable'
+            [max]="opt.quantityAvailable"
             (keyup)="validate()"
           />
-          <mat-hint
-            >
+          <mat-hint>
             available:
             <b class="fg-teal-300">{{ opt.quantityAvailable }}</b></mat-hint
           >
         </mat-form-field>
       </div>
     </div>
-
-
   </form>
 
   <!-- Quantity for: no sub variations, but we have variations -->
@@ -35,9 +32,7 @@
     <div class="row">
       <div class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">
-          <mat-label>
-            Quantity
-          </mat-label>
+          <mat-label> Quantity </mat-label>
           <input
             matInput
             type="number"
@@ -45,7 +40,6 @@
             [(ngModel)]="totalQuantity"
             (keyup)="validate()"
           />
-
         </mat-form-field>
       </div>
     </div>
@@ -56,30 +50,40 @@
     <div class="row">
       <div class="col-md-6 col-lg-4">
         <mat-form-field class="w-100">
-          <mat-label>
-            Quantity
-          </mat-label>
+          <mat-label> Quantity </mat-label>
           <input
             matInput
             type="number"
             [disabled]="product.quantity <= 0"
             name="quantity-for-x"
             [(ngModel)]="totalQuantity"
-            [max]='product.quantity'
+            [max]="product.quantity"
             (keyup)="validate()"
           />
-          <mat-hint
-            >
+          <mat-hint>
             available:
             <b class="fg-teal-300">{{ product.quantity }}</b></mat-hint
           >
-
         </mat-form-field>
       </div>
     </div>
   </form>
 
   <footer class="mt-4">
-      <button mat-flat-button color="primary" (click)="saveQuantities()" class="" [disabled]="!validated" >Save and Continue</button>
-    </footer>
+    <div class="mb-2">
+      <app-info-text
+        type="warning"
+        text="Please enter valid quantity/quantities not more than available stock."
+        *ngIf="!validated"
+      ></app-info-text>
+    </div>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="saveQuantities()"
+      [disabled]="!validated"
+    >
+      Save and Continue
+    </button>
+  </footer>
 </section>

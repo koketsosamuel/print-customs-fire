@@ -25,10 +25,16 @@
     </div>
   </div>
 
-  <footer class="gap-20 d-flex mt-4">
+  <footer class="mt-4">
+    <div class="mb-2">
+      <app-info-text
+        type="warning"
+        text="Please upload artwork for all printing locations selected."
+        *ngIf="!validated"
+      ></app-info-text>
+    </div>
     <button mat-flat-button color="primary" (click)="saveArtWork()" [disabled]="!validated">
       Save and continue
     </button>
-    <button mat-flat-button color="accent" matStepperPrevious>Back</button>
   </footer>
 </section>

@@ -10,6 +10,13 @@
   </app-image-card-options-selection>
 
   <footer class="mt-4">
+    <div class="mb-2">
+      <app-info-text
+        type="warning"
+        text="Please select atleast one area where you would like to print."
+        *ngIf="!selectedOptions.length"
+      ></app-info-text>
+    </div>
     <button
       mat-flat-button
       color="primary"

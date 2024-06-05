@@ -8,7 +8,7 @@
     </div>
   </div>
 
-  <mat-stepper #stepper [linear]="!editMode" *ngIf="!!product" [selectedIndex]="0" [orientation]="vertical ? 'vertical' : 'horizontal'">
+  <mat-stepper #stepper [linear]="!editMode || linearSteps" *ngIf="!!product" [selectedIndex]="0" [orientation]="vertical ? 'vertical' : 'horizontal'">
     <mat-step label="Quantities" [completed]="stepsCompleted.quantities">
       <app-product-quantities
         (quantityChanged)="setQuantities($event)"

@@ -57,6 +57,7 @@ export class CustomizeProductComponent implements OnInit {
     summary: false,
   };
   vertical = false;
+  linearSteps = false;
 
   constructor(
     private readonly productService: ProductService,
@@ -148,7 +149,12 @@ export class CustomizeProductComponent implements OnInit {
 
   setPrintingInfoForLocations(printingInfoArr: IPrintingInfo[]) {
     this.setPrintingInfo(printingInfoArr, false);
+    this.linearSteps = true;
     this.completeStep('locations');
+    this.completeStep('quantities');
+    ['artwork', 'methods', 'summary'].forEach(step => {
+      this.completeStep(step, false);
+    })
   }
 
   setPrintingInfoForMethods(printingInfoArr: IPrintingInfo[]) {
@@ -156,8 +162,8 @@ export class CustomizeProductComponent implements OnInit {
     this.completeStep('methods');
   }
 
-  completeStep(propertyName: string) {
-    this.stepsCompleted[propertyName] = true;
+  completeStep(propertyName: string, value: boolean = true) {
+    this.stepsCompleted[propertyName] = value;
     setTimeout(() => {
       this.stepper.next();
     });
