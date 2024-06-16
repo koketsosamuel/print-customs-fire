@@ -13,20 +13,57 @@
             <mat-icon>menu</mat-icon>
           </button>
           <div class="d-flex align-items-center cursor" routerLink="/">
-            <img src="../assets/logo.png" class="logo">
+            <img src="../assets/logo.png" class="logo" />
           </div>
           <span class="example-spacer"></span>
 
           <div class="align-items-center d-flex gap-20">
-            <button mat-flat-button color="primary" routerLink="/catalogue" class="d-none  d-md-inline d-lg-inline">
+            <button
+              mat-flat-button
+              color="primary"
+              routerLink="/catalogue"
+              class="d-none d-md-inline d-lg-inline"
+            >
               Our Catalogue
             </button>
-            <button mat-flat-button color="primary" routerLink="/contact" class="d-none  d-md-inline d-lg-inline">
+            <button
+              mat-flat-button
+              color="primary"
+              routerLink="/contact"
+              class="d-none d-md-inline d-lg-inline"
+            >
               Contact Us
             </button>
-            <button mat-flat-button color="primary" routerLink="/about-us" class="d-none  d-md-inline d-lg-inline">
+            <button
+              mat-flat-button
+              color="primary"
+              routerLink="/about-us"
+              class="d-none d-md-inline d-lg-inline"
+            >
               About Us
             </button>
+            
+            <div>
+              <button
+              mat-icon-button
+              color="primary"
+              aria-label="Example icon-button with heart icon"
+              [matMenuTriggerFor]="profileMenu"
+            >
+              <mat-icon>person</mat-icon>
+            </button>
+
+            <mat-menu #profileMenu="matMenu">
+              @if (user?.uid && !user?.isAnonymous) {
+                <button mat-menu-item>Profile</button>
+                <button mat-menu-item>Orders</button>
+                <button mat-menu-item (click)="logout()">Logout</button>
+              } @else {
+                <button mat-menu-item routerLink="/login">Login/Register</button>
+              }
+              
+            </mat-menu>
+
             <button
               mat-icon-button
               color="primary"
@@ -35,6 +72,8 @@
             >
               <mat-icon>shopping_cart</mat-icon>
             </button>
+            </div>
+
           </div>
         </mat-toolbar-row>
       </div>

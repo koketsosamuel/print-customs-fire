@@ -107,6 +107,8 @@ import { OrderCompletedComponent } from './pages/customer-facing/order-completed
 import { EmptyCartComponent } from './components/empty-cart/empty-cart.component';
 import { InfoTextComponent } from './components/info-text/info-text.component';
 import { Four04Component } from './pages/customer-facing/four04/four04.component';
+import { LoginComponent } from './pages/customer-facing/login/login.component';
+import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
@@ -181,7 +183,9 @@ import { Four04Component } from './pages/customer-facing/four04/four04.component
     OrderCompletedComponent,
     EmptyCartComponent,
     InfoTextComponent,
-    Four04Component
+    Four04Component,
+    LoginComponent,
+    LoginDialogComponent
   ],
   imports: [
     AngularFireModule.initializeApp({

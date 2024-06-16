@@ -22,8 +22,9 @@ export class OrderService {
 
   async createOrder(order: any) {
     const res = await this.db.getDocumentWhereFieldEquals(this.orderCollection, ['cartId', order.cartId]);
+    console.log(res);
     
-    if (res.id) {
+    if (res?.id) {
       return res;
     }
 

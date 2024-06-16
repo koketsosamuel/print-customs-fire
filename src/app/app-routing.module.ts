@@ -22,6 +22,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { TrackOrderComponent } from './pages/customer-facing/track-order/track-order.component';
 import { OrderCompletedComponent } from './pages/customer-facing/order-completed/order-completed.component';
 import { Four04Component } from './pages/customer-facing/four04/four04.component';
+import { LoginComponent } from './pages/customer-facing/login/login.component';
 
 const routes: Routes = [
   {
@@ -135,6 +136,10 @@ const routes: Routes = [
   {
     path: 'order-completed/:orderId',
     component: OrderCompletedComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: '**',

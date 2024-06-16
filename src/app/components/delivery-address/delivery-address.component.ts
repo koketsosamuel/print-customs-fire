@@ -7,6 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./delivery-address.component.scss']
 })
 export class DeliveryAddressComponent {
-  @Input({required: true})
-  addressForm!: FormGroup;
+  @Input({required: true}) addressForm!: FormGroup;
+  @Input() deliveryAddress = false;
 }

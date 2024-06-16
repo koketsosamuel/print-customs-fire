@@ -37,7 +37,7 @@ export class DbService {
       .get();
     return res.docs.map((d: any) => {
       return { id: d.id, ...d.data() };
-    })[0];
+    })?.[0];
   }
 
   async updateDocumentWhereFieldEquals(
@@ -106,6 +106,14 @@ export class DbService {
 
   deleteDocument(collection: string, id: string) {
     return this.firestore.collection(collection).doc(id).delete();
+  }
+
+  async deleteDocumentWhereFieldEquals(collection: string, where: [string, any]) {
+    const doc = await this.getDocumentWhereFieldEquals(collection, where);
+    if (doc) {
+      return this.deleteDocument(collection, doc.id)
+    }
+    return null;
   }
 
   async getNewDocFromReference(doc: any) {

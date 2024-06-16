@@ -1,47 +1,74 @@
 <form autocomplete="off" [formGroup]="registerForm" (submit)="onRegister()">
-    <div class="row">
-        <div class="col-lg-6 col-md-8">
-            <h4>Register a new account</h4>
+  <h1>Register a new account</h1>
 
-            <mat-form-field class="d-block">
-                <mat-label>Email</mat-label>
-                <input name="login_email" type="email" matInput placeholder="mike@cooltech.co.za"
-                    formControlName="email" />
+  <mat-form-field class="d-block">
+    <mat-label>Email</mat-label>
+    <input
+      name="login_email"
+      type="email"
+      matInput
+      placeholder="mike@cooltech.co.za"
+      formControlName="email"
+    />
 
-                <mat-error
-                    *ngIf="registerForm.controls['email'].hasError('email') && !registerForm.controls['email'].hasError('required')">Invalid
-                    email address</mat-error>
-                <mat-error *ngIf="registerForm.controls['email'].hasError('required')">Required</mat-error>
-            </mat-form-field>
+    <mat-error
+      *ngIf="
+        registerForm.controls['email'].hasError('email') &&
+        !registerForm.controls['email'].hasError('required')
+      "
+      >Invalid email address</mat-error
+    >
+    <mat-error *ngIf="registerForm.controls['email'].hasError('required')"
+      >Required</mat-error
+    >
+  </mat-form-field>
 
-            <mat-form-field class="d-block">
-                <mat-label>Password</mat-label>
-                <input name="login_password" type="password" matInput
-                    formControlName="password" />
-                <mat-error
-                    *ngIf="registerForm.controls['password'].hasError('minlength') && !registerForm.controls['password'].hasError('required')">Must
-                    have atleast 8 characters</mat-error>
-                <mat-error *ngIf="registerForm.controls['password'].hasError('required')">Required</mat-error>
-            </mat-form-field>
+  <mat-form-field class="d-block">
+    <mat-label>Password</mat-label>
+    <input
+      name="login_password"
+      type="password"
+      matInput
+      formControlName="password"
+    />
+    <mat-error
+      *ngIf="
+        registerForm.controls['password'].hasError('minlength') &&
+        !registerForm.controls['password'].hasError('required')
+      "
+      >Must have atleast 8 characters</mat-error
+    >
+    <mat-error *ngIf="registerForm.controls['password'].hasError('required')"
+      >Required</mat-error
+    >
+  </mat-form-field>
 
-            <mat-form-field class="d-block">
-                <mat-label>Confirm password</mat-label>
-                <input name="login_password" type="password" matInput
-                    formControlName="confirmPassword" />
-                <mat-error *ngIf="registerForm.controls['confirmPassword'].hasError('matchFieldValue')">Must match password</mat-error>
-            </mat-form-field>
+  <mat-form-field class="d-block">
+    <mat-label>Confirm password</mat-label>
+    <input
+      name="login_password"
+      type="password"
+      matInput
+      formControlName="confirmPassword"
+    />
+    <mat-error
+      *ngIf="
+        registerForm.controls['confirmPassword'].hasError('matchFieldValue')
+      "
+      >Must match password</mat-error
+    >
+  </mat-form-field>
 
-                <button mat-flat-button color="primary" [disabled]="!registerForm.valid" type="submit">
-                   Register
-                </button>
-                
+  <button
+    mat-flat-button
+    color="primary"
+    [disabled]="!registerForm.valid"
+    type="submit"
+  >
+    Register
+  </button>
 
-            <h5 class="py-0 mb-0 cursor" (click)="alreadyHaveAccount()"><u>I already have an account</u></h5>
-        </div>
-        <div class="col-lg-6 col-md-4">
-            <div class="d-flex justify-content-center">
-                <img src="../../../assets/sheild-dynamic-color.png" class="side-icon" alt="">
-            </div>
-        </div>
-    </div>
+  <h5 class="py-0 mb-0 cursor" (click)="alreadyHaveAccount()">
+    <u>I already have an account</u>
+  </h5>
 </form>

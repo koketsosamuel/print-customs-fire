@@ -1,7 +1,7 @@
-<form autocomplete="off" [formGroup]="loginForm" (submit)="onLogin()" *ngIf="isLogin && !resetPassword">
+<form autocomplete="off" [formGroup]="loginForm" (submit)="onLogin()">
     <div class="row">
-        <div class="col-lg-6 col-md-8">
-            <h4>{{ isLogin ? 'Login to your account' : 'Register a new account' }}</h4>
+        <div class="col-lg-6 col-md-8" *ngIf="isLogin && !resetPassword">
+            <h1>Login to your account</h1>
 
             <mat-form-field class="d-block">
                 <mat-label>Email</mat-label>
@@ -36,17 +36,19 @@
 
             <h5 class="py-0 mb-0 cursor" (click)="isLogin = false"><u>I dont have an account</u></h5>
         </div>
+        <div *ngIf="!isLogin" class="col-lg-6 col-md-8">
+            <app-register-new-user (alreadyHaveAccountEvent)="isLogin = true"
+                (loginEvent)="emitUser($event)"></app-register-new-user>
+        </div>
+        <div *ngIf="resetPassword" class="col-lg-6 col-md-8">
+            <app-reset-password (backToLoginScreen)="resetPassword = false"></app-reset-password>
+        </div>
         <div class="col-lg-4 col-md-4">
             <div class="d-flex justify-content-center">
-                <img src="../../../assets/sheild-dynamic-color.png" class="side-icon" alt="">
+                <img src="../../../assets/icons/lock.svg" class="side-icon" alt="security icon">
             </div>
         </div>
     </div>
 </form>
-<div *ngIf="!isLogin">
-    <app-register-new-user (alreadyHaveAccountEvent)="isLogin = true"
-        (loginEvent)="emitUser($event)"></app-register-new-user>
-</div>
-<div *ngIf="resetPassword">
-    <app-reset-password (backToLoginScreen)="resetPassword = false"></app-reset-password>
-</div>
+
+

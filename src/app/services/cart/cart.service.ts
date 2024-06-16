@@ -12,18 +12,39 @@ import { ProductService } from '../product/product.service';
 })
 export class CartService {
   collection = 'Cart' as const;
-  cart!: ICart;
+  cart: ICart | null = null;;
+  user: firebase.default.User | null = null;
 
   constructor(
     private readonly auth: AuthService,
     private readonly db: DbService,
     private readonly injector: Injector,
     private readonly productService: ProductService
-  ) {}
+  ) {
+    
+    auth.userObservable.subscribe(async user => {
+      this.user = user;
+
+      if (user?.uid && !user.isAnonymous) {
+        const cart: ICart | null = await this._getCart(user.uid);
+
+        if (cart && this.cart && cart.id !=  this.cart.id) {
+          await this.deleteCart(cart.id as string);
+          await this.swapCartOwnership(user.uid, this.cart.id as string);
+        }
+      }
+    })
+
+  }
 
   async getCart() {
-    const user: any = await this.auth.getUserId();
+    let user: any = await this.auth.getUserId();
     let cart: ICart | null = null;
+
+    if (!user) {
+      await this.auth.anonymousLogin();
+      user = await this.auth.getUserId();
+    }
 
     cart = await this._getCart(user.uid);
 
@@ -33,6 +54,7 @@ export class CartService {
       }
       this.cart = cart as ICart;
     }
+
     return cart;
   }
 
@@ -41,7 +63,6 @@ export class CartService {
       'userId',
       userId,
     ]);
-    this.cart = cart;
     return cart;
   }
 
@@ -59,6 +80,7 @@ export class CartService {
         product: product.value
       }
     }))
+    this.cart = cart;
     return cart;
   }
 
@@ -81,5 +103,8 @@ export class CartService {
     this.db.updateById(this.collection, cartId, { userId: newUserUid });
   }
 
+  private deleteCart(cartId: string) {
+    return this.db.deleteDocument(this.collection, cartId);
+  }
 
 }

@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
+import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
+import { LoginOrSignupComponent } from 'src/app/components/login-or-signup/login-or-signup.component';
 import { ICartItem } from 'src/app/models/cart.interface';
+import { User } from 'src/app/models/types';
 import { AlertService } from 'src/app/services/alert/alert.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { CustomizationPreviewDialogService } from 'src/app/services/customization-preview-dialog/customization-preview-dialog.service';
 import { LoadingSpinnerService } from 'src/app/services/loading-spinner/loading-spinner.service';
@@ -22,7 +27,6 @@ export class CheckoutComponent implements OnInit {
   contactInfoAndPersonalInfoForm: FormGroup;
   businessInfoForm: FormGroup;
   billingAddressSameAsDelivery = true;
-  saveMyDetailsForNextPurchase = false;
   notRegisteredBusiness = false;
   initialLoad = false;
   items: ICartItem[] = [];
@@ -31,6 +35,8 @@ export class CheckoutComponent implements OnInit {
   subTotal: string = '';
   deliveryFee: string = (250).toFixed(2);
 
+  user: User | null = null;
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly cartService: CartService,
@@ -38,7 +44,10 @@ export class CheckoutComponent implements OnInit {
     private readonly customizationPreviewServ: CustomizationPreviewDialogService,
     private readonly loadingSpinner: LoadingSpinnerService,
     private readonly alertService: AlertService,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly dialog: MatDialog,
+    private readonly auth: AuthService
+
   ) {
 
     this.deliveryAddressForm = formBuilder.group({
@@ -70,8 +79,8 @@ export class CheckoutComponent implements OnInit {
     })
 
     this.businessInfoForm = formBuilder.group({
-      taxNumber: [''],
-      name: ['']
+      taxNumber: ['', Validators.required],
+      name: ['', Validators.required]
     }),
 
     this.checkoutForm = formBuilder.group({
@@ -93,6 +102,12 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.initialLoad = true;
+    this.auth.userObservable.subscribe(user => {
+      this.user = user;
+      console.log(user);
+      
+    })
+    
     this.cartService
       .getUserCart()
       .then((cart) => {
@@ -140,10 +155,13 @@ export class CheckoutComponent implements OnInit {
 
   checkout() {
     if (this.checkoutForm.valid) {
-      this.loadingSpinner.show()
+      this.loadingSpinner.show();
 
       this.orderService.createOrder(this.checkoutForm.value).then(res => {
+        
         this.router.navigate(['/order-completed', res.id], { replaceUrl: true });
+      }).catch(err => {
+        this.alertService.error('Something went wrong, please try again.')
       }).finally(() => {
         this.loadingSpinner.hide();
       });
@@ -167,5 +185,24 @@ export class CheckoutComponent implements OnInit {
 
   previewItem(item: any) {
     this.customizationPreviewServ.preview(item);
+  }
+
+  loginOrRegister() {
+    this.dialog.open(LoginDialogComponent, {
+      maxHeight: '90%',
+      maxWidth: '90%',
+      minWidth: '70%',
+      minHeight: '50%',
+    })
+  }
+
+  applyRequiredValidators(clear = false) {
+    if (!clear) {
+      this.checkoutForm.controls['businessInformation'].get('taxNumber')?.addValidators(Validators.required);
+      this.checkoutForm.controls['businessInformation'].get('name')?.addValidators(Validators.required);
+    } else {
+      this.checkoutForm.controls['businessInformation'].get('taxNumber')?.clearValidators();
+      this.checkoutForm.controls['businessInformation'].get('name')?.clearValidators();
+    }
   }
 }

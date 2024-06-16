@@ -28,7 +28,7 @@ export const handleFileUploads = functions
     const isImage = object.contentType
       ? object.contentType.startsWith('image/')
       : false;
-    const isSvg∂ = !!object.contentType?.includes('svg');
+    const isSvg = !!object.contentType?.includes('svg');
     const isPDFInvoice =
       !!object.contentType?.includes('pdf') &&
       !!object.name?.startsWith('Invoices');
@@ -142,7 +142,7 @@ export const cleanCartOnDelete = functions.firestore
       .get();
 
     snapshot.forEach(async (doc) => {
-      await doc.ref.update({ printingInfoArr: [] });
+      await doc.ref.update({ printingInfoArr: [] }); // to prevent artwork wipe
       await doc.ref.delete();
       return '';
     });
@@ -183,7 +183,6 @@ export const promoteCartToOrder = functions.firestore
   });
 
 export const generateInvoice = functions
-  .runWith({ memory: '1GB', maxInstances: 2 })
   .firestore.document('InvoiceQueue/{documentId}')
   .onCreate(async (snap, context) => {
     const invoiceToBeGenerated = snap.data();

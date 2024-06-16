@@ -29,7 +29,7 @@ export class RegisterNewUserComponent {
   onRegister() {
     if (this.registerForm.valid) {
       const values = this.registerForm.value;
-      this.authService.registerUserWithEmailAndPassword(values.email, values.password).then(res => {
+      this.authService.registerUserWithEmailAndPassword(values.email, values.password)?.then((res: any) => {
         this.loginEvent.emit(res.user);
       });
     }

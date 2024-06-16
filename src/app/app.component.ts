@@ -10,13 +10,25 @@ import { CartService } from './services/cart/cart.service';
 })
 export class AppComponent {
   title = 'print-customs';
-  constructor(private router: Router, private readonly auth: AuthService, private readonly cartService: CartService) {}
+  user: firebase.default.User | null = null;
+
+  constructor(
+    private router: Router,
+    private readonly auth: AuthService,
+    private readonly cartService: CartService
+  ) {}
 
   ngOnInit() {
     this.router.events.subscribe((event) => {
       window.scrollTo(0, 0);
     });
 
-    this.auth.anonymousLogin();
+    this.auth.userObservable.subscribe(user => {
+      this.user = user;
+    })
+  }
+
+  logout() {
+    this.auth.logout();
   }
 }
