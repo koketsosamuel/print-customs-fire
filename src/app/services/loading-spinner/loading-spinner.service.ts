@@ -6,14 +6,14 @@ import { LoadingSpinnerComponent } from 'src/app/components/loading-spinner/load
   providedIn: 'root',
 })
 export class LoadingSpinnerService {
-  dialogRef: any = null;
-  open = 0;                 
+  private dialogRef: MatDialogRef<LoadingSpinnerComponent> | null = null;
+  private openCount = 0;
 
   constructor(private readonly dialog: MatDialog) {}
 
   show() {
-    this.open += 1;
-    if (this.open == 1) {
+    this.openCount += 1;
+    if (this.openCount === 1) {
       this.dialogRef = this.dialog.open(LoadingSpinnerComponent, {
         maxHeight: '70vh',
         maxWidth: '70vw',
@@ -25,12 +25,12 @@ export class LoadingSpinnerService {
   }
 
   hide() {
-    this.open -= 1;
-    if (this.open == 0) {
-      this.dialogRef && this.dialogRef.close();
-      this.dialogRef = null;
-    } else if (this.open < 0) {
-      this.open == 0;
+    if (this.openCount > 0) {
+      this.openCount -= 1;
+      if (this.openCount === 0 && this.dialogRef) {
+        this.dialogRef.close();
+        this.dialogRef = null;
+      }
     }
   }
 }
