@@ -1,115 +1,187 @@
 <div class="container" *ngIf="order">
-    <header class="bg-teal-100 p-4">
-        <h1 class="mt-0 mb-0">Track Order</h1>
+  <header class="py-2">
+    <h1 class="mt-0 mb-0">Track Order</h1>
     <h3 class="fg-grey-800">
-        <b>#{{ order.orderNumber }}</b>
-        &nbsp;<span class="p-2 fg-white bg-grey-800 rounded-corners">{{order.status}}</span>
+      <span class="fg-teal">#{{ order.orderNumber }}</span>
+      &nbsp;<span class="p-2 fg-white bg-grey-800 rounded-corners">{{
+        order.status
+      }}</span>
     </h3>
 
     <h4 class="fg-grey-800">
-        <b>Ordered:</b>&nbsp;<span class="p-2 fg-white bg-grey-800 rounded-corners">13 April 2024 14:22</span>
-        &nbsp;<b>Last Updated:</b>&nbsp;<span class="p-2 fg-white bg-grey-800 rounded-corners">13 April 2024 14:22</span>
+      Ordered:&nbsp;<span>{{
+        utilServ.formatDate(order.createdAt.toDate(), "DD/MM/YYYY HH:mm")
+      }}</span>
+      @if (order.updatedAt) { &nbsp;Last Updated:&nbsp;<span class="">{{
+        utilServ.formatDate(order.updatedAt.toDate(), "DD/MM/YYYY HH:mm")
+      }}</span>
+      }
     </h4>
-    </header>
+  </header>
 
-    
+  <div class="row">
+    <div class="col-lg-8">
+      <div>
+        <h2 class="mt-0 pt-0">Order Items</h2>
+
+        <div class="bg-white mb-3" *ngFor="let item of order.items">
+          <div class="row p-4">
+            <div class="col-md-4">
+              <img
+                class="w-100 rounded-corners"
+                [src]="item.product.images[0].link"
+                [alt]="item.product.images[0].link"
+              />
+            </div>
+            <div class="col-md-8">
+              <h4 class="mt-0 pt-0 d-flex align-items-center mb-0">
+                {{ item.product.name }}
+                <button
+                  mat-icon-button
+                  [routerLink]="
+                    '/products/' + item.product.name + '/' + item.product.id
+                  "
+                >
+                  <mat-icon>open_in_new</mat-icon>
+                </button>
+              </h4>
+              <h5
+                class="mt-0 pt-0"
+                *ngIf="utilServ.generateQuantities(item.quantities)"
+              >
+                <span
+                  *ngFor="let q of utilServ.generateQuantities(item.quantities)"
+                >
+                  <span class="p-2 bg-grey-800 rounded-corners fg-white"
+                    >{{ q.name }} - {{ q.value }} units</span
+                  >&nbsp;
+                </span>
+              </h5>
+              <h5 class="mt-0 pt-0">
+                Total Quantity:
+                <span class="p-2 bg-grey-800 rounded-corners fg-white"
+                  >{{ item.totalQuantity }} units</span
+                >
+                Branding:
+                <span *ngFor="let pi of item.printingInfoArr">
+                  <span class="p-2 bg-grey-800 rounded-corners fg-white">{{
+                    pi.printingPosition.name
+                  }}</span
+                  >&nbsp;
+                </span>
+                Total&nbsp;Cost:&nbsp;<span
+                  class="p-2 bg-grey-800 rounded-corners fg-white"
+                  >R&nbsp;{{ item.totalPrice.toFixed(2) }}</span
+                >
+              </h5>
+              <h4 class="cursor" (click)="previewItem(item)">
+                <u>View Detailed information</u>
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="pb-4">
+        <h2 class="mt-0 pt-0">Cost Information</h2>
+        <div class="bg-white p-3">
+          <table>
+            <tbody>
+              <tr>
+                <td>Sub Total</td>
+                <td>R&nbsp;{{ order.subTotal }}</td>
+              </tr>
+              <tr>
+                <td>Delivery</td>
+                <td>R&nbsp;{{ order.delivery }}</td>
+              </tr>
+              <tr>
+                <td>Vat</td>
+                <td>R&nbsp;{{ order.vat }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <h2 class="text-bold mt-2 pt-2 fg-teal">
+            Total: R&nbsp;{{ order.total }}
+          </h2>
+        </div>
+
+        <h2>Contact Information</h2>
+        <div class="bg-white p-3">
+          <p>{{ order.contactInfoAndPersonalInfo.fullName }}</p>
+          <mat-chip-listbox>
+            <mat-chip>{{ order.contactInfoAndPersonalInfo.email }}</mat-chip>
+            <mat-chip>{{
+              order.contactInfoAndPersonalInfo.phoneNumber
+            }}</mat-chip>
+            <mat-chip
+              *ngIf="order.contactInfoAndPersonalInfo.alternativePhoneNumber"
+              >{{
+                order.contactInfoAndPersonalInfo.alternativePhoneNumber
+              }}</mat-chip
+            >
+          </mat-chip-listbox>
+        </div>
+
+        @if (order.businessInformation?.taxNumber) {
+        <h2>Business Information</h2>
+        <div class="bg-white p-3">
+          <p>
+            Business name:
+            <mat-chip>{{ order.businessInformation.name }}</mat-chip>
+          </p>
+          <p>
+            VAT Tax Number:
+            <mat-chip>{{ order.businessInformation.taxNumber }}</mat-chip>
+          </p>
+        </div>
+        }
+
+        <h2>Billing Address</h2>
+        <div class="bg-white p-3">
+          {{ formatAddress(order.billingAddress) }}
+        </div>
+
+        <h2>Delivery Address</h2>
+        <div class="bg-white p-3">
+          {{ formatAddress(order.deliveryAddress) }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (loading) {
+<div class="container mt-4">
+  <section>
     <div class="row">
-        <div class="col-lg-8">
-            <div class="bg-white p-4 h-100">
-                <h2 class="mt-0 pt-0">Order Items</h2>
-
-                <div class="bg-grey-100" *ngFor="let item of order.items">
-                    <div class="row p-4">
-                        <div class="col-md-4">
-                            <img class="w-100 rounded-corners" [src]="item.product.images[0].link" [alt]="item.product.images[0].link">
-                        </div>
-                        <div class="col-md-8">
-                            <h4 class="mt-0 pt-0 d-flex align-items-center mb-0">
-                                {{item.product.name}}
-                                <button
-                                    mat-icon-button
-                                    [routerLink]="'/products/'+item.product.name+'/'+item.product.id"
-                                >
-                                    <mat-icon>open_in_new</mat-icon>
-                                </button>
-                            </h4>
-                            <h5 class="mt-0 pt-0" *ngIf="utilServ.generateQuantities(item.quantities)">
-                                <span *ngFor="let q of utilServ.generateQuantities(item.quantities)">
-                                    <span class="p-2 bg-grey-800 rounded-corners fg-white" >{{q.name}} - {{q.value}} units</span>&nbsp;
-                                </span>
-                            </h5>
-                            <h5 class="mt-0 pt-0">
-                                Total Quantity: <span class="p-2 bg-grey-800 rounded-corners fg-white">{{ item.totalQuantity }} units</span>
-                                Branding: <span *ngFor="let pi of item.printingInfoArr">
-                                    <span class="p-2 bg-grey-800 rounded-corners fg-white" >{{ pi.printingPosition.name }}</span>&nbsp;
-                                </span>
-                                Total&nbsp;Cost:&nbsp;<span class="p-2 bg-grey-800 rounded-corners fg-white" >R&nbsp;{{ item.totalPrice.toFixed(2) }}</span>
-                            </h5>
-                            <h4 class="cursor" (click)="previewItem(item)"><u>View Detailed information</u></h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="col-12">
+        <div class="col-5 col-lg-2 mb-2">
+          <div class="loading-block sentence"></div>
         </div>
-        <div class="col-lg-4">
-            <div class="py-4">
-                <h2 class="mt-0 pt-0">Cost Information</h2>
-                <mat-card>
-                    <mat-card-content>
-                        <table>
-                            <tbody>
-                                <tr>
-                                    <td>Sub Total</td>
-                                    <td>R&nbsp;{{ order.subTotal }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Delivery</td>
-                                    <td>R&nbsp;{{ order.delivery }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Vat</td>
-                                    <td>R&nbsp;{{ order.vat }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <h2 class="text-bold mt-2 pt-2 fg-teal">Total: R&nbsp;{{order.total}}</h2>
-                    </mat-card-content>
-                </mat-card>
-
-                <h2>Contact Information</h2>
-                <mat-card>
-                    <mat-card-content>
-                        <p>{{ order.contactInfoAndPersonalInfo.fullName }}</p>
-                        <mat-chip-listbox>
-                            <mat-chip>{{ order.contactInfoAndPersonalInfo.email }}</mat-chip>
-                            <mat-chip>{{ order.contactInfoAndPersonalInfo.phoneNumber }}</mat-chip>
-                            <mat-chip *ngIf="order.contactInfoAndPersonalInfo.alternativePhoneNumber">{{ order.contactInfoAndPersonalInfo.alternativePhoneNumber }}</mat-chip>
-                        </mat-chip-listbox>
-                    </mat-card-content>
-                </mat-card>
-
-                <h2>Business Information</h2>
-                <mat-card>
-                    <mat-card-content>
-                        <p>Business name: <mat-chip>{{ order.businessInformation.name }}</mat-chip></p>
-                        <p>VAT Tax Number: <mat-chip>{{ order.businessInformation.taxNumber }}</mat-chip></p>
-                    </mat-card-content>
-                </mat-card>
-
-                <h2>Billing Address</h2>
-                <mat-card>
-                    <mat-card-content>
-                        {{ formatAddress(order.billingAddress) }}
-                    </mat-card-content>
-                </mat-card>
-
-                <h2>Delivery Address</h2>
-                <mat-card>
-                    <mat-card-content>
-                        {{ formatAddress(order.deliveryAddress) }}
-                    </mat-card-content>
-                </mat-card>
-            </div>
+        <div class="col-5 col-lg-4 mb-2">
+          <div class="loading-block sentence"></div>
         </div>
+        <div class="col-5 col-lg-4 mb-2">
+          <div class="loading-block sentence"></div>
+        </div>
+      </div>
+      <div class="col-lg-8 col-md-8">
+        <div class="loading-block ultra-wide mb-3"></div>
+        <div class="loading-block ultra-wide mb-3"></div>
+        <div class="loading-block ultra-wide mb-3"></div>
+        <div class="loading-block ultra-wide mb-3"></div>
+      </div>
+      <div class="col-lg-4 col-md-12">
+        <div class="loading-block square mb-4"></div>
+        <div class="loading-block square"></div>
+      </div>
     </div>
-    </div>
+  </section>
+</div>
+} @if (!loading && !order) {
+<app-four04
+  message="Order not found! Please make sure that your link is correct."
+></app-four04>
+}

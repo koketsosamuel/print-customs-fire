@@ -1,11 +1,18 @@
 <div class="container">
-    <header class="text-center mb-5">
-        <h1 class="fg-teal">404</h1>
-        <h2>page not found! It is possible what you are looking for doesn't exist anymore</h2>
-    </header>
-    <div class="suggested-products mt-4">
-        <h1 class="mb-2">Find Something, maybe?</h1>
-        <app-horizontal-cards [loading]="loading" [products]="bestSellingProducts"></app-horizontal-cards>
-    </div>
-    
+  <header class="text-center mb-5 mx-auto col-lg-6 col-md-8 col-12">
+    <h1 class="fg-teal">404</h1>
+    <h2>
+      {{
+        message ||
+          "Page not found! It is possible what you are looking for doesn't exist anymore, or that you are not authenticated."
+      }}
+    </h2>
+  </header>
+  <div class="suggested-products mt-4">
+    <h1 class="mb-2">Find Something, maybe?</h1>
+    <app-horizontal-cards
+      [loading]="loading"
+      [products]="bestSellingProducts"
+    ></app-horizontal-cards>
+  </div>
 </div>

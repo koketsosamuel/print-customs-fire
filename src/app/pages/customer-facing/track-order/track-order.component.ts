@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ICartItem } from 'src/app/models/cart.interface';
+import { AlertService } from 'src/app/services/alert/alert.service';
 import { CustomizationPreviewDialogService } from 'src/app/services/customization-preview-dialog/customization-preview-dialog.service';
 import { OrderService } from 'src/app/services/order/order.service';
 import { UtilService } from 'src/app/services/util/util.service';
@@ -12,18 +12,32 @@ import { UtilService } from 'src/app/services/util/util.service';
 })
 export class TrackOrderComponent implements OnInit {
   order: any;
+  loading = true;
 
   constructor(
     private readonly orderService: OrderService,
     private readonly activatedRoute: ActivatedRoute,
     private readonly customizationPreviewServ: CustomizationPreviewDialogService,
-    public readonly utilServ: UtilService
+    public readonly utilServ: UtilService,
+    private readonly alertService: AlertService
   ) {}
 
   async ngOnInit() {
-    const orderId = this.activatedRoute.snapshot.params['orderId'];
-    this.order = await this.orderService.getOrder(orderId).then(res => res.value);
-    this.order = await this.orderService.getOrderByOrderNumber('MM35378MFG').then(res => res.value);
+    
+    try {
+      this.loading = true;
+      const orderId = this.activatedRoute.snapshot.params['orderId'];
+      this.order = await this.orderService.getOrder(orderId).then(res => res?.value);
+      console.log(this.order);
+      
+      
+    } catch (err) {
+      console.log(err);
+      
+      this.alertService.error('Something went wrong! Please retry or reload.')
+    } finally {
+      this.loading = false;
+    }
   }
 
   formatAddress(billingAddress: any) {

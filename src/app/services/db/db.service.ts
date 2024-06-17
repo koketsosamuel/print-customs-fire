@@ -70,7 +70,11 @@ export class DbService {
           })
         )
         .subscribe((doc: any) => {
-          resolve({ doc, value: { id: doc.id, ...doc.data() } });
+          if (doc.exists) {
+            resolve({ doc, value: { id: doc.id, ...doc.data() } });
+          } else {
+            resolve(null);
+          }
         });
     });
     return promise;

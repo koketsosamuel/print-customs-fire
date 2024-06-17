@@ -52,8 +52,10 @@ export class OrderService {
 
   async getOrder(orderId: string) {
     const res: any = await this.db.getDocumentById(this.orderCollection, orderId);
-    let items = await this.getOrderItems(orderId);
-    res.value.items = items;
+    if (res) {
+      let items = await this.getOrderItems(orderId);
+      res.value.items = items;
+    }
     return res;
   }
 

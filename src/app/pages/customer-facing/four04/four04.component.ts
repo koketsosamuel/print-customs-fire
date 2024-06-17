@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import IProduct from 'src/app/models/product.interface';
 import { ProductService } from 'src/app/services/product/product.service';
 
@@ -8,6 +8,8 @@ import { ProductService } from 'src/app/services/product/product.service';
   styleUrl: './four04.component.scss'
 })
 export class Four04Component {
+
+  @Input() message: string = '';
   loading = false;
   bestSellingProducts: IProduct[] = [];
 
