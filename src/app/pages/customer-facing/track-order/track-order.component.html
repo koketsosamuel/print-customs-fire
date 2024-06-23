@@ -8,7 +8,7 @@
       }}</span>
     </h3>
 
-    <h4 class="fg-grey-800">
+    <h4 class="fg-grey-800 mb-0">
       Ordered:&nbsp;<span>{{
         utilServ.formatDate(order.createdAt.toDate(), "DD/MM/YYYY HH:mm")
       }}</span>
@@ -17,6 +17,14 @@
       }}</span>
       }
     </h4>
+
+    @if (order?.invoice) {
+      <a [href]="order.invoice.link" target="_blank">
+        <button mat-flat-button color="accent" class="mt-2"><mat-icon>article</mat-icon> Download Invoice</button>
+      </a>
+    } @else {
+      <app-info-text text="Generating invoice..."></app-info-text>
+    }
   </header>
 
   <div class="row">
@@ -94,7 +102,7 @@
               </tr>
               <tr>
                 <td>Delivery</td>
-                <td>R&nbsp;{{ order.delivery }}</td>
+                <td>R&nbsp;{{ order.deliveryFee }}</td>
               </tr>
               <tr>
                 <td>Vat</td>

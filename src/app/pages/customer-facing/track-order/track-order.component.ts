@@ -23,21 +23,16 @@ export class TrackOrderComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    
-    try {
-      this.loading = true;
-      const orderId = this.activatedRoute.snapshot.params['orderId'];
-      this.order = await this.orderService.getOrder(orderId).then(res => res?.value);
-      console.log(this.order);
-      
-      
-    } catch (err) {
-      console.log(err);
-      
-      this.alertService.error('Something went wrong! Please retry or reload.')
-    } finally {
+    this.loading = true;
+    this.getOrder().then(() => {
+      if (this.order && !this.order.invoice) {
+        setTimeout(() => {
+          this.getOrder()
+        }, 30000)
+      }
+    }).finally(() => {
       this.loading = false;
-    }
+    });
   }
 
   formatAddress(billingAddress: any) {
@@ -45,10 +40,10 @@ export class TrackOrderComponent implements OnInit {
 
     let formattedAddress = `${streetAddress}`;
     if (buildingName) {
-        formattedAddress += `, ${buildingName}`;
+      formattedAddress += `, ${buildingName}`;
     }
     if (suburb) {
-        formattedAddress += `, ${suburb}`;
+      formattedAddress += `, ${suburb}`;
     }
     formattedAddress += `, ${city}, ${province}, ${postalCode}`;
 
@@ -57,5 +52,14 @@ export class TrackOrderComponent implements OnInit {
 
   previewItem(item: any) {
     this.customizationPreviewServ.preview(item);
+  }
+
+  async getOrder() {
+    try {
+      const orderId = this.activatedRoute.snapshot.params['orderId'];
+      this.order = await this.orderService.getOrder(orderId).then(res => res?.value);
+    } catch (err) {
+      this.alertService.error('Something went wrong! Please retry or reload.')
+    }
   }
 }

@@ -21,6 +21,12 @@ export interface IInvoicePayload {
     vat: string;
     total: string;
     orderId?: string;
+    createdAt: Date;
+    invoice?: {
+        link: string;
+        name: string;
+    },
+    paid?: boolean;
 }
 
 export interface IInvoicePayloadItem {

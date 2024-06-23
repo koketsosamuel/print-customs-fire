@@ -93,10 +93,11 @@ export class CheckoutComponent implements OnInit {
       createdAt: [new Date(), Validators.required],
       status: ['Pending Payment', Validators.required],
       subTotal: [0, Validators.required],
-      delivery: [0, Validators.required],
+      deliveryFee: [this.deliveryFee, Validators.required],
       vat: [0, Validators.required],
       total: [0, Validators.required],
       numberOfItems: [0, Validators.required],
+      paid: [false, Validators.required],
     })
   }
 
@@ -104,8 +105,6 @@ export class CheckoutComponent implements OnInit {
     this.initialLoad = true;
     this.auth.userObservable.subscribe(user => {
       this.user = user;
-      console.log(user);
-      
     })
     
     this.cartService

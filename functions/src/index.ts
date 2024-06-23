@@ -179,7 +179,9 @@ export const promoteCartToOrder = functions.firestore
       delete orderItem.cartId;
       promises.push(orderItemCollectionRef.add(orderItem));
     });
+
     await Promise.all(promises);
+    await db.collection('InvoiceQueue').add({ orderId: context.params.documentId });
   });
 
 export const generateInvoice = functions
@@ -264,10 +266,12 @@ export const generateInvoice = functions
       businessName: orderSnapData!.businessInformation.name,
       taxNumber: orderSnapData!.businessInformation.taxNumber,
       orderId: orderSnap.id,
+      createdAt: new Date()
     };
 
     await snap.ref.update({
       payload,
+      updatedAt: new Date()
     });
     await db.collection('InvoicePayloads').add(payload);
   });

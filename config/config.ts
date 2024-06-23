@@ -8,5 +8,6 @@ export const globalConfig = {
   words: {
     skip: 'SK1P'
   },
-  storageBucketName: 'custom-prints-aae9c.appspot.com'
+  storageBucketName: 'custom-prints-aae9c.appspot.com',
+  deliveryFee: 250
 };
