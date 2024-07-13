@@ -3,6 +3,8 @@ import * as admin from 'firebase-admin';
 import { firestore } from 'firebase-admin';
 import * as moment from 'moment';
 import * as uuid from 'uuid';
+import * as nodemailer from 'nodemailer';
+
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -18,6 +20,15 @@ import {
   IInvoicePayloadItem,
 } from './interfaces/invoice-payload.interface';
 import { getFilePublicPermanentLink } from './helpers/get-file-public-permanent-link';
+
+// Fetch email credentials from environment variables
+const mailTransport = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'koklathewebguy@gmail.com',
+    pass: 'K0k3t$00',
+  },
+});
 
 export const handleFileUploads = functions
   .runWith({
@@ -286,6 +297,46 @@ export const removeArtwork = functions.firestore
       })
     );
   });
+  
+  // Function to send email with attachment
+  async function sendEmail(email: string, subject: string, text: string, attachmentPath: string) {
+    try {
+      // Fetch the file from Firebase Storage
+      const bucket = storage.bucket(globalConfig.storageBucketName);
+      const file = bucket.file(attachmentPath);
+      const [fileBuffer] = await file.download();
+  
+      const mailOptions = {
+        from: 'koklathewebguy@gmail.com',
+        to: email,
+        subject: subject,
+        text: text,
+        attachments: [
+          {
+            filename: file.name,
+            content: fileBuffer,
+          },
+        ],
+      };
+  
+      await mailTransport.sendMail(mailOptions);
+      console.log('Email sent successfully to', email);
+    } catch (error) {
+      console.error('Error sending email:', error);
+    }
+  }
+  
+  // Trigger function when a document is created in Firestore
+  export const sendEmailFrom = functions.firestore.document('EmailQueue/{docId}').onCreate(async (snap, context) => {
+    const data = snap.data();
+    const email = data.email;
+    const subject = data.subject;
+    const text = data.text;
+    const attachmentPath = data.attachmentPath;
+  
+    await sendEmail(email, subject, text, attachmentPath);
+  });
+  
 
 function generateOrderNumber(): string {
   let characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZSAMANDLINDA';
