@@ -24,6 +24,7 @@ import { OrderCompletedComponent } from './pages/customer-facing/order-completed
 import { Four04Component } from './pages/customer-facing/four04/four04.component';
 import { LoginComponent } from './pages/customer-facing/login/login.component';
 import { ProfileComponent } from './pages/customer-facing/profile/profile.component';
+import { OrdersComponent } from './pages/customer-facing/orders/orders.component';
 
 const routes: Routes = [
   {
@@ -145,6 +146,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
+  },
+  {
+    path: 'my-orders',
+    component: OrdersComponent
   },
   {
     path: '**',

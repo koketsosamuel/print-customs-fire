@@ -111,6 +111,7 @@ import { LoginComponent } from './pages/customer-facing/login/login.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { ProfileComponent } from './pages/customer-facing/profile/profile.component';
 import { MainFormComponent } from './components/checkout-forms/main-form/main-form.component';
+import { OrdersComponent } from './pages/customer-facing/orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -189,7 +190,8 @@ import { MainFormComponent } from './components/checkout-forms/main-form/main-fo
     LoginComponent,
     LoginDialogComponent,
     ProfileComponent,
-    MainFormComponent
+    MainFormComponent,
+    OrdersComponent
   ],
   imports: [
     AngularFireModule.initializeApp({

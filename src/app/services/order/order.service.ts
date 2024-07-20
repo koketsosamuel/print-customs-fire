@@ -17,7 +17,7 @@ export class OrderService {
     private readonly db: DbService,
     private readonly productService: ProductService,
     private readonly printingPositionService: PrintingPositionsService,
-    private readonly printingMethodService: PrintingMethodsService
+    private readonly printingMethodService: PrintingMethodsService,
   ) { }
 
   async createOrder(order: any) {
@@ -67,5 +67,9 @@ export class OrderService {
     res.items = items;
     res = { value: res }
     return res;
+  }
+
+  getOrdersByUserId(userId: string) {
+    return this.db.getDocumentsOrderedByWhere(this.orderCollection, 'createdAt', false, [['userId', '==', userId]]);
   }
 }

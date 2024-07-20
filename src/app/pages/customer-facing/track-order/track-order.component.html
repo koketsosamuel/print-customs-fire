@@ -20,7 +20,7 @@
 
     @if (order?.invoice) {
       <a [href]="order.invoice.link" target="_blank">
-        <button mat-flat-button color="accent" class="mt-2"><mat-icon>article</mat-icon> Download Invoice</button>
+        <button mat-flat-button color="primary" class="mt-2"><mat-icon>download</mat-icon> Invoice</button>
       </a>
     } @else {
       <app-info-text text="Generating invoice..."></app-info-text>
