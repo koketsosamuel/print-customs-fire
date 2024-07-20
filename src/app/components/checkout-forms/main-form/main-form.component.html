@@ -1,0 +1,24 @@
+<app-fancy-card [small]="true">
+  <h3>Contact & Personal info</h3>
+  <app-personal-info
+    [contacDetailsAndPersonalDetails]="contactInfoAndPersonalInfoForm"
+  ></app-personal-info>
+
+  <h3>Business Info</h3>
+  <app-business-info [businessInfoForm]="businessInfoForm"></app-business-info>
+
+  <h3>Billing Address</h3>
+  <app-delivery-address
+    [addressForm]="billingAddressForm"
+    [deliveryAddress]="false"
+  ></app-delivery-address>
+
+  <h3>Delivery Address</h3>
+  <mat-checkbox [formControl]="sameAsBillingControl" name="same-as-billing"
+    >Same as billing address</mat-checkbox
+  >
+  <app-delivery-address
+    [addressForm]="deliveryAddressForm"
+    [deliveryAddress]="true"
+  ></app-delivery-address>
+</app-fancy-card>

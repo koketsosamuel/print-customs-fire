@@ -23,6 +23,7 @@ import { TrackOrderComponent } from './pages/customer-facing/track-order/track-o
 import { OrderCompletedComponent } from './pages/customer-facing/order-completed/order-completed.component';
 import { Four04Component } from './pages/customer-facing/four04/four04.component';
 import { LoginComponent } from './pages/customer-facing/login/login.component';
+import { ProfileComponent } from './pages/customer-facing/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -140,6 +141,10 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   },
   {
     path: '**',

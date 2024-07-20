@@ -1,0 +1,146 @@
+<div class="container">
+  <h1>Profile</h1>
+  <div class="row">
+    <div class="col-lg-8">
+      <app-main-form
+        (change)="setProfileData($event)"
+        #profileForm
+      ></app-main-form>
+      <button
+        mat-flat-button
+        color="primary"
+        class="my-4"
+        [disabled]="!profileData"
+        (click)="updateProfile()"
+      >
+        Update Profile
+      </button>
+    </div>
+    <div class="col-lg-4">
+      <div class="bg-teal-100 p-4 mt-lg-0 mt-4 mb-4 rounded-corners">
+        <h2 class="mt-0">Change Login Email</h2>
+        <h3 class="d-flex align-items-center">
+          <mat-icon>email</mat-icon>&nbsp;{{ user?.email }}
+        </h3>
+        <form [formGroup]="changeEmailForm" autocomplete="off" (submit)="changeEmail()">
+          <mat-form-field class="w-100">
+            <mat-label>Current Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="currentPassword"
+              name="current-password"
+            />
+            <mat-error
+              *ngIf="
+                changeEmailForm.controls['currentPassword'].hasError('required')
+              "
+              >Required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label>New Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="newEmail"
+              name="new-Email"
+            />
+            <mat-error
+              *ngIf="changeEmailForm.controls['newEmail'].hasError('required')"
+              >Required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label>Confirm New Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="confirmNewEmail"
+              name="confirm-new-Email"
+            />
+            <mat-error
+              *ngIf="
+                changeEmailForm.controls['confirmNewEmail'].hasError('required')
+              "
+              >Required</mat-error
+            >
+          </mat-form-field>
+
+          <button mat-flat-button color="primary" [disabled]="!changeEmailForm.valid" type="submit">Change Email</button>
+        </form>
+      </div>
+
+      <div class="bg-teal-100 p-4 mt-lg-0 mt-4 rounded-corners">
+        <h2 class="mt-0">Change Password</h2>
+        <form
+          [formGroup]="resetPasswordForm"
+          (submit)="changePassword()"
+          autocomplete="off"
+        >
+          <mat-form-field class="w-100">
+            <mat-label>Current Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="currentPassword"
+              name="current-password"
+            />
+            <mat-error
+              *ngIf="
+                resetPasswordForm.controls['currentPassword'].hasError(
+                  'required'
+                )
+              "
+              >Required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label>New Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="newPassword"
+              name="new-password"
+            />
+            <mat-error
+              *ngIf="
+                resetPasswordForm.controls['newPassword'].hasError('required')
+              "
+              >Required</mat-error
+            >
+          </mat-form-field>
+
+          <mat-form-field class="w-100">
+            <mat-label>Confirm New Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="confirmNewPassword"
+              name="confirm-new-password"
+            />
+            <mat-error
+              *ngIf="
+                resetPasswordForm.controls['confirmNewPassword'].hasError(
+                  'required'
+                )
+              "
+              >Required</mat-error
+            >
+          </mat-form-field>
+
+          <button
+            mat-flat-button
+            color="primary"
+            [disabled]="!resetPasswordForm.valid"
+          >
+            Change Password
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

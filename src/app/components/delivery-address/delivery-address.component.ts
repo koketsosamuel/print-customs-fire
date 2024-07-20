@@ -9,4 +9,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class DeliveryAddressComponent {
   @Input({required: true}) addressForm!: FormGroup;
   @Input() deliveryAddress = false;
+
+  provinces: string[] = [
+    "Gauteng",
+    "Western Cape",
+    "KwaZulu-Natal",
+    "Eastern Cape",
+    "Mpumalanga",
+    "Limpopo",
+    "North West",
+    "Free State",
+    "Northern Cape"
+  ]
+  
 }

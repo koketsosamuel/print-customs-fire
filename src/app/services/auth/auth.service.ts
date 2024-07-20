@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Observable, catchError } from 'rxjs';
+import { Observable, catchError, first } from 'rxjs';
 import { CartService } from '../cart/cart.service';
 import { AlertService } from '../alert/alert.service';
 import firebase from 'firebase/compat/app';
@@ -155,5 +155,29 @@ export class AuthService {
       .finally(() => {
         this.loadingSpinner.hide();
       });
+  }
+
+  changeLoginEmail(password: string, newEmail: string) {
+    return new Promise((resolve, reject) => {
+      this.userObservable.pipe(first()).subscribe(user => {
+        if (user?.email) {
+          this.auth.signInWithEmailAndPassword(user.email, password).then(userCredential => {
+            userCredential.user?.updateEmail(newEmail).then(resolve).catch(reject);
+          }).catch(reject);
+        }
+      })
+    })
+  }
+
+  changePassword(password: string, newPassword: string) {
+    return new Promise((resolve, reject) => {
+      this.userObservable.pipe(first()).subscribe(user => {
+        if (user?.email) {
+          this.auth.signInWithEmailAndPassword(user.email, password).then(userCredential => {
+            userCredential.user?.updatePassword(newPassword).then(resolve).catch(reject);
+          }).catch(reject);
+        }
+      })
+    })
   }
 }

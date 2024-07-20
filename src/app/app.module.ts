@@ -109,6 +109,8 @@ import { InfoTextComponent } from './components/info-text/info-text.component';
 import { Four04Component } from './pages/customer-facing/four04/four04.component';
 import { LoginComponent } from './pages/customer-facing/login/login.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
+import { ProfileComponent } from './pages/customer-facing/profile/profile.component';
+import { MainFormComponent } from './components/checkout-forms/main-form/main-form.component';
 
 @NgModule({
   declarations: [
@@ -185,7 +187,9 @@ import { LoginDialogComponent } from './components/login-dialog/login-dialog.com
     InfoTextComponent,
     Four04Component,
     LoginComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    ProfileComponent,
+    MainFormComponent
   ],
   imports: [
     AngularFireModule.initializeApp({

@@ -124,4 +124,9 @@ export class DbService {
     let newDoc = await doc.get();
     return { id: newDoc.id, ...newDoc.data() };
   }
+
+  addOrWriteToRef(collection: string, docId: string, data: Object) {
+    return this.firestore
+      .collection(collection).doc(docId).set(data);
+  }
 }

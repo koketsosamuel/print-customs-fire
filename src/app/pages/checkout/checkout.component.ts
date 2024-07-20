@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
+import { MainFormComponent } from 'src/app/components/checkout-forms/main-form/main-form.component';
 import { LoginDialogComponent } from 'src/app/components/login-dialog/login-dialog.component';
 import { LoginOrSignupComponent } from 'src/app/components/login-or-signup/login-or-signup.component';
 import { ICartItem } from 'src/app/models/cart.interface';
@@ -21,11 +22,9 @@ import { OrderService } from 'src/app/services/order/order.service';
 })
 export class CheckoutComponent implements OnInit {
 
+  @ViewChild('checkoutMainForm') checkoutDetailsForm!: MainFormComponent;
+
   checkoutForm: FormGroup;
-  deliveryAddressForm: FormGroup;
-  billingAddressForm: FormGroup;
-  contactInfoAndPersonalInfoForm: FormGroup;
-  businessInfoForm: FormGroup;
   billingAddressSameAsDelivery = true;
   notRegisteredBusiness = false;
   initialLoad = false;
@@ -34,6 +33,7 @@ export class CheckoutComponent implements OnInit {
   vat: string = '';
   subTotal: string = '';
   deliveryFee: string = (250).toFixed(2);
+  checkoutProfileInformation: Object | null = null;
 
   user: User | null = null;
 
@@ -49,47 +49,9 @@ export class CheckoutComponent implements OnInit {
     private readonly auth: AuthService
 
   ) {
-
-    this.deliveryAddressForm = formBuilder.group({
-      streetAddress: ['', [Validators.required]],
-      suburb: [''],
-      city: ['', Validators.required],
-      province: ['', Validators.required],
-      buildingName: [''],
-      postalCode: ['', Validators.required],
-      deliveryNotes: [''],
-    })
-
-    this.billingAddressForm = formBuilder.group({
-      streetAddress: ['', Validators.required],
-      suburb: [''],
-      city: ['', Validators.required],
-      province: ['', Validators.required],
-      buildingName: [''],
-      postalCode: ['', Validators.required],
-    });
-
-    const southAfricanPhoneNumberPattern = /^(?:\+27|0)(?:\d{9}|\(\d{2}\)\s?\d{3}\s?\d{4})$/;
-
-    this.contactInfoAndPersonalInfoForm = formBuilder.group({
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', [Validators.required, Validators.pattern(southAfricanPhoneNumberPattern)]],
-      alternativePhoneNumber: ['', Validators.pattern(southAfricanPhoneNumberPattern)],
-    })
-
-    this.businessInfoForm = formBuilder.group({
-      taxNumber: ['', Validators.required],
-      name: ['', Validators.required]
-    }),
-
     this.checkoutForm = formBuilder.group({
       cartId: ['', Validators.required],
       userId: ['', Validators.required],
-      deliveryAddress: this.deliveryAddressForm,
-      billingAddress: this.billingAddressForm,
-      businessInformation: this.businessInfoForm,
-      contactInfoAndPersonalInfo: this.contactInfoAndPersonalInfoForm,
       createdAt: [new Date(), Validators.required],
       status: ['Pending Payment', Validators.required],
       subTotal: [0, Validators.required],
@@ -105,6 +67,8 @@ export class CheckoutComponent implements OnInit {
     this.initialLoad = true;
     this.auth.userObservable.subscribe(user => {
       this.user = user;
+      console.log(user);
+      
     })
     
     this.cartService
@@ -122,11 +86,6 @@ export class CheckoutComponent implements OnInit {
       .finally(() => {
         this.initialLoad = false;
       });
-      this.deliveryAddressForm.valueChanges.pipe(debounceTime(300)).subscribe(data => {
-        if (this.billingAddressSameAsDelivery) {
-          this.checkoutForm.patchValue({ billingAddress: data });
-        }
-      })
   }
 
   setOrderSummary() {
@@ -152,12 +111,15 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
-  checkout() {
-    if (this.checkoutForm.valid) {
-      this.loadingSpinner.show();
+  setCheckoutProfileInfo(data: any | null) {
+    this.checkoutProfileInformation = data;
+  }
 
-      this.orderService.createOrder(this.checkoutForm.value).then(res => {
-        
+  checkout() {
+    this.checkoutDetailsForm.submit();
+    if (this.checkoutForm.valid && this.checkoutProfileInformation) {
+      this.loadingSpinner.show();
+      this.orderService.createOrder({ ...this.checkoutForm.value, ...this.checkoutProfileInformation }).then(res => {
         this.router.navigate(['/order-completed', res.id], { replaceUrl: true });
       }).catch(err => {
         this.alertService.error('Something went wrong, please try again.')
@@ -167,18 +129,6 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.checkoutForm.markAllAsTouched();
       this.alertService.error('Please enter valid information on all fields')
-    }
-  }
-
-  sameAddressAsDelivery(event: any) {
-    if (event.checked) {
-      this.checkoutForm.patchValue({
-        billingAddress: {
-          ...this.checkoutForm.value.deliveryAddress
-        }
-      })
-    } else {
-      this.billingAddressForm.reset();
     }
   }
 
@@ -195,13 +145,4 @@ export class CheckoutComponent implements OnInit {
     })
   }
 
-  applyRequiredValidators(clear = false) {
-    if (!clear) {
-      this.checkoutForm.controls['businessInformation'].get('taxNumber')?.addValidators(Validators.required);
-      this.checkoutForm.controls['businessInformation'].get('name')?.addValidators(Validators.required);
-    } else {
-      this.checkoutForm.controls['businessInformation'].get('taxNumber')?.clearValidators();
-      this.checkoutForm.controls['businessInformation'].get('name')?.clearValidators();
-    }
-  }
 }

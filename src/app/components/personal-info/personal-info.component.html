@@ -21,6 +21,8 @@
                             *ngIf="contacDetailsAndPersonalDetails.controls['email'].hasError('email') && !contacDetailsAndPersonalDetails.controls['email'].hasError('required')">Invalid
                             email address</mat-error>
                         <mat-error *ngIf="contacDetailsAndPersonalDetails.controls['email'].hasError('required')">Required</mat-error>
+
+                        <mat-hint *ngIf="user?.email">Changing this email does not change your login email</mat-hint>
                     </mat-form-field>
                 </div>
                 <div class="col-lg-6 col-md-6">

@@ -17,45 +17,7 @@
   
   <div class="row">
     <div class="col-lg-8 my-2">
-      <app-fancy-card [small]="true">
-        <h3>Contact & Personal info</h3>
-        <app-personal-info
-          [contacDetailsAndPersonalDetails]="contactInfoAndPersonalInfoForm"
-        ></app-personal-info>
-
-        <h3>Business Info</h3>
-        <div class="p-2 bg-teal-50 rounded-corners d-inline-block mb-3">
-          <mat-checkbox
-            [(ngModel)]="notRegisteredBusiness"
-            (change)="applyRequiredValidators(notRegisteredBusiness)"
-            >Not a registered business</mat-checkbox
-          >
-        </div>
-        <app-business-info
-          [businessInfoForm]="businessInfoForm"
-          *ngIf="!notRegisteredBusiness"
-        ></app-business-info>
-
-        <h3>Delivery Address</h3>
-        <app-delivery-address
-          [addressForm]="deliveryAddressForm"
-          [deliveryAddress]="true"
-        ></app-delivery-address>
-
-        <h3>Billing Address</h3>
-        <div class="p-2 bg-teal-50 rounded-corners d-inline-block mb-3">
-          <mat-checkbox
-            [(ngModel)]="billingAddressSameAsDelivery"
-            (change)="sameAddressAsDelivery($event)"
-            >Same as delivery</mat-checkbox
-          >
-        </div>
-        <app-delivery-address
-          [addressForm]="billingAddressForm"
-          [deliveryAddress]="false"
-          *ngIf="!billingAddressSameAsDelivery"
-        ></app-delivery-address>
-      </app-fancy-card>
+      <app-main-form #checkoutMainForm (change)="setCheckoutProfileInfo($event)"></app-main-form>
     </div>
     <div class="col-lg-4 mt-3">
       <h1 class="mt-0 pt-0">Order Summary</h1>
